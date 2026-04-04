@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Resonance Mapping of The Periodic Table</title>
+<style>
+:root {
+  --bg:#f2f1ef; --bg2:#eae9e6; --white:#ffffff;
+  --text:#1a1a18; --text2:#555550; --text3:#888882;
+  --accent:#95bb20; --rule:#ddddd8;
+  --serif:Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  --max:860px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(242,241,239,0.95);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:52px;}
+.brand{font-size:13px;font-weight:600;}
+.brand span{color:var(--accent);}
+nav ul{list-style:none;display:flex;gap:28px;}
+nav a{font-size:11px;text-decoration:none;color:var(--text3);
+  letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+nav a:hover{color:var(--text);}
+
+.page{max-width:var(--max);margin:0 auto;padding:100px 40px 80px;}
+hr{border:none;border-top:1px solid var(--rule);margin:60px 0;}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.sec-title{font-family:var(--serif);font-size:clamp(24px,3vw,36px);
+  font-weight:normal;line-height:1.2;margin-bottom:24px;}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:18px;}
+.formula{font-family:'Courier New',monospace;font-size:14px;
+  background:var(--bg2);padding:12px 18px;border-radius:6px;
+  margin:20px 0;color:var(--text);}
+
+.hero{padding:60px 0 40px;}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,54px);
+  font-weight:normal;line-height:1.1;margin-bottom:24px;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero-note{font-size:13px;color:var(--text3);font-style:italic;
+  line-height:1.6;border-left:2px solid var(--rule);padding-left:16px;margin-top:24px;}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:32px 0;}
+.kpi{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:16px;}
+.kpi .val{font-size:20px;font-weight:700;font-family:var(--serif);}
+.kpi .lbl{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4;}
+
+.accordion{border:1px solid var(--rule);border-radius:8px;
+  margin:16px 0;background:var(--white);overflow:hidden;}
+.acc-btn{width:100%;display:flex;justify-content:space-between;
+  align-items:center;padding:14px 18px;background:none;border:none;
+  cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;
+  color:var(--text2);text-align:left;transition:background 0.15s;}
+.acc-btn:hover{background:var(--bg);}
+.acc-icon{font-size:18px;color:var(--text3);margin-left:12px;}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+.acc-body.open{max-height:2000px;}
+.acc-inner{padding:16px 18px 20px;font-size:14px;color:var(--text2);
+  line-height:1.75;border-top:1px solid var(--rule);}
+.acc-inner p{font-size:14px;margin-bottom:12px;}
+.acc-inner .formula{font-size:13px;}
+
+.model-section{background:var(--bg2);border-radius:12px;padding:24px;margin:40px 0;}
+.model-section h3{font-size:13px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;}
+.model-wrap{background:var(--white);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;display:grid;
+  grid-template-columns:200px 1fr;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.ctrl-panel{border-right:1px solid var(--rule);display:flex;flex-direction:column;}
+.ctrl-head{padding:12px 14px 8px;font-size:10px;font-weight:700;
+  letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);
+  border-bottom:1px solid var(--rule);}
+.ctrl-btns{padding:8px 14px;border-bottom:1px solid var(--rule);display:flex;gap:6px;}
+.btn-sm{font-size:10px;padding:3px 8px;border-radius:4px;
+  border:1px solid var(--rule);background:var(--bg);color:var(--text2);cursor:pointer;}
+.btn-sm:hover{background:var(--rule);}
+.lr-list{overflow-y:auto;flex:1;max-height:340px;}
+.lr{padding:8px 14px;display:flex;align-items:center;gap:8px;
+  cursor:pointer;border-bottom:1px solid #f5f5f3;transition:background 0.1s;}
+.lr:hover{background:#fafaf8;}
+.lr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.lr-info{flex:1;min-width:0;}
+.lr-name{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lr-sub{font-size:9px;color:var(--text3);margin-top:1px;}
+.obs-box{display:none;padding:8px 14px;font-size:11px;line-height:1.6;
+  color:var(--text2);background:#f7f9f4;border-left:2px solid var(--accent);
+  margin:0 14px 8px;border-radius:0 4px 4px 0;}
+.obs-box.open{display:block;}
+.sw{position:relative;display:inline-block;width:28px;height:16px;flex-shrink:0;}
+.sw input{opacity:0;width:0;height:0;}
+.sw-track{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;
+  background:#ccc;border-radius:16px;transition:0.2s;}
+.sw-track:before{content:"";position:absolute;height:12px;width:12px;
+  left:2px;bottom:2px;background:white;border-radius:50%;transition:0.2s;}
+.sw input:checked + .sw-track{background:var(--accent);}
+.sw input:checked + .sw-track:before{transform:translateX(12px);}
+.svg-wrap{padding:12px;overflow:auto;position:relative;}
+.svg-wrap svg,.svg-wrap object{width:100%;height:auto;display:block;}
+.svg-wrap img{width:100%;height:auto;display:block;}
+.zoom-ctrl{position:absolute;top:12px;right:12px;z-index:10;display:flex;gap:4px;}
+.z-btn{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);
+  background:var(--white);color:var(--text2);font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.z-btn:hover{background:var(--bg);}
+.expand-btn{display:flex;align-items:center;gap:6px;margin-top:10px;
+  font-size:11px;color:var(--text3);background:none;border:none;
+  cursor:pointer;padding:4px 0;transition:color 0.2s;}
+.expand-btn:hover{color:var(--text);}
+.expand-btn svg{width:14px;height:14px;}
+
+.fs-overlay{display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(242,241,239,0.97);backdrop-filter:blur(4px);
+  flex-direction:column;}
+.fs-overlay.open{display:flex;}
+.fs-header{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;border-bottom:1px solid var(--rule);
+  background:var(--white);flex-shrink:0;}
+.fs-title{font-size:13px;font-weight:600;color:var(--text2);}
+.fs-close{width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--rule);background:var(--white);
+  font-size:22px;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:var(--text2);line-height:1;transition:background 0.15s;}
+.fs-close:hover{background:var(--bg2);}
+.fs-body{flex:1;display:grid;grid-template-columns:220px 1fr;overflow:hidden;}
+.fs-ctrl{border-right:1px solid var(--rule);overflow-y:auto;background:var(--white);}
+.fs-svg-wrap{overflow:auto;padding:20px;position:relative;
+  display:flex;align-items:flex-start;justify-content:center;}
+.fs-svg-wrap svg{width:100%;max-width:1400px;height:auto;display:block;}
+.fs-zoom{position:absolute;top:20px;right:20px;}
+
+.pred{background:var(--white);border:1px solid var(--rule);
+  border-radius:8px;padding:20px;margin:12px 0;}
+.pred-tag{display:inline-block;font-size:10px;font-weight:700;
+  letter-spacing:0.7px;text-transform:uppercase;padding:2px 7px;
+  border-radius:4px;margin-bottom:10px;}
+.pred h4{font-size:14px;font-weight:600;margin-bottom:6px;}
+.pred p{font-size:13px;margin:0;}
+
+footer{padding:40px;text-align:center;border-top:1px solid var(--rule);
+  font-size:12px;color:var(--text3);margin-top:60px;}
+
+@media(max-width:700px){
+  .model-wrap,.fs-body{grid-template-columns:1fr;}
+  .ctrl-panel,.fs-ctrl{border-right:none;border-bottom:1px solid var(--rule);}
+  .kpis{grid-template-columns:1fr;}
+  nav ul{display:none;}
+  .page{padding:80px 20px 60px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">A <span>Resonance</span> Mapping</div>
+  <ul>
+    <li><a href="#observation">Observation</a></li>
+    <li><a href="#geometry">Geometry</a></li>
+    <li><a href="#predictions">Predictions</a></li>
+    <li><a href="#biology">Biology</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+<div class="hero">
+  <div class="sec-label">A geometric exploration</div>
+  <h1>A resonance mapping of<br><em>The Periodic Table</em></h1>
+  <p style="font-size:16px;color:var(--text2);">The periodic table is one of the most studied objects in science. And yet it contains a geometric structure that has gone largely unnoticed — not because it is hidden, but because it only becomes visible in the wide format.</p>
+  <p>This is a working proposal, not a completed theory. It is offered here because the geometric connections are precise enough to be falsified — and because the implications, if the geometry holds, extend beyond chemistry.</p>
+  <div class="hero-note">All values should be understood as relational rather than exact. The model begins as a hand-drawn vector construction. Connections should be evaluated through geometric consistency, not decimal precision.</div>
+  <div class="kpis" style="margin-top:36px;">
+    <div class="kpi"><div class="val">√3</div><div class="lbl">Ratio of the two resonance circle radii — emerging from the table, not imposed on it</div></div>
+    <div class="kpi"><div class="val">1/√3</div><div class="lbl">Percolation threshold — the table's own dynamic width in normalised units</div></div>
+    <div class="kpi"><div class="val">1/12</div><div class="lbl">Percolation interval — derived exactly from the double cube's diagonal structure</div></div>
+    <div class="kpi"><div class="val">7/4</div><div class="lbl">Harmonic threshold — (√7/2)², the dynamic expression of the spherical element</div></div>
+  </div>
+</div>
+
+<hr id="observation">
+
+<div class="sec-label">The observation</div>
+<h2 class="sec-title">Something hidden in plain sight</h2>
+<p>Most versions of the periodic table fold the lanthanides and actinides away. The wide format lays everything out in 32 columns. When it does, a curve appears — at least for the shape-inclined among us.</p>
+<p>If we follow the curve, two circles fill its inflections naturally. This is where the connections start to line up — because these two circles have a radius ratio of √3.</p>
+<div class="accordion" id="acc-obs1">
+  <button class="acc-btn" onclick="toggleAcc('obs1')">
+    <span>Why hand-drawn — and why it matters</span><span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-obs1">
+    <div class="acc-inner"><p>This model begins as a hand-drawn vector construction, not a computed fit. The curve is drawn by eye through the visual core of the wide-format table. The circles that fill its inflections are placed by hand.</p>
+<p>Which makes the following observation more striking, not less. The two circles are not equal. The larger, C1, sits above the table. The smaller, C2, has its centre at lead — Pb, atomic number 82, the heaviest stable element and a nuclear magic number. That placement was not chosen. It followed from the geometry.</p>
+<p>Their radius ratio R1/R2 is so close to √3 that in a computed version of this construction, we expect the ratio to be exactly √3.</p></div>
+  </div>
+</div>
+
+<hr id="geometry">
+
+<div class="sec-label">The geometry</div>
+<h2 class="sec-title">Explore the layers</h2>
+<p>Toggle geometric layers on and off. Click a layer name to read the observation. Use + / − to zoom in. Use the expand button to open the model in full screen.</p>
+
+<div class="model-section">
+  <h3>Interactive model</h3>
+  <div class="model-wrap">
+    <div class="ctrl-panel">
+      <div class="ctrl-head">Layers</div>
+      <div class="ctrl-btns">
+        <button class="btn-sm" onclick="setAll(true)">All on</button>
+        <button class="btn-sm" onclick="setAll(false)">All off</button>
+      </div>
+      <div class="lr-list">
+        <div class="lr" onclick="showObs('tab')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-tab" checked onchange="toggleLayer('tab')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#b3b3b2"></span>
+          <div class="lr-info">
+            <div class="lr-name">Periodic Table</div>
+            <div class="lr-sub">Wide format, 32 columns</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-tab">The wide-format (Janet) periodic table with 32 columns. s-block left, f-block centre, d- and p-blocks right. Most versions fold the lanthanides away. This format reveals the full geometric structure.</div>
+        <div class="lr" onclick="showObs('res')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-res" checked onchange="toggleLayer('res')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#ffd500"></span>
+          <div class="lr-info">
+            <div class="lr-name">Resonance Curve</div>
+            <div class="lr-sub">The S-curve through the system</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-res">The resonance curve runs from hydrogen, arcs upward through the empty space above the table, and descends to meet the heavy elements on the right. It is not drawn on the table — it emerges from the visual core of the wide format.</div>
+        <div class="lr" onclick="showObs('cir')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-cir" checked onchange="toggleLayer('cir')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#0089cb"></span>
+          <div class="lr-info">
+            <div class="lr-name">C1 and C2</div>
+            <div class="lr-sub">The two resonance circles</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-cir">C1 (the larger circle) sits above the table. C2 has its centre at lead — Pb, atomic number 82, the heaviest stable element and a nuclear magic number. Their radius ratio R1/R2 is so close to √3 that in a computed version of this construction, we expect the ratio to be exactly √3.</div>
+        <div class="lr" onclick="showObs('dbl')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-dbl"  onchange="toggleLayer('dbl')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#009ddf"></span>
+          <div class="lr-info">
+            <div class="lr-name">Double Cube</div>
+            <div class="lr-sub">Two overlapping squares</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-dbl">The outer reach of C1 defines the first cube. Two cubes placed side by side almost span the table. They overlap by δ = 14 units against a side of 327. That overlap lands precisely at the boundary between group 2 and group 3.</div>
+        <div class="lr" onclick="showObs('pyr')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-pyr"  onchange="toggleLayer('pyr')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#f39200"></span>
+          <div class="lr-info">
+            <div class="lr-name">Asymmetric Pyramid</div>
+            <div class="lr-sub">Connecting C1 and C2</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-pyr">The asymmetric pyramidal form connects C1 and C2. Δx = 385.345 mm, Δy = 187.78 mm.</div>
+        <div class="lr" onclick="showObs('ang')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-ang"  onchange="toggleLayer('ang')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#555550"></span>
+          <div class="lr-info">
+            <div class="lr-name">Angles & Measures</div>
+            <div class="lr-sub">Geometric constants</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-ang">Angular and dimensional measurements. Key angles: 90°, 51.05°, 25.98°, 138.32°, 114.89°, 102.97°. Use zoom to read details.</div>
+        <div class="lr" onclick="showObs('pri')">
+          <label class="sw" onclick="event.stopPropagation()">
+            <input type="checkbox" id="chk-pri"  onchange="toggleLayer('pri')">
+            <span class="sw-track"></span>
+          </label>
+          <span class="lr-dot" style="background:#cc5116"></span>
+          <div class="lr-info">
+            <div class="lr-name">Prime Periods</div>
+            <div class="lr-sub">7 periods — 4 primes — 7/4=1.75</div>
+          </div>
+        </div>
+        <div class="obs-box" id="obs-pri">Seven periods pair with the first four primes (2,3,5,7) as reciprocal pairs.</div></div>
+    </div>
+    <div class="svg-wrap" id="main-wrap">
+      <div class="zoom-ctrl">
+        <button class="z-btn" onclick="zm(1.25)">＋</button>
+        <button class="z-btn" onclick="zm(0.8)">－</button>
+        <button class="z-btn" onclick="zr()">⊡</button>
+      </div>
+      <div id="main-svg-container" style="width:100%;"></div>
+    </div>
+  </div>
+  <button class="expand-btn" onclick="openFullscreen()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5"/>
+    </svg>
+    Open in full screen
+  </button>
+</div>
+
+<div class="sec-label" style="margin-top:48px;">The double cube</div>
+<h2 class="sec-title">An overlap that lands somewhere</h2>
+<p>The √3 ratio between C1 and C2, combined with the long rectangular form of the wide-format table, geometrically suggested a natural next step: a double cube. The right-hand reach of C1 sits close to the geometric centre of the table, making it a natural boundary for the first cube. Two cubes of that size, placed side by side, would span the full table.</p>
+<p>They did not tessellate. The geometric intuition appeared to be falsified.</p>
+<p>Then the overlap was measured.</p>
+<p>The two cubes overlap by a small amount — δ = 14 units against a cube side of 327. That overlap lands precisely at the boundary between group 2 and group 3 — between the s-block and the d-block, between the elements that fill the left side of the resonance curve and the elements that begin the straight segment.</p>
+<p>In this light, the almost tessellating cubes might be evaluated as a signal and not a failure.</p>
+<p>The side length 327 follows from the chosen cell size of 20 mm. The ratio δ/side = 14/327 is scale-independent. The system is dimensionless.</p>
+<div class="accordion" id="acc-dbl1">
+  <button class="acc-btn" onclick="toggleAcc('dbl1')">
+    <span>On the choice of the double cube</span><span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-dbl1">
+    <div class="acc-inner"><p>The use of a double cube rather than a single or triple cube was not arbitrary. A single cube does not contain √7 — the diagonal that signals the spherical element. A triple cube produces diagonals √8 = 2√2 and √9 = 3, which are multiples of existing diagonals rather than new geometric qualities.</p>
+<p>√7 does not traverse beyond the double cube. It is defined by the double cube's full extent — the distance that requires both the full length and both cubes to exist simultaneously. The double cube is the minimal sufficient structure: the smallest system that contains √7 and therefore the smallest system that can carry both the structural and dynamic sides of the geometry.</p></div>
+  </div>
+</div>
+
+<div class="sec-label" style="margin-top:48px;">The missing root</div>
+<h2 class="sec-title">√7 and the spherical contribution</h2>
+<p>A double cube is widely recognised as home to the diagonal lines described by the square roots of 1 through 6, addressing the corners of the cubes. However, √7 belongs to the curvature — it needs both cubes to exist, and shows us that the system might also have a dynamic side.</p>
+<p>Recognising √7 as a natural part of a two-cube system, its dynamic expression might be quantised as:</p>
+<div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
+<p>√7 is the geometry. 7/4 is its dynamic expression.</p>
+<p>Now connect this to delta. The percolation interval — the channel width — is 1/12. And:</p>
+<div class="formula">7/4 × 12 = 21 = 3 × 7</div>
+<p>The overlapping double cube delta is 14 = 2 × 7. The full percolation space is 21 = 3 × 7. It seems these are not separate instances, but the same geometric fact expressed at three different scales.</p>
+<div class="accordion" id="acc-sqrt7">
+  <button class="acc-btn" onclick="toggleAcc('sqrt7')">
+    <span>The geometric derivation of 1/12</span><span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-sqrt7">
+    <div class="acc-inner"><p>The percolation interval 1/12 is not imported from biology. It is derived from the double cube's own diagonal structure.</p>
+<p>The structural cube contributes the ratio of its face diagonal to its space diagonal:</p>
+<div class="formula">√2 / √3</div>
+<p>The dynamic cube contributes the ratio of its space diagonal to the double cube's full length:</p>
+<div class="formula">√3 / √4 = √3 / 2</div>
+<p>When squared, these ratios produce the percolation boundary conditions:</p>
+<div class="formula">(√2 / √3)² = 2/3</div>
+<div class="formula">(√3 / √4)² = 3/4</div>
+<p>The percolation interval is the difference between them:</p>
+<div class="formula">3/4 − 2/3 = 1/12</div>
+<p>√7 is the coupling term that requires both cubes simultaneously. Without it, the structural and dynamic sides are independent. With it, the interval 1/12 becomes geometrically necessary.</p></div>
+  </div>
+</div>
+
+<hr id="predictions">
+
+<div class="sec-label">Predictions</div>
+<h2 class="sec-title">What the geometry predicts</h2>
+<p>A geometric model is only as interesting as what it predicts. The following observations were not derived from chemical knowledge — they follow from the position of elements relative to C1, C2 and the resonance curve. The chemistry was checked afterwards. In each case, the chemical fact was already known. What the model offers is an independent geometric derivation of known results — which is a different kind of evidence.</p>
+
+<div class="pred">
+  <span class="pred-tag" style="background:#e8f4d4;color:#5a7a10;">Confirmed</span>
+  <h4>Fe, Ru and Os as universal mediators</h4>
+  <p>The geometry places these elements at the crossing point between the stable boundary interior and the open percolation zone. The prediction: they should be the most chemically universal bonders in the transition metals. Fe, Ru and Os are among the most catalytically versatile elements known. Iron is the centre of haemoglobin. The geometry did not need to know this.</p>
+</div>
+<div class="pred">
+  <span class="pred-tag" style="background:#e8f4d4;color:#5a7a10;">Confirmed</span>
+  <h4>Be and Mg — the diagonal anomaly</h4>
+  <p>The resonance curve passes through beryllium and magnesium. The prediction: they should behave anomalously relative to the rest of group 2 — more covalently, resembling their diagonal neighbours more than their vertical group neighbours. This is the diagonal rule — one of the known anomalies of the periodic table. The model placed Be and Mg on the curve independently.</p>
+</div>
+<div class="pred">
+  <span class="pred-tag" style="background:#e8f4d4;color:#5a7a10;">Confirmed</span>
+  <h4>Pb as a potential minimum</h4>
+  <p>C2 has its centre at lead. In the field geometry, C2 is the lower boundary condition. Lead has atomic number 82, a nuclear magic number. It is the heaviest stable element. That the geometry places C2 at Pb is either a remarkable coincidence or a signal worth following.</p>
+</div>
+<div class="accordion" id="acc-inert">
+  <button class="acc-btn" onclick="toggleAcc('inert')">
+    <span>Two geometrically distinct types of inertness</span><span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-inert">
+    <div class="acc-inner"><p><strong>Type 1 — Ti, Zr, Hf:</strong> These sit inside the C1 boundary. The field is maximally stable here; there is no gradient driving bond formation. Their inertness is structural. Confirmed: Ti, Zr and Hf are among the most corrosion-resistant transition metals, used in implants and nuclear cladding.</p>
+<p><strong>Type 2 — heavy halogens, noble gases:</strong> These sit in the peripheral zone where the harmonic series approaches its 7/4 threshold. Their inertness is dynamic: the system is closing one period and beginning the next. Noble gases are fixed points of the geometric transformation. Two different geometric mechanisms. Two different chemical characters.</p></div>
+  </div>
+</div><div class="accordion" id="acc-conv">
+  <button class="acc-btn" onclick="toggleAcc('conv')">
+    <span>A convergence worth noting</span><span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-conv">
+    <div class="acc-inner"><p>The atomic number ratio (Z_Yb − Z_Sc) / (Z_Rn − Z_H) = 49/85 = 0.57647 lies within 0.00088 of the percolation threshold 1/√3 = 0.57735.</p>
+<p>The numerator counts the span from the first d-block element to the last lanthanide. The denominator counts the full span of the table through period 6. This is a counting statement about the table itself — no external constants are involved. Whether this proximity is structural or coincidental is not known. It is noted here as a convergence, not a conclusion.</p></div>
+  </div>
+</div>
+
+<hr id="biology">
+
+<div class="sec-label">A bridge to biology</div>
+<h2 class="sec-title">Kleibers law</h2>
+<p>In 1932, Max Kleiber observed that the metabolic rate of living organisms scales as M^(3/4) across all scales — from bacteria to whales. The naive geometric prediction from surface-to-volume scaling is M^(2/3). The difference between them is:</p>
+<div class="formula">3/4 − 2/3 = 1/12</div>
+<p>The double cube generates this interval exactly from its own diagonal structure. The structural cube contributes (√2/√3)² = 2/3. The dynamic cube contributes (√3/√4)² = 3/4. The interval between them is 1/12.</p>
+<p>The proposed reading: biological metabolic scaling operates at the upper boundary condition of the double cube's percolation channel. The exponent 3/4 is the squared diagonal ratio of the dynamic cube — the same geometric object that defines the dynamic axis of the periodic table.</p>
+<p>This is proposed as a model, not asserted as a result. The geometric derivation of 2/3, 3/4 and 1/12 from the double cube is exact. The connection to Kleibers law is structurally compelling — but a formal derivation has not yet been produced. That derivation is an open problem.</p>
+<p>What can be said is this: the double cube gives us 1/12. Kleibers law requires 1/12. That is not nothing.</p>
+
+<hr>
+
+<div class="sec-label">Status</div>
+<h2 class="sec-title">Where this leads — and where it does not</h2>
+<p>This is a geometric observation, not a completed theory. It began with a curve drawn by hand through a table that most scientists encounter in a different format. It produced a ratio, a structure and a set of correspondences that were not anticipated at the outset.</p>
+<p>We are aware that the results may appear too tidy. Three chemical predictions confirmed by known chemistry. A geometric interval that matches the gap in Kleibers law exactly. These correspondences invite scepticism — and that scepticism is reasonable.</p>
+<p>What we can say is that each step in the construction follows from the previous one without free parameters. The curve is drawn. The circles emerge. The ratio is measured. The double cube follows. The overlap is what it is. Nothing is fitted to produce a desired result.</p>
+<div class="accordion" id="acc-open">
+  <button class="acc-btn" onclick="toggleAcc('open')">
+    <span>What the model does not yet predict</span><span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-open">
+    <div class="acc-inner"><p>The geometry of C1 and C2 generates the framework within which molecular bond angles can be located — the system contains the t-point for bond angle geometry. But the algorithm for placing ligands has not been found.</p>
+<p>The lanthanides and actinides have not been placed within the percolation framework in a way that generates predictions.</p>
+<p>The formal derivation of the Laplace solution between C1 and C2 has not been completed. The model points toward it. The calculation remains to be done.</p>
+<p>The connection to Kleibers law has not been formally derived. The geometric interval matches. The formal derivation is an open problem.</p>
+<p>These are not weaknesses to be apologised for. They are the open problems that make the model worth pursuing.</p></div>
+  </div>
+</div>
+
+<p style="margin-top:32px;">The model is offered here as a proposal — precise enough to be falsified, open enough to invite collaboration. If the geometric derivations are wrong, they can be shown to be wrong. If they are right, the implications will take time to work through properly.</p>
+<p>That seems like the right place to leave it.</p>
+
+<div style="margin-top:40px;padding:20px;background:var(--white);border:1px solid var(--rule);border-radius:8px;">
+  <div style="font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">Working document</div>
+  <p style="font-size:13px;color:var(--text2);margin:0;">The full mathematical treatment — including formal definitions, the Laplace postulate, orbit correspondence and all open questions — is available as a working document.</p>
+</div>
+
+</div>
+
+<!-- FULLSCREEN OVERLAY -->
+<div class="fs-overlay" id="fs-overlay">
+  <div class="fs-header">
+    <div class="fs-title">Geometric model — interactive layers</div>
+    <button class="fs-close" onclick="closeFullscreen()">&#215;</button>
+  </div>
+  <div class="fs-body">
+    <div class="fs-ctrl">
+      <div class="ctrl-head">Layers</div>
+      <div class="ctrl-btns">
+        <button class="btn-sm" onclick="setAll(true)">All on</button>
+        <button class="btn-sm" onclick="setAll(false)">All off</button>
+      </div>
+      <div class="lr-list" id="fs-lr-list"></div>
+    </div>
+    <div class="fs-svg-wrap">
+      <div class="zoom-ctrl fs-zoom">
+        <button class="z-btn" onclick="zmf(1.25)">＋</button>
+        <button class="z-btn" onclick="zmf(0.8)">－</button>
+        <button class="z-btn" onclick="zrf()">⊡</button>
+      </div>
+      <div id="fs-svg-container" style="width:100%;max-width:1400px;"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  A geometric field model of the periodic table &mdash; work in progress &mdash;
+  all values relational, model hand-drawn in Adobe Illustrator
+</footer>
+
+<script>
+var openObs = null;
+var layers = [{"id": "tab", "title": "Periodic Table", "sub": "Wide format, 32 columns", "color": "#b3b3b2", "on": true, "obs": "The wide-format (Janet) periodic table with 32 columns. s-block left, f-block centre, d- and p-blocks right. Most versions fold the lanthanides away. This format reveals the full geometric structure."}, {"id": "res", "title": "Resonance Curve", "sub": "The S-curve through the system", "color": "#ffd500", "on": true, "obs": "The resonance curve runs from hydrogen, arcs upward through the empty space above the table, and descends to meet the heavy elements on the right. It is not drawn on the table \u2014 it emerges from the visual core of the wide format."}, {"id": "cir", "title": "C1 and C2", "sub": "The two resonance circles", "color": "#0089cb", "on": true, "obs": "C1 (the larger circle) sits above the table. C2 has its centre at lead \u2014 Pb, atomic number 82, the heaviest stable element and a nuclear magic number. Their radius ratio R1/R2 is so close to \u221a3 that in a computed version of this construction, we expect the ratio to be exactly \u221a3."}, {"id": "dbl", "title": "Double Cube", "sub": "Two overlapping squares", "color": "#009ddf", "on": false, "obs": "The outer reach of C1 defines the first cube. Two cubes placed side by side almost span the table. They overlap by \u03b4 = 14 units against a side of 327. That overlap lands precisely at the boundary between group 2 and group 3."}, {"id": "pyr", "title": "Asymmetric Pyramid", "sub": "Connecting C1 and C2", "color": "#f39200", "on": false, "obs": "The asymmetric pyramidal form connects C1 and C2. \u0394x = 385.345 mm, \u0394y = 187.78 mm."}, {"id": "ang", "title": "Angles & Measures", "sub": "Geometric constants", "color": "#555550", "on": false, "obs": "Angular and dimensional measurements. Key angles: 90\u00b0, 51.05\u00b0, 25.98\u00b0, 138.32\u00b0, 114.89\u00b0, 102.97\u00b0. Use zoom to read details."}, {"id": "pri", "title": "Prime Periods", "sub": "7 periods \u2014 4 primes \u2014 7/4=1.75", "color": "#cc5116", "on": false, "obs": "Seven periods pair with the first four primes (2,3,5,7) as reciprocal pairs."}];
+var mainSVG = null;
+var fsSVG = null;
+var msVB = null;
+var fsVB = null;
+var msc = 1;
+var fsc = 1;
+
+// Load SVG via fetch and inject into containers
+function loadSVG() {
+  fetch('model.svg')
+    .then(function(r) { return r.text(); })
+    .then(function(svgText) {
+      // Inject into main container
+      var mainContainer = document.getElementById('main-svg-container');
+      mainContainer.innerHTML = svgText;
+      mainSVG = mainContainer.querySelector('svg');
+      if (mainSVG) {
+        mainSVG.style.width = '100%';
+        mainSVG.style.height = 'auto';
+        msVB = mainSVG.getAttribute('viewBox');
+      }
+
+      // Inject clone into fullscreen container
+      var fsContainer = document.getElementById('fs-svg-container');
+      var clone = mainContainer.querySelector('svg').cloneNode(true);
+      // Rename IDs to avoid conflicts
+      clone.querySelectorAll('[id]').forEach(function(el) {
+        el.id = 'fs-' + el.id;
+      });
+      fsContainer.appendChild(clone);
+      fsSVG = clone;
+      fsVB = fsSVG.getAttribute('viewBox');
+    })
+    .catch(function(err) {
+      console.error('Could not load model.svg:', err);
+      document.getElementById('main-svg-container').innerHTML =
+        '<p style="padding:20px;color:#888;font-size:13px;">Model requires a local server to load. Open via: python3 -m http.server 8000</p>';
+    });
+}
+
+function toggleLayer(id) {
+  var chk = document.getElementById('chk-' + id);
+  var vis = chk.checked ? 'visible' : 'hidden';
+  if (mainSVG) {
+    var el = mainSVG.getElementById('lyr-' + id);
+    if (el) el.setAttribute('visibility', vis);
+  }
+  if (fsSVG) {
+    var elF = fsSVG.getElementById('fs-lyr-' + id);
+    if (elF) elF.setAttribute('visibility', vis);
+  }
+  var chkF = document.getElementById('fs-chk-' + id);
+  if (chkF) chkF.checked = chk.checked;
+}
+
+function toggleLayerFs(id) {
+  var chkF = document.getElementById('fs-chk-' + id);
+  var vis = chkF.checked ? 'visible' : 'hidden';
+  if (mainSVG) {
+    var el = mainSVG.getElementById('lyr-' + id);
+    if (el) el.setAttribute('visibility', vis);
+  }
+  if (fsSVG) {
+    var elF = fsSVG.getElementById('fs-lyr-' + id);
+    if (elF) elF.setAttribute('visibility', vis);
+  }
+  var chk = document.getElementById('chk-' + id);
+  if (chk) chk.checked = chkF.checked;
+}
+
+function setAll(on) {
+  layers.forEach(function(lr) {
+    var vis = on ? 'visible' : 'hidden';
+    if (mainSVG) {
+      var el = mainSVG.getElementById('lyr-' + lr.id);
+      if (el) el.setAttribute('visibility', vis);
+    }
+    if (fsSVG) {
+      var elF = fsSVG.getElementById('fs-lyr-' + lr.id);
+      if (elF) elF.setAttribute('visibility', vis);
+    }
+    var chk = document.getElementById('chk-' + lr.id);
+    if (chk) chk.checked = on;
+    var chkF = document.getElementById('fs-chk-' + lr.id);
+    if (chkF) chkF.checked = on;
+  });
+}
+
+function showObs(id) {
+  var box = document.getElementById('obs-' + id);
+  if (!box) return;
+  if (openObs && openObs !== id) {
+    var prev = document.getElementById('obs-' + openObs);
+    if (prev) prev.classList.remove('open');
+  }
+  box.classList.toggle('open');
+  openObs = box.classList.contains('open') ? id : null;
+}
+
+function toggleAcc(id) {
+  var btn = document.querySelector('#acc-' + id + ' .acc-btn');
+  var body = document.getElementById('accb-' + id);
+  if (!btn || !body) return;
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  btn.querySelector('.acc-icon').textContent = isOpen ? '+' : '×';
+}
+
+function applyZoom(svg, scale, origVB) {
+  var p = origVB.split(' ').map(Number);
+  var cx = p[0]+p[2]/2, cy = p[1]+p[3]/2;
+  var nw = p[2]/scale, nh = p[3]/scale;
+  svg.setAttribute('viewBox', (cx-nw/2)+' '+(cy-nh/2)+' '+nw+' '+nh);
+}
+
+function zm(f) { if(mainSVG && msVB){msc*=f; applyZoom(mainSVG,msc,msVB);} }
+function zr() { if(mainSVG && msVB){msc=1; mainSVG.setAttribute('viewBox',msVB);} }
+function zmf(f) { if(fsSVG && fsVB){fsc*=f; applyZoom(fsSVG,fsc,fsVB);} }
+function zrf() { if(fsSVG && fsVB){fsc=1; fsSVG.setAttribute('viewBox',fsVB);} }
+
+function buildFsControls() {
+  var list = document.getElementById('fs-lr-list');
+  layers.forEach(function(lr) {
+    var row = document.createElement('div');
+    row.className = 'lr';
+    row.innerHTML =
+      '<label class="sw" onclick="event.stopPropagation()">' +
+      '<input type="checkbox" id="fs-chk-' + lr.id + '" ' + (lr.on?'checked':'') +
+      ' onchange="toggleLayerFs('' + lr.id + '')">' +
+      '<span class="sw-track"></span></label>' +
+      '<span class="lr-dot" style="background:' + lr.color + '"></span>' +
+      '<div class="lr-info"><div class="lr-name">' + lr.title + '</div>' +
+      '<div class="lr-sub">' + lr.sub + '</div></div>';
+    list.appendChild(row);
+  });
+}
+
+function openFullscreen() {
+  document.getElementById('fs-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFullscreen() {
+  document.getElementById('fs-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeFullscreen();
+});
+
+buildFsControls();
+loadSVG();
+</script>
+</body>
+</html>
