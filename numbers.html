@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Negotiating Numbers — A Geometric Exploration</title>
+<style>
+:root {
+  --bg:#f2f1ef; --bg2:#eae9e6; --white:#fff;
+  --text:#1a1a18; --text2:#555550; --text3:#888882;
+  --accent:#95bb20; --rule:#ddddd8;
+  --serif:Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  --max:720px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.8; }
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(242,241,239,0.95); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px; height:52px;
+}
+.brand { font-size:13px; font-weight:600; }
+.brand span { color:var(--accent); }
+nav ul { list-style:none; display:flex; gap:24px; }
+nav a { font-size:11px; text-decoration:none; color:var(--text3);
+  letter-spacing:0.5px; text-transform:uppercase; transition:color 0.2s; }
+nav a:hover { color:var(--text); }
+
+.page { max-width:var(--max); margin:0 auto; padding:110px 40px 100px; }
+hr { border:none; border-top:1px solid var(--rule); margin:64px 0; }
+
+.hero { padding:20px 0 48px; }
+.hero-label { font-size:11px; font-weight:600; letter-spacing:1.2px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+.hero h1 { font-family:var(--serif); font-size:clamp(32px,5vw,52px);
+  font-weight:normal; line-height:1.1; margin-bottom:16px; }
+.hero h1 em { font-style:normal; color:var(--accent); }
+.hero-sub { font-size:16px; color:var(--text3); font-style:italic;
+  margin-bottom:32px; line-height:1.5; }
+.hero-body { font-size:16px; color:var(--text2); line-height:1.85; }
+.hero-body p { margin-bottom:18px; }
+.hero-question {
+  font-family:var(--serif); font-size:20px; color:var(--text);
+  margin-top:32px; padding:20px 24px;
+  border-left:3px solid var(--accent);
+  background:var(--white); border-radius:0 8px 8px 0;
+  line-height:1.6;
+}
+
+.sec-label { font-size:11px; font-weight:600; letter-spacing:1.2px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
+.sec-title { font-family:var(--serif); font-size:clamp(22px,3vw,32px);
+  font-weight:normal; line-height:1.2; margin-bottom:8px; }
+.sec-sub { font-size:14px; color:var(--text3); font-style:italic; margin-bottom:28px; }
+
+p { font-size:15px; color:var(--text2); line-height:1.85; margin-bottom:18px; }
+
+.subsec { margin:40px 0 0; }
+.subsec h3 { font-family:var(--serif); font-size:19px; font-weight:normal;
+  color:var(--text); margin-bottom:14px; border-bottom:1px solid var(--rule);
+  padding-bottom:8px; }
+
+.formula {
+  font-family:'Courier New',monospace; font-size:14px;
+  background:var(--bg2); padding:14px 20px; border-radius:6px;
+  margin:24px 0; color:var(--text); letter-spacing:0.3px;
+  border-left:2px solid var(--accent);
+}
+
+.note {
+  font-size:13px; color:var(--text3); font-style:italic;
+  padding:14px 18px; background:var(--white);
+  border:1px solid var(--rule); border-radius:6px;
+  margin:24px 0; line-height:1.7;
+}
+
+.sqrt-pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:28px 0; }
+.sqrt-card {
+  background:var(--white); border:1px solid var(--rule);
+  border-radius:8px; padding:20px;
+}
+.sqrt-card .num { font-family:var(--serif); font-size:28px; font-weight:normal;
+  color:var(--accent); margin-bottom:8px; }
+.sqrt-card p { font-size:13px; color:var(--text2); margin:0; line-height:1.6; }
+
+.accordion { border:1px solid var(--rule); border-radius:8px;
+  margin:24px 0; background:var(--white); overflow:hidden; }
+.acc-btn { width:100%; display:flex; justify-content:space-between;
+  align-items:center; padding:14px 18px; background:none; border:none;
+  cursor:pointer; font-family:var(--sans); font-size:13px; font-weight:500;
+  color:var(--text2); text-align:left; transition:background 0.15s; }
+.acc-btn:hover { background:var(--bg); }
+.acc-icon { font-size:18px; color:var(--text3); margin-left:12px; }
+.acc-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
+.acc-body.open { max-height:2000px; }
+.acc-inner { padding:16px 18px 20px; font-size:14px; color:var(--text2);
+  line-height:1.75; border-top:1px solid var(--rule); }
+.acc-inner p { font-size:14px; margin-bottom:12px; }
+.acc-inner .formula { font-size:13px; padding:10px 14px; }
+
+.model-link {
+  display:block; margin-top:48px; padding:28px 32px;
+  background:var(--white); border:1px solid var(--rule);
+  border-radius:10px; text-decoration:none;
+  transition:box-shadow 0.2s, border-color 0.2s;
+}
+.model-link:hover { box-shadow:0 4px 20px rgba(0,0,0,0.08); border-color:#ccc; }
+.model-link .link-label { font-size:11px; font-weight:600; letter-spacing:0.8px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+.model-link h3 { font-family:var(--serif); font-size:22px; font-weight:normal;
+  color:var(--text); margin-bottom:8px; }
+.model-link p { font-size:13px; color:var(--text3); margin:0; }
+.model-link .arrow { font-size:20px; color:var(--accent); margin-top:14px; display:block; }
+
+footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
+  font-size:12px; color:var(--text3); }
+
+@media(max-width:600px) {
+  .sqrt-pair { grid-template-columns:1fr; }
+  nav ul { display:none; }
+  .page { padding:80px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">A <span>Resonance</span> Mapping</div>
+  <ul>
+    <li><a href="index.html">The Periodic Table</a></li>
+    <li><a href="#doublecube">The Double Cube</a></li>
+    <li><a href="#threshold">The Threshold</a></li>
+    <li><a href="#constants">Constants</a></li>
+    <li><a href="#model">The Model</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">A geometric exploration</div>
+  <h1><em>Negotiating</em> numbers<br>that transform reality.</h1>
+  <div class="hero-sub">How space can coordinate the values of geometric and accumulating numbers.</div>
+  <div class="hero-body">
+    <p>Every number has two faces: the geometric, structural and the cumulative, linear — we use the same numbers to describe both coordinates and sums. These two very different domains, normally treated as separate phenomena, are calculable with the same system consisting of 10 numbers in infinite combinations: 1, 2, 3, 4, 5, 6, 7, 8, 9, 0.</p>
+    <p>Although the system has served us well since the beginning of calculation, the question remains:</p>
+  </div>
+  <div class="hero-question">
+    Are the two-faced properties of these Janus entities related in a certain way?<br>
+    Is there a geometry that coordinates them?
+  </div>
+</div>
+
+<hr id="doublecube">
+
+<!-- THE DOUBLE CUBE -->
+<div class="sec-label">The structure</div>
+<h2 class="sec-title">Meet the double cube.</h2>
+<div class="sec-sub">The structure that corners the numbers.</div>
+
+<p>The double cube has been used since ancient times to explain the geometric properties of numbers. It is a visual and educational masterpiece. But it might be more than that.</p>
+
+<p>A single cube shows us √1, √2 and √3 — edge, face diagonal, space diagonal. Add a second cube sharing a face, and something interesting happens. √4 and √6 are natural doublings of what we already know. But you see — the double cube is not just a repetition of the single cube, and √5 is the snitch. It tells us that something new emerges when the two regimes are placed side by side.</p>
+
+<div class="sqrt-pair">
+  <div class="sqrt-card">
+    <div class="num">√5</div>
+    <p>The dynamic connector. Traverses both cubes. Cannot exist in a single cube alone. Tells us the double cube is half a cycle.</p>
+  </div>
+  <div class="sqrt-card">
+    <div class="num">√6</div>
+    <p>A natural doubling of √3. Structural. Predictable. The double cube's space diagonal — still playing by the old rules.</p>
+  </div>
+</div>
+
+<div class="subsec">
+  <h3>Missing in action</h3>
+  <p>Viewing the double cube reveals something as you digest these facts: adding another cube would not create the same magic. You won't get another √5 factor, but instead end up with a cleaner, more easily divisible √10, echoing √2.</p>
+  <p>And before you go so far as to add a cube to make a triple cube — where is √7? Here's where the real magic starts — if we may propose one major assumption: the double cube, bound by √5 as its dynamic connector, points towards a closed system. √7 does not escape — it curves. The expression (√7/2)² = 7/4 is the geometric signature of this curvature, hinting at this as a candidate saddle point at the interface between cubic and spherical symmetry in the double cube — the point where the two geometries can negotiate without either dominating. √7's value also places it firmly in the second cube, close to √6. As the numbers and examples will show, this is more than a fair assumption.</p>
+</div>
+
+<div class="subsec">
+  <h3>Let's negotiate</h3>
+  <p>√7, given the assumption, is the one that will not be squared into a corner. Instead it wants to play ball. The √7 diagonal traverses space and ends up roaming the cubes. It's the negotiator between the two regimes.</p>
+</div>
+
+<hr>
+
+<!-- SO HERE WE ARE -->
+<div class="sec-label">The two binders</div>
+<h2 class="sec-title">So here we are.</h2>
+
+<p>We have two separate cubes and two numbers that bind them together: √5 and √7.</p>
+
+<div class="sqrt-pair">
+  <div class="sqrt-card">
+    <div class="num">√5</div>
+    <p>The dynamic one. It traverses the two cubes and tells us that they are not only a structure, but half a cycle.</p>
+  </div>
+  <div class="sqrt-card">
+    <div class="num">√7</div>
+    <p>The odd one. It tells us that negotiating the cycle involves more than the corners. It needs the space. And it does so by snitching about the fact that the double cube hides a spherical element.</p>
+  </div>
+</div>
+
+<div class="subsec">
+  <h3>The negotiating parts</h3>
+  <p>We now see our numbers in their true two-faced properties: the cyclic and the structural — the geometric.</p>
+  <p>The modest double cube delivers a great punch for its size and shape. It gives us an operating system where these two domains meet.</p>
+  <p>The spherical element that the √7 tangent revealed is not just a geometric curiosity. It has a precise half expression given its place in the double cube, and names the candidate saddle point in the system, as mentioned before:</p>
+  <div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
+  <p>√7 is the geometry. 7/4 is what it does.</p>
+  <p>This number, 1.75, is the double cube's way of telling us that the cycle it hides negotiates the geometrical length of √4 to 1.75 when translated into cyclic motion. And when we change the two-faced numbers from geometric value to cumulative value, we discover that the geometric double cube hides a triple-based spherical motion.</p>
+  <p>The secret lies in the shared face between the cubes: each cube has 8 corners, but sharing a face leaves 12. So the total length of the double cube, divided by 7, gives us a spatial hint through its corners:</p>
+  <div class="formula">7/4 × 12 = 21 = 3 × 7</div>
+  <p>The full negotiating space is 21 = 3 × 7. The threshold 7/4 and the corners of the double cube speak the same language.</p>
+</div>
+
+<hr id="threshold">
+
+<!-- THE THIRD CUBE -->
+<div class="sec-label">The threshold</div>
+<h2 class="sec-title">The third cube — a new string length.</h2>
+
+<p>While the double cube is a self-contained system identifying both structural and cyclical behaviour, some constants and numbers need a third cube to be explained geometrically.</p>
+
+<p>A double cube is structurally similar to a string of a certain length — described dimensionlessly as √4. √7, via the 7/4 factor, defines the string's minimal harmonic partial, marking the limit of its structural coherence. The 7th partial is disharmonic at the harmonic level — it lives within the string, but marks the threshold of resolution. The geometry can no longer resolve itself cleanly here. The string does not break. It seeks another level — a new string length.</p>
+
+<p>That new string length is the triple cube. Not a new geometry. The same system, in the next octave.</p>
+
+<p>This is where e enters. Not as a number that belongs to the double cube — but as the rotation constant for the transition itself.</p>
+
+<hr id="constants">
+
+<!-- GAMMA -->
+<div class="sec-label">The remainder</div>
+<h2 class="sec-title">γ — what always stays behind.</h2>
+
+<p>When two regimes negotiate, something is always left over. The negotiation is never perfect. This is not a flaw — it is a structural guarantee.</p>
+
+<p>Euler's constant γ = 0.57722... is that remainder.</p>
+
+<p>Reading γ as a geometric address in the double cube: 0 sits below one full cycle. 5 points to the √5 corner — the full cube must be included. 7 via the saddle point. 2×2 spans two cubes. The digits describe a position in the system before we even do the mathematics.</p>
+
+<p>And the mathematics confirms it:</p>
+
+<div class="formula">γ · √3 = 0.57722 × 1.73205 ≈ 1.00000</div>
+
+<p>Euler's constant, scaled by the face diagonal of the cube, returns exactly one full cycle. γ is not a mysterious analytic constant. It is the remainder when the cumulative regime meets the geometric — structurally guaranteed by the incommensurability between the two. It lives inside the period, measuring what cannot be resolved.</p>
+
+<!-- E -->
+<div class="subsec">
+  <h3>e — the rotation that completes the cycle</h3>
+
+  <p>If γ is the remainder that always stays behind, e is the rotation that carries the system forward into the next cycle.</p>
+
+  <p>Euler's number e = 2.71828... reads in two layers.</p>
+
+  <p>The integer — 2 — is two complete cubic cycles. Exact. No remainder. The structure is satisfied.</p>
+
+  <p>The decimals — 0.71828... — are something else entirely. They describe a path: 7 → 1 → 8 → 2. In the double cube, these are not arbitrary digits. They are a journey through the system's own geometry — from the saddle point √7, via the unit √1, through the triple cube's threshold √8 = 2√2, and back to the ground tone √2 where the rotation is complete.</p>
+
+  <p>Now imagine placing e on a circle. Not the whole number — just the decimal part, e − 2 = 0.71828... The natural radius for this circle, given where the path has taken us, is √7.</p>
+
+  <p>The rotation angle is 44.09°. Almost 45°. And 45° is the angle of √2 — the double cube's own ground tone. e lands just short of where the double cube naturally rests. That gap — less than one degree — is e's own geometric signature in the system.</p>
+
+  <p>e does not belong to the double cube. It belongs to the transition — the rotation that carries the system from the double cube into the triple cube. e^(iπ) = −1 is not halfway through something arbitrary. It is one step in a two-step cycle where the triple cube is the natural endpoint.</p>
+
+  <div class="accordion" id="acc-euler">
+    <button class="acc-btn" onclick="toggleAcc('euler')">
+      <span>The exact derivation</span>
+      <span class="acc-icon">+</span>
+    </button>
+    <div class="acc-body" id="accb-euler">
+      <div class="acc-inner">
+        <p>Place e − 2 on a circle of radius √7:</p>
+        <div class="formula">Re = √7 · (e − 2)
+Im = √7 · sin(arccos(e − 2))</div>
+        <p>Then:</p>
+        <div class="formula">Re² + Im² = 7</div>
+        <p>This is an exact algebraic identity — it follows directly from sin²θ + cos²θ = 1, scaled by √7. No numerical approximation. It holds for any value of e.</p>
+        <p>The rotation angle produces a second exact identity:</p>
+        <div class="formula">sin²(θ) = (3 − e)(e − 1)</div>
+        <p>e sits between 1 and 3 — the cube's own boundary values. The gap from each boundary is not arbitrary. It is e's precise position in the system.</p>
+        <p>The triangle (√2, √7, √8) that this rotation generates is complete:</p>
+        <div class="formula">√8² − √7² = 1 · √8² − √2² = 6 · √7² − √2² = 5</div>
+        <p>Combined with its own sides, this triangle covers the entire double cube.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAMMA AND E AS FAMILY -->
+<div class="subsec">
+  <h3>γ and e — a family</h3>
+  <p>γ measures what cannot be resolved inside the period. e rotates through what remains and completes it. They are two sides of the same fundamental tension — as the double cube's two regimes are two sides of the same structure.</p>
+  <p>The normalisation factor that connects them:</p>
+  <div class="formula">γ · √3 ≈ 1
+e · γ · √3 ≈ e  (deviation 0.023%)</div>
+  <p>The same factor — γ · √3 — returns both to themselves. The double cube's remainder and its rotation constant are not independent. They are a family.</p>
+</div>
+
+<hr id="model">
+
+<!-- LINK TO MODEL -->
+<div class="sec-label">The evidence</div>
+<h2 class="sec-title">Where the geometry becomes visible.</h2>
+<p>The periodic table of elements is one of the places where this operating system manifests in the physical world. The same double cube geometry — the same √3, √5 and √7 — organises the elements, predicts their chemical character, and places the resonance curve exactly where the geometry says it must be.</p>
+
+<a href="index.html" class="model-link">
+  <div class="link-label">The geometric model</div>
+  <h3>A resonance mapping of The Periodic Table</h3>
+  <p>An interactive exploration of how the double cube geometry organises the elements — with layer-by-layer controls, zoom, and full-screen mode.</p>
+  <span class="arrow">→</span>
+</a>
+
+</div>
+
+<footer>
+  A geometric exploration of number structure &mdash; work in progress &mdash;
+  all values relational
+</footer>
+
+<script>
+function toggleAcc(id) {
+  var btn = document.querySelector('#acc-' + id + ' .acc-btn');
+  var body = document.getElementById('accb-' + id);
+  if (!btn || !body) return;
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  btn.querySelector('.acc-icon').textContent = isOpen ? '+' : '×';
+}
+</script>
+
+</body>
+</html>
