@@ -195,6 +195,32 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
       <div class="acc-inner">
         <p>The cube effectively codes √1 to √3, and adding a tessellating cube expands this to √1 to √6. These are all natural cubic proportions. √7 is a combinator: √(2² + (√3)²) = √7. It is constructable over both regimes at the same time as it is not part of the convex outer shell of the double cube. The tangent from the √7 sphere to the √6 surface is √(7−6) = √1 = 1 exactly.</p>
         <p>The double cube, historically, has not been regarded as a system of numbers. That may be why the question about which square roots it produces — and more pressing, why √7 sits outside the system — seems not to have been asked formally.</p>
+
+        <h4>A proof in three layers</h4>
+
+        <p><strong>Layer 1 — Exhaustive check.</strong> All 12 corners of the 2×1×1 double cube have coordinates (x,y,z) where x∈{0,1,2}, y∈{0,1}, z∈{0,1}. The squared distances x²+y²+z² from the origin — and between all corner pairs — produce exactly the set {0,1,2,3,4,5,6}. No pair of corners produces a squared distance of 7. This is not an axiom. It is a finite, exhaustive proof.</p>
+
+        <p><strong>Layer 2 — Algebra (Wantzel, 1837).</strong> ∛2 is irrational and can therefore never be a corner point in an integer lattice. This was proved in the resolution of the Delian problem — the classical impossibility of doubling a cube by compass and straightedge alone.</p>
+
+        <p><strong>Layer 3 — The connection.</strong> The double cube is closed at n=6 for corner distances. 7 is the first integer that breaks out of this corner structure. The Delian problem requires ∛2 — which is equally absent as a corner point. Both are expressions of the same structural limitation: the system cannot contain them as points, but √7 defines the spherical boundary where the system opens. The Delian problem appears to operate in the same gap — this connection deserves formal attention.</p>
+
+        <p><strong>What follows.</strong> √7 is not arbitrarily placed outside the double cube. It is the first and only value that the system's own geometry excludes — and simultaneously requires, as the combinator that binds the two regimes. Its curvature is not assumed. It is a structural consequence of the lattice.</p>
+
+        <h4>Layer 4 — An exact identity connecting √7 and ∛2</h4>
+
+        <p>∛2 and √7 are not independent of each other. √7 can be written as ∛2 plus a gap:</p>
+        <div class="formula">√7 = ∛2 + (√7 − ∛2)</div>
+        <p>Squaring both sides via the binomial expansion gives an exact identity:</p>
+        <div class="formula">(∛2)² + 2·∛2·(√7 − ∛2) + (√7 − ∛2)² = 7</div>
+        <p>Written structurally, this decomposes 7 into three exact terms:</p>
+        <div class="formula">∛4          — the Delian constant squared
+2·∛2·(√7−∛2) — the transition term
+(√7−∛2)²    — the gap squared
+─────────────────
+Sum = 7  ✓  (exact)</div>
+        <p>The gap itself is √7 − ∛2 = 1.38583... — the precise distance between the double cube's spherical boundary and the Delian constant. Both are absent from the integer lattice of the double cube, for different reasons: √7 because no corner pair produces a squared distance of 7, and ∛2 because it is irrational (Wantzel). Yet they are connected by this exact identity.</p>
+        <p>Whether this connection is structural — pointing toward a deeper relationship between cubic topology, spherical geometry and the Delian problem — or whether it is a consequence of binomial algebra alone, remains an open question. The identity itself is exact and requires no assumptions. Its interpretation does.</p>
+        <p>The conjecture is this: the same gap that separates ∛2 from √7 in the double cube may reappear in the periodic table at the boundary between the s-block and the d-block, and in the percolation interval 1/12 that connects Kleibers law to the double cube's diagonal structure. If so, the Delian problem is not a historical curiosity — it is a geometric signature of the same system.</p>
       </div>
     </div>
   </div>
