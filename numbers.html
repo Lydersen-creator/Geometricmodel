@@ -97,11 +97,13 @@ p { font-size:15px; color:var(--text2); line-height:1.85; margin-bottom:18px; }
 .acc-btn:hover { background:var(--bg); }
 .acc-icon { font-size:18px; color:var(--text3); margin-left:12px; }
 .acc-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
-.acc-body.open { max-height:2000px; }
+.acc-body.open { max-height:3000px; }
 .acc-inner { padding:16px 18px 20px; font-size:14px; color:var(--text2);
   line-height:1.75; border-top:1px solid var(--rule); }
 .acc-inner p { font-size:14px; margin-bottom:12px; }
 .acc-inner .formula { font-size:13px; padding:10px 14px; }
+.acc-inner h4 { font-size:13px; font-weight:600; color:var(--text);
+  margin:16px 0 6px; text-transform:uppercase; letter-spacing:0.5px; }
 
 .model-link {
   display:block; margin-top:48px; padding:28px 32px;
@@ -146,53 +148,68 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <div class="hero">
   <div class="hero-label">A geometric exploration</div>
   <h1><em>Negotiating</em> numbers<br>that transform reality.</h1>
-  <div class="hero-sub">How space can coordinate the values of geometric and accumulating numbers.</div>
+  <div class="hero-sub">How space may coordinate the values of geometric and accumulating numbers.</div>
   <div class="hero-body">
     <p>Every number has two faces: the geometric, structural and the cumulative, linear — we use the same numbers to describe both coordinates and sums. These two very different domains, normally treated as separate phenomena, are calculable with the same system consisting of 10 numbers in infinite combinations: 1, 2, 3, 4, 5, 6, 7, 8, 9, 0.</p>
     <p>Although the system has served us well since the beginning of calculation, the question remains:</p>
   </div>
   <div class="hero-question">
-    Are the two-faced properties of these Janus entities related in a certain way?<br>
+    Are the two-faced properties of numbers related in a certain way?<br>
     Is there a geometry that coordinates them?
   </div>
 </div>
 
 <hr id="doublecube">
 
-<!-- THE DOUBLE CUBE -->
+<!-- THE STRUCTURE -->
 <div class="sec-label">The structure</div>
 <h2 class="sec-title">Meet the double cube.</h2>
 <div class="sec-sub">The structure that corners the numbers.</div>
 
 <p>The double cube has been used since ancient times to explain the geometric properties of numbers. It is a visual and educational masterpiece. But it might be more than that.</p>
 
-<p>A single cube shows us √1, √2 and √3 — edge, face diagonal, space diagonal. Add a second cube sharing a face, and something interesting happens. √4 and √6 are natural doublings of what we already know. But you see — the double cube is not just a repetition of the single cube, and √5 is the snitch. It tells us that something new emerges when the two regimes are placed side by side.</p>
+<p>A single cube shows us √1, √2 and √3 — edge, face diagonal, space diagonal. Add a second cube sharing a face, and something interesting happens. √4 and √6 are natural doublings of what we already know. But you see — the second cube is not just a repetition of the single cube, and √5 is the snitch telling us that something new emerges when the two seemingly similar structures are placed side by side.</p>
 
 <div class="sqrt-pair">
   <div class="sqrt-card">
     <div class="num">√5</div>
-    <p>The dynamic connector. Traverses both cubes. Cannot exist in a single cube alone. Tells us the double cube is half a cycle.</p>
+    <p>The dynamic connector. Traverses both cubes. Cannot exist in a single cube alone. Tells us the double cube also represents something cyclical.</p>
   </div>
   <div class="sqrt-card">
     <div class="num">√6</div>
-    <p>A natural doubling of √3. Structural. Predictable. The double cube's space diagonal — still playing by the old rules.</p>
+    <p>A natural doubling of √3. Structural. Predictable. The double cube's space diagonal — still playing by the rules from the first cube.</p>
   </div>
 </div>
 
 <div class="subsec">
   <h3>Missing in action</h3>
-  <p>Viewing the double cube reveals something as you digest these facts: adding another cube would not create the same magic. You won't get another √5 factor, but instead end up with a cleaner, more easily divisible √10, echoing √2.</p>
-  <p>And before you go so far as to add a cube to make a triple cube — where is √7? Here's where the real magic starts — if we may propose one major assumption: the double cube, bound by √5 as its dynamic connector, points towards a closed system. √7 does not escape — it curves. The expression (√7/2)² = 7/4 is the geometric signature of this curvature, hinting at this as a candidate saddle point at the interface between cubic and spherical symmetry in the double cube — the point where the two geometries can negotiate without either dominating. √7's value also places it firmly in the second cube, close to √6. As the numbers and examples will show, this is more than a fair assumption.</p>
+  <p>Viewing the double cube reveals something peculiar as you digest these facts: adding a third cube would not create the same magic. You won't get another √5 factor, but instead end up with a cleaner, more easily divisible √10, echoing √2.</p>
+  <p>And before we even go so far as to add a third cube — where is √7?</p>
+
+  <div class="accordion" id="acc-sqrt7bg">
+    <button class="acc-btn" onclick="toggleAcc('sqrt7bg')">
+      <span>Why √7 sits outside — a closer look</span>
+      <span class="acc-icon">+</span>
+    </button>
+    <div class="acc-body" id="accb-sqrt7bg">
+      <div class="acc-inner">
+        <p>The cube effectively codes √1 to √3, and adding a tessellating cube expands this to √1 to √6. These are all natural cubic proportions. √7 is a combinator: √(2² + (√3)²) = √7. It is constructable over both regimes at the same time as it is not part of the convex outer shell of the double cube. The tangent from the √7 sphere to the √6 surface is √(7−6) = √1 = 1 exactly.</p>
+        <p>The double cube, historically, has not been regarded as a system of numbers. That may be why the question about which square roots it produces — and more pressing, why √7 sits outside the system — seems not to have been asked formally.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>Here's where the real magic starts — if we take this question seriously, we may propose one major assumption: the double cube, bound by √5 as its dynamic connector, points towards a closed system. √7 does not escape — it curves. The expression (√7/2)² = 7/4 is the geometric signature of this curvature, hinting at this as a candidate saddle point at the interface between cubic and spherical symmetry in the double cube — the point where the two geometries can negotiate without either dominating. √7's value also places it firmly in the second cube, close to √6. As the numbers and examples will show, this is more than a fair assumption.</p>
 </div>
 
 <div class="subsec">
   <h3>Let's negotiate</h3>
-  <p>√7, given the assumption, is the one that will not be squared into a corner. Instead it wants to play ball. The √7 diagonal traverses space and ends up roaming the cubes. It's the negotiator between the two regimes.</p>
+  <p>√7, given the assumption, is the one that will not be squared into a corner. Instead it literally wants to play ball. The √7 diagonal traverses space and ends up roaming the cubes. It's the negotiator between the two regimes.</p>
 </div>
 
 <hr>
 
-<!-- SO HERE WE ARE -->
+<!-- THE TWO BINDERS -->
 <div class="sec-label">The two binders</div>
 <h2 class="sec-title">So here we are.</h2>
 
@@ -211,26 +228,95 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <div class="subsec">
   <h3>The negotiating parts</h3>
-  <p>We now see our numbers in their true two-faced properties: the cyclic and the structural — the geometric.</p>
-  <p>The modest double cube delivers a great punch for its size and shape. It gives us an operating system where these two domains meet.</p>
-  <p>The spherical element that the √7 tangent revealed is not just a geometric curiosity. It has a precise half expression given its place in the double cube, and names the candidate saddle point in the system, as mentioned before:</p>
+  <p>We now see our numbers in their true two-faced properties: the cyclic/periodic and the structural/geometric.</p>
+
+  <p>And what is even deeper: do we also see the possible shape of a hypothesis? That every number carries both these properties at the same time, and that factorisation uncovers its geometrical identity, while the cyclical uncovers a cumulative position?</p>
+
+  <p>The modest double cube may turn out to deliver a great punch for its size and shape. Assuming √7 is contained in the construction, it gives us an operating system where these two domains meet.</p>
+
+  <p>The spherical element that the √7 tangent revealed might not just be a geometric curiosity. It has a precise half expression given its place in the double cube, and names the candidate saddle point in the system, as mentioned before:</p>
+
   <div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
-  <p>√7 is the geometry. 7/4 is what it does.</p>
-  <p>This number, 1.75, is the double cube's way of telling us that the cycle it hides negotiates the geometrical length of √4 to 1.75 when translated into cyclic motion. And when we change the two-faced numbers from geometric value to cumulative value, we discover that the geometric double cube hides a triple-based spherical motion.</p>
-  <p>The secret lies in the shared face between the cubes: each cube has 8 corners, but sharing a face leaves 12. So the total length of the double cube, divided by 7, gives us a spatial hint through its corners:</p>
+
+  <p>Simply put: √7 is the geometry. 7/4 is what it does.</p>
+
+  <p>This number, 7/4 = 1.75, is the double cube's way of telling us that the cycle it hides negotiates the geometrical length of √4 to 1.75 when translated into cyclic motion. And when we change the two-faced numbers from geometric value to cumulative value, we discover that the geometric double cube possibly hides a triple-based spherical motion — a full period.</p>
+
+  <p>The way to spot this goes through the shared face between the cubes: each cube has 8 corners, but sharing a face leaves 12. So the total length of the double cube, divided by 7, gives us a spatial hint through its corners:</p>
+
   <div class="formula">7/4 × 12 = 21 = 3 × 7</div>
+
   <p>The full negotiating space is 21 = 3 × 7. The threshold 7/4 and the corners of the double cube speak the same language.</p>
+
+  <div class="accordion" id="acc-3x7">
+    <button class="acc-btn" onclick="toggleAcc('3x7')">
+      <span>The proposition behind 3 × 7 — a formal addendum</span>
+      <span class="acc-icon">+</span>
+    </button>
+    <div class="acc-body" id="accb-3x7">
+      <div class="acc-inner">
+        <h4>Proposition: The dynamic side of the double cube</h4>
+
+        <p><strong>Definition 1.</strong> Let a double cube be two unit cubes linked along one shared face. The double cube has 2×8 − 4 = 12 corners, where 4 shared corners are subtracted.</p>
+
+        <p><strong>Definition 2.</strong> Let the saddle point S be defined as S = (√7/2)² = 7/4, where √7 is the combinator — the smallest square root not contained in the double cube's convex shell, but constructable as √(2² + (√3)²).</p>
+
+        <p><strong>Lemma.</strong> For n linked unit cubes, the number of corners is 4(n+1), and the product with the saddle point is:</p>
+        <div class="formula">4(n+1) · 7/4 = 7(n+1)</div>
+        <p>This is an exact algebraic identity.</p>
+
+        <p><strong>Corollary for n = 2 (the double cube):</strong></p>
+        <div class="formula">12 · 7/4 = 21 = 3 × 7</div>
+
+        <p><strong>Interpretation.</strong> The factor 3 corresponds to the spherical content of the double cube: one full sphere in the centre and two half-spheres at the ends — the structure ½ + 1 + ½. The factor 7 is the combinator. The product 21 is where the cubic topology and the spherical geometry meet as an exact integer.</p>
+
+        <h4>Four independent convergences on 21</h4>
+
+        <p><strong>1.</strong> √21 = √(1² + 2² + 4²) — the space diagonal of a 1×2×4 rectangle, where 1, 2, 4 are cubic powers of the base edge.</p>
+
+        <p><strong>2.</strong> 7π/21 = π/3 = 60° exactly — the area of the saddle point sphere (4π · 7/4 = 7π) divided by 21 gives the base angle of hexagonal crystallography.</p>
+
+        <p><strong>3.</strong> 21 × γ × √3 = 20.995 ≈ 21 — the same normalisation principle as γ · √3 ≈ 1 for e and α⁻¹.</p>
+
+        <p><strong>4.</strong> Sc is element 21 in the periodic table — the first element requiring a d-orbital, where the structural shift from the spherical s-regime to the cubic d-regime occurs.</p>
+
+        <h4>Conclusion</h4>
+        <p>The dynamic side of the double cube is established by the fact that the topological corner count, weighted by the combinator's saddle point, generates the spherical segment count and the combinator as a necessary product. The argument is internally consistent, algebraically exact in its core, and converges with four independent observations.</p>
+
+        <h4>Remaining weakness</h4>
+        <p>The weighting of corners by the saddle point 7/4 is geometrically motivated but not formally proved — an explicit axiom connecting cubic topology with spherical weighting is still missing.</p>
+      </div>
+    </div>
+  </div>
 </div>
+
+<hr>
+
+<!-- CLOSING REMARK -->
+<div class="sec-label">Synthesis</div>
+<h2 class="sec-title">A closing remark and a new perspective.</h2>
+
+<p>The double cube's essence is the tension between two boundary conditions: 2/3 and 3/4.</p>
+
+<p>2/3 is the ratio seen from the cumulative side: 2 periods across 3 spheres — the structure ½ + 1 + ½ distributed along the dynamic axis.</p>
+
+<p>3/4 is the saddle point's distance from unity: 7/4 − 1 = 3/4. It is not chosen — it follows from the combinator's own position in the system.</p>
+
+<p>These two boundary conditions define the negotiating space of the double cube. Their difference is the remainder — the percolation interval:</p>
+
+<div class="formula">3/4 − 2/3 = 1/12</div>
+
+<p>1/12 is not a correction factor. It is the structural gap between the two faces of the system — the space where the negotiation actually happens.</p>
 
 <hr id="threshold">
 
-<!-- THE THIRD CUBE -->
+<!-- THE THRESHOLD -->
 <div class="sec-label">The threshold</div>
 <h2 class="sec-title">The third cube — a new string length.</h2>
 
 <p>While the double cube is a self-contained system identifying both structural and cyclical behaviour, some constants and numbers need a third cube to be explained geometrically.</p>
 
-<p>A double cube is structurally similar to a string of a certain length — described dimensionlessly as √4. √7, via the 7/4 factor, defines the string's minimal harmonic partial, marking the limit of its structural coherence. The 7th partial is disharmonic at the harmonic level — it lives within the string, but marks the threshold of resolution. The geometry can no longer resolve itself cleanly here. The string does not break. It seeks another level — a new string length.</p>
+<p>To explain this, let's use an analogy: a double cube is structurally similar to a string of a certain length — described dimensionlessly as √4. √7, via the 7/4 factor, defines the string's minimal harmonic partial, marking the limit of its structural coherence. The 7th partial is disharmonic at the harmonic level — it lives within the string, but marks the threshold of resolution. The geometry can no longer resolve itself cleanly here. The string does not break. It seeks another level — a new string length.</p>
 
 <p>That new string length is the triple cube. Not a new geometry. The same system, in the next octave.</p>
 
