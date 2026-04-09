@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Resonance Mapping of The Periodic Table</title>
+<style>
+:root{--bg:#f2f1ef;--bg2:#eae9e6;--white:#fff;--text:#1a1a18;--text2:#555550;--text3:#888882;--accent:#95bb20;--rule:#ddddd8;--serif:Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;--max:860px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(242,241,239,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:52px;}
+.brand{font-size:13px;font-weight:600;}.brand span{color:var(--accent);}
+nav ul{list-style:none;display:flex;gap:28px;}
+nav a{font-size:11px;text-decoration:none;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+nav a:hover{color:var(--text);}
+.page{max-width:var(--max);margin:0 auto;padding:100px 40px 80px;}
+hr{border:none;border-top:1px solid var(--rule);margin:60px 0;}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.sec-title{font-family:var(--serif);font-size:clamp(24px,3vw,36px);font-weight:normal;line-height:1.2;margin-bottom:24px;}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:18px;}
+.formula{font-family:'Courier New',monospace;font-size:14px;background:var(--bg2);padding:12px 18px;border-radius:6px;margin:20px 0;color:var(--text);}
+.hero{padding:60px 0 40px;}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,54px);font-weight:normal;line-height:1.1;margin-bottom:24px;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero-note{font-size:13px;color:var(--text3);font-style:italic;line-height:1.6;border-left:2px solid var(--rule);padding-left:16px;margin-top:24px;}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:32px 0;}
+.kpi{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:16px;}
+.kpi .val{font-size:20px;font-weight:700;font-family:var(--serif);}
+.kpi .lbl{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4;}
+.accordion{border:1px solid var(--rule);border-radius:8px;margin:16px 0;background:var(--white);overflow:hidden;}
+.acc-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--text2);text-align:left;transition:background 0.15s;}
+.acc-btn:hover{background:var(--bg);}
+.acc-icon{font-size:18px;color:var(--text3);margin-left:12px;}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+.acc-body.open{max-height:2000px;}
+.acc-inner{padding:16px 18px 20px;font-size:14px;color:var(--text2);line-height:1.75;border-top:1px solid var(--rule);}
+.acc-inner p{font-size:14px;margin-bottom:12px;}
+.acc-inner .formula{font-size:13px;}
+.model-section{background:var(--bg2);border-radius:12px;padding:24px;margin:40px 0;}
+.model-section h3{font-size:13px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;}
+.model-wrap{background:var(--white);border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:grid;grid-template-columns:200px 1fr;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.ctrl-panel{border-right:1px solid var(--rule);display:flex;flex-direction:column;}
+.ctrl-head{padding:12px 14px 8px;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--rule);}
+.ctrl-btns{padding:8px 14px;border-bottom:1px solid var(--rule);display:flex;gap:6px;}
+.btn-sm{font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--rule);background:var(--bg);color:var(--text2);cursor:pointer;}
+.btn-sm:hover{background:var(--rule);}
+.lr-list{overflow-y:auto;flex:1;max-height:340px;}
+.lr{padding:8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;border-bottom:1px solid #f5f5f3;transition:background 0.1s;}
+.lr:hover{background:#fafaf8;}
+.lr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.lr-info{flex:1;min-width:0;}
+.lr-name{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lr-sub{font-size:9px;color:var(--text3);margin-top:1px;}
+.obs-box{display:none;padding:8px 14px;font-size:11px;line-height:1.6;color:var(--text2);background:#f7f9f4;border-left:2px solid var(--accent);margin:0 14px 8px;border-radius:0 4px 4px 0;}
+.obs-box.open{display:block;}
+.sw{position:relative;display:inline-block;width:28px;height:16px;flex-shrink:0;}
+.sw input{opacity:0;width:0;height:0;}
+.sw-track{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:16px;transition:0.2s;}
+.sw-track:before{content:"";position:absolute;height:12px;width:12px;left:2px;bottom:2px;background:white;border-radius:50%;transition:0.2s;}
+.sw input:checked + .sw-track{background:var(--accent);}
+.sw input:checked + .sw-track:before{transform:translateX(12px);}
+.svg-wrap{padding:12px;overflow:auto;position:relative;}
+.svg-wrap svg{width:100%;height:auto;display:block;}
+.zoom-ctrl{position:absolute;top:12px;right:12px;z-index:10;display:flex;gap:4px;}
+.z-btn{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--white);color:var(--text2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.z-btn:hover{background:var(--bg);}
+.expand-btn{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;padding:4px 0;transition:color 0.2s;}
+.expand-btn:hover{color:var(--text);}
+.expand-btn svg{width:14px;height:14px;}
+.fs-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(242,241,239,0.97);backdrop-filter:blur(4px);flex-direction:column;}
+.fs-overlay.open{display:flex;}
+.fs-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--rule);background:var(--white);flex-shrink:0;}
+.fs-title{font-size:13px;font-weight:600;color:var(--text2);}
+.fs-close{width:34px;height:34px;border-radius:50%;border:1px solid var(--rule);background:var(--white);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);line-height:1;transition:background 0.15s;}
+.fs-close:hover{background:var(--bg2);}
+.fs-body{flex:1;display:grid;grid-template-columns:220px 1fr;overflow:hidden;}
+.fs-ctrl{border-right:1px solid var(--rule);overflow-y:auto;background:var(--white);}
+.fs-svg-wrap{overflow:auto;padding:20px;position:relative;display:flex;align-items:flex-start;justify-content:center;}
+.fs-svg-wrap svg{width:100%;max-width:1400px;height:auto;display:block;}
+.fs-zoom{position:absolute;top:20px;right:20px;}
+.pred{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:20px;margin:12px 0;}
+.pred-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.7px;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-bottom:10px;}
+.pred h4{font-size:14px;font-weight:600;margin-bottom:6px;}
+.pred p{font-size:13px;margin:0;}
+footer{padding:40px;text-align:center;border-top:1px solid var(--rule);font-size:12px;color:var(--text3);margin-top:60px;}
+@media(max-width:700px){.model-wrap,.fs-body{grid-template-columns:1fr;}.ctrl-panel,.fs-ctrl{border-right:none;border-bottom:1px solid var(--rule);}.kpis{grid-template-columns:1fr;}nav ul{display:none;}.page{padding:80px 20px 60px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">A <span>Resonance</span> Mapping</div>
+  <ul>
+    <li><a href="index.html">The Numbers</a></li>
+    <li><a href="#observation">Observation</a></li>
+    <li><a href="#geometry">Geometry</a></li>
+    <li><a href="#predictions">Predictions</a></li>
+    <li><a href="#biology">Biology</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+<div class="hero">
+  <div class="sec-label">A geometric exploration</div>
+  <h1>A resonance mapping of<br><em>The Periodic Table</em></h1>
+  <p style="font-size:16px;color:var(--text2);">The periodic table is one of the most studied objects in science. And yet it contains a geometric structure that has gone largely unnoticed — not because it is hidden, but because it only becomes visible in the wide format.</p>
+  <p>This is a working proposal, not a completed theory. It is offered here because the geometric connections are precise enough to be falsified — and because the implications, if the geometry holds, extend beyond chemistry.</p>
+  <div class="hero-note">All values should be understood as relational rather than exact. The model begins as a hand-drawn vector construction. Connections should be evaluated through geometric consistency, not decimal precision.</div>
+  <div class="kpis" style="margin-top:36px;">
+    <div class="kpi"><div class="val">√3</div><div class="lbl">Ratio of the two resonance circle radii — emerging from the table, not imposed on it</div></div>
+    <div class="kpi"><div class="val">1/√3</div><div class="lbl">Percolation threshold — the table's own dynamic width in normalised units</div></div>
+    <div class="kpi"><div class="val">1/12</div><div class="lbl">Percolation interval — derived exactly from the double cube's diagonal structure</div></div>
+    <div class="kpi"><div class="val">7/4</div><div class="lbl">Harmonic threshold — (√7/2)², the dynamic expression of the spherical element</div></div>
+  </div>
+</div>
+
+<hr id="observation">
+
+<div class="sec-label">The observation</div>
+<h2 class="sec-title">Something hidden in plain sight</h2>
+<p>Most versions of the periodic table fold the lanthanides and actinides away. The wide format lays everything out in 32 columns. When it does, a curve appears — at least for the shape-inclined among us.</p>
+<p>If we follow the curve, two circles fill its inflections naturally. This is where the connections start to line up — because these two circles have a radius ratio of √3.</p>
+<div class="accordion" id="acc-obs1"><button class="acc-btn" onclick="toggleAcc('obs1')"><span>Why hand-drawn — and why it matters</span><span class="acc-icon">+</span></button><div class="acc-body" id="accb-obs1"><div class="acc-inner"><p>This model begins as a hand-drawn vector construction, not a computed fit. The curve is drawn by eye through the visual core of the wide-format table. The circles that fill its inflections are placed by hand.</p><p>Which makes the following observation more striking, not less. The two circles are not equal. The larger, C1, sits above the table. The smaller, C2, has its centre at lead — Pb, atomic number 82, the heaviest stable element and a nuclear magic number. That placement was not chosen. It followed from the geometry.</p><p>Their radius ratio R1/R2 is so close to √3 that in a computed version of this construction, we expect the ratio to be exactly √3.</p></div></div></div>
+
+<hr id="geometry">
+
+<div class="sec-label">The geometry</div>
+<h2 class="sec-title">Explore the layers</h2>
+<p>Toggle geometric layers on and off. Click a layer name to read the observation. Use + / − to zoom in. Use the expand button to open in full screen.</p>
+
+<div class="model-section">
+  <h3>Interactive model</h3>
+  <div class="model-wrap">
+    <div class="ctrl-panel">
+      <div class="ctrl-head">Layers</div>
+      <div class="ctrl-btns">
+        <button class="btn-sm" onclick="setAll(true)">All on</button>
+        <button class="btn-sm" onclick="setAll(false)">All off</button>
+      </div>
+      <div class="lr-list"><div class="lr" onclick="showObs('tab')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-tab" checked onchange="toggleLayer('tab')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#b3b3b2"></span><div class="lr-info"><div class="lr-name">Periodic Table</div><div class="lr-sub">Wide format, 32 columns</div></div></div><div class="obs-box" id="obs-tab">The wide-format (Janet) periodic table with 32 columns. s-block left, f-block centre, d- and p-blocks right. Most versions fold the lanthanides away. This format reveals the full geometric structure.</div><div class="lr" onclick="showObs('res')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-res" checked onchange="toggleLayer('res')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#ffd500"></span><div class="lr-info"><div class="lr-name">Resonance Curve</div><div class="lr-sub">The S-curve through the system</div></div></div><div class="obs-box" id="obs-res">The resonance curve runs from hydrogen, arcs upward through the empty space above the table, and descends to meet the heavy elements on the right. It emerges from the visual core of the wide format.</div><div class="lr" onclick="showObs('cir')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-cir" checked onchange="toggleLayer('cir')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#0089cb"></span><div class="lr-info"><div class="lr-name">C1 and C2</div><div class="lr-sub">The two resonance circles</div></div></div><div class="obs-box" id="obs-cir">C1 (the larger circle) sits above the table. C2 has its centre at lead — Pb, atomic number 82, the heaviest stable element and a nuclear magic number. Their radius ratio R1/R2 is so close to √3 that in a computed version we expect the ratio to be exactly √3.</div><div class="lr" onclick="showObs('dbl')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-dbl"  onchange="toggleLayer('dbl')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#009ddf"></span><div class="lr-info"><div class="lr-name">Double Cube</div><div class="lr-sub">Two overlapping squares</div></div></div><div class="obs-box" id="obs-dbl">The outer reach of C1 defines the first cube. Two cubes placed side by side almost span the table. They overlap by δ = 14 units against a side of 327. That overlap lands precisely at the boundary between group 2 and group 3.</div><div class="lr" onclick="showObs('pyr')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-pyr"  onchange="toggleLayer('pyr')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#f39200"></span><div class="lr-info"><div class="lr-name">Asymmetric Pyramid</div><div class="lr-sub">Connecting C1 and C2</div></div></div><div class="obs-box" id="obs-pyr">The asymmetric pyramidal form connects C1 and C2. Δx = 385.345 mm, Δy = 187.78 mm.</div><div class="lr" onclick="showObs('ang')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-ang"  onchange="toggleLayer('ang')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#555550"></span><div class="lr-info"><div class="lr-name">Angles & Measures</div><div class="lr-sub">Geometric constants</div></div></div><div class="obs-box" id="obs-ang">Angular and dimensional measurements. Key angles: 90°, 51.05°, 25.98°, 138.32°, 114.89°, 102.97°. Use zoom to read details.</div><div class="lr" onclick="showObs('pri')"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="chk-pri"  onchange="toggleLayer('pri')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#cc5116"></span><div class="lr-info"><div class="lr-name">Prime Periods</div><div class="lr-sub">7 periods — 4 primes — 7/4=1.75</div></div></div><div class="obs-box" id="obs-pri">Seven periods pair with the first four primes (2,3,5,7) as reciprocal pairs.</div></div>
+    </div>
+    <div class="svg-wrap">
+      <div class="zoom-ctrl">
+        <button class="z-btn" onclick="zm(1.25)">＋</button>
+        <button class="z-btn" onclick="zm(0.8)">－</button>
+        <button class="z-btn" onclick="zr()">⊡</button>
+      </div>
+      <svg id="msv" viewBox="1900 517 2000 1400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+    <style>
+      .tab0 {
+        font-family: Lato-Black, Lato;
+        font-size: 30px;
+        font-weight: 800;
+      }
+
+      .tab0, .tab1 {
+        fill: #b3b3b2;
+      }
+
+      .tab2 {
+        fill: none;
+        stroke: #1d1d1c;
+        stroke-miterlimit: 10;
+        stroke-width: .8px;
+      }
+
+      .tab3 {
+        fill:none;
+      }
+
+      .tab1 {
+        font-family: Lato-Medium, Lato;
+        font-size: 20px;
+        font-weight: 500;
+      }
+    </style>
+  
+
+    <style>
+      .res0 {
+        fill:none;
+      }
+
+      .res1 {
+        fill: none;
+        stroke: #ffd500;
+        stroke-miterlimit: 10;
+        stroke-width: 4.3px;
+      }
+    </style>
+  
+
+    <style>
+      .cir0 {
+        stroke-width: .3px;
+      }
+
+      .cir0, .cir1 {
+        fill: none;
+        stroke: #0089cb;
+        stroke-dasharray: 12;
+        stroke-miterlimit: 10;
+      }
+
+      .cir1 {
+        stroke-width: 2.8px;
+      }
+    </style>
+  
+
+    <style>
+      .dbl0 {
+        fill:none;
+      }
+
+      .dbl1 {
+        fill: none;
+        stroke: #009ddf;
+        stroke-dasharray: 8.6;
+        stroke-miterlimit: 10;
+        stroke-width: 1.4px;
+      }
+    </style>
+  
+
+    <style>
+      .pyr0 {
+        fill: none;
+        stroke: #f39200;
+        stroke-miterlimit: 10;
+        stroke-width: .7px;
+      }
+
+      .pyr1 {
+        fill:none;
+      }
+    </style>
+  
+
+    <style>
+      .pri0 {
+        fill:none;
+      }
+
+      .pri1 {
+        fill: #cc5116;
+      }
+
+      .pri1, .pri2 {
+        font-family: Lato-Medium, Lato;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .pri2 {
+        fill: #b3b3b2;
+      }
+    </style>
+  
+
+    <style>
+      .tor0 {
+        stroke: #c7d787;
+      }
+
+      .tor0, .tor1 {
+        fill: none;
+        stroke-miterlimit: 10;
+        stroke-width: 2.8px;
+      }
+
+      .tor2 {
+        fill:none;
+      }
+
+      .tor1 {
+        stroke: #95bb20;
+      }
+    </style>
+  
+
+    <style>
+      .ang0, .ang1, .ang2, .ang3, .ang4, .ang5, .ang6, .ang7, .ang8, .ang9, .ang10, .ang11, .ang12, .ang13, .ang14, .ang15, .ang16 {
+        fill: none;
+      }
+
+      .ang1 {
+        stroke: #c7d787;
+      }
+
+      .ang1, .ang2, .ang3, .ang4, .ang5, .ang6, .ang7, .ang8, .ang9, .ang10, .ang11, .ang12, .ang13, .ang14, .ang15, .ang16 {
+        stroke-miterlimit: 10;
+      }
+
+      .ang1, .ang8, .ang9, .ang15 {
+        stroke-width: 2.8px;
+      }
+
+      .ang17 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 12px;
+      }
+
+      .ang17, .ang18, .ang19 {
+        fill: #1d1d1b;
+      }
+
+      .ang20 {
+        font-family: Lato-Black, Lato;
+        font-size: 30px;
+        font-weight: 800;
+      }
+
+      .ang20, .ang21 {
+        fill: #b3b3b2;
+      }
+
+      .ang2 {
+        stroke-width: .3px;
+      }
+
+      .ang2, .ang9 {
+        stroke-dasharray: 12;
+      }
+
+      .ang2, .ang9, .ang10 {
+        stroke: #0089cb;
+      }
+
+      .ang22 {
+        font-size: 21.3px;
+      }
+
+      .ang22, .ang18, .ang23 {
+        font-family: ArialMT, Arial;
+        isolation: isolate;
+      }
+
+      .ang22, .ang23 {
+        fill: #009ddf;
+      }
+
+      .ang3 {
+        stroke: #f39200;
+        stroke-width: .7px;
+      }
+
+      .ang4, .ang5, .ang8, .ang11 {
+        stroke: #1d1d1b;
+      }
+
+      .ang4, .ang16 {
+        stroke-width: 1.4px;
+      }
+
+      .ang5 {
+        stroke-width: .7px;
+      }
+
+      .ang6 {
+        stroke: #ffd500;
+        stroke-width: 4.3px;
+      }
+
+      .ang18, .ang23 {
+        font-size: 30.9px;
+      }
+
+      .ang7 {
+        stroke: #1d1d1c;
+        stroke-width: .8px;
+      }
+
+      .ang24 {
+        fill: #cc5116;
+      }
+
+      .ang24, .ang21 {
+        font-family: Lato-Medium, Lato;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .ang10 {
+        stroke-dasharray: 23;
+        stroke-width: 5.4px;
+      }
+
+      .ang25 {
+        opacity: .3;
+      }
+
+      .ang12 {
+        stroke-width: .7px;
+      }
+
+      .ang12, .ang13, .ang14 {
+        stroke: #e6007e;
+      }
+
+      .ang13 {
+        stroke-width: .7px;
+      }
+
+      .ang14 {
+        stroke-width: .7px;
+      }
+
+      .ang26 {
+        display: none;
+      }
+
+      .ang15 {
+        stroke: #95bb20;
+      }
+
+      .ang16 {
+        stroke: #009ddf;
+        stroke-dasharray: 8.6;
+      }
+    </style>
+  <style>.tab3,.res1,.dbl0,.pyr1,.ang7,.pri0{fill:none!important;}</style></defs>
+        <g id="lyr-tab" visibility="visible"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="Periodic_Table">
+    <g>
+      <rect class="tab2" x="2022.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2136.2" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2192.9" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2249.6" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2306.3" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2363" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2419.7" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2476.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2533.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2589.7" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2646.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2703.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2759.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2816.5" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2873.2" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2136.2" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2192.9" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2249.6" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2306.3" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2363" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2419.7" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2476.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2533.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2589.7" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2646.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2703.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2759.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2816.5" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2873.2" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1244.3" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1244.3" width="56.7" height="56.7"/>
+    </g>
+  </g>
+  <g id="Layer_15">
+    <text class="tab0" transform="translate(2039.6 1283.2)"><tspan x="0" y="0">H</tspan></text>
+    <text class="tab0" transform="translate(2039.4 1339.8)"><tspan x="0" y="0">Li</tspan></text>
+    <text class="tab0" transform="translate(2031.8 1396.5)"><tspan x="0" y="0">Na</tspan></text>
+    <text class="tab0" transform="translate(2040.7 1453.1)"><tspan x="0" y="0">K</tspan></text>
+    <text class="tab0" transform="translate(2032.8 1509.8)"><tspan x="0" y="0">Rb</tspan></text>
+    <text class="tab0" transform="translate(2034.7 1566.4)"><tspan x="0" y="0">Cs</tspan></text>
+    <text class="tab0" transform="translate(2037 1623.1)"><tspan x="0" y="0">Fr</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1283.2)"><tspan x="0" y="0">1</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1339.8)"><tspan x="0" y="0">2</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1396.5)"><tspan x="0" y="0">3</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1453.1)"><tspan x="0" y="0">4</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1509.8)"><tspan x="0" y="0">5</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1566.4)"><tspan x="0" y="0">6</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1623.1)"><tspan x="0" y="0">7</tspan></text>
+    <text class="tab0" transform="translate(2089 1339.8)"><tspan x="0" y="0">Be</tspan></text>
+    <text class="tab0" transform="translate(2084.7 1396.5)"><tspan x="0" y="0">Mg</tspan></text>
+    <text class="tab0" transform="translate(2089.5 1453.1)"><tspan x="0" y="0">Ca</tspan></text>
+    <text class="tab0" transform="translate(2093.1 1509.8)"><tspan x="0" y="0">Sr</tspan></text>
+    <text class="tab0" transform="translate(2090.1 1566.4)"><tspan x="0" y="0">Ba</tspan></text>
+    <text class="tab0" transform="translate(2090.3 1623.1)"><tspan x="0" y="0">Ra</tspan></text>
+    <text class="tab0" transform="translate(2149 1566.4)"><tspan x="0" y="0">La</tspan></text>
+    <text class="tab0" transform="translate(2146.7 1623.1)"><tspan x="0" y="0">Ac</tspan></text>
+    <text class="tab0" transform="translate(2203.4 1566.4)"><tspan x="0" y="0">Ce</tspan></text>
+    <text class="tab0" transform="translate(2203.7 1623.1)"><tspan x="0" y="0">Th</tspan></text>
+    <text class="tab0" transform="translate(2262.8 1566.4)"><tspan x="0" y="0">Pr</tspan></text>
+    <text class="tab0" transform="translate(2260.7 1623.1)"><tspan x="0" y="0">Pa</tspan></text>
+    <text class="tab0" transform="translate(2314.5 1566.4)"><tspan x="0" y="0">Nd</tspan></text>
+    <text class="tab0" transform="translate(2323.5 1623.1)"><tspan x="0" y="0">U</tspan></text>
+    <text class="tab0" transform="translate(2369.1 1566.4)"><tspan x="0" y="0">Pm</tspan></text>
+    <text class="tab0" transform="translate(2371.2 1623.1)"><tspan x="0" y="0">Np</tspan></text>
+    <text class="tab0" transform="translate(2427.1 1566.4)"><tspan x="0" y="0">Sm</tspan></text>
+    <text class="tab0" transform="translate(2430 1623.1)"><tspan x="0" y="0">Pu</tspan></text>
+    <text class="tab0" transform="translate(2487.7 1566.4)"><tspan x="0" y="0">Eu</tspan></text>
+    <text class="tab0" transform="translate(2481.4 1623.1)"><tspan x="0" y="0">Am</tspan></text>
+    <text class="tab0" transform="translate(2542.1 1566.4)"><tspan x="0" y="0">Gd</tspan></text>
+    <text class="tab0" transform="translate(2538.9 1623.1)"><tspan x="0" y="0">Cm</tspan></text>
+    <text class="tab0" transform="translate(2600.5 1566.4)"><tspan x="0" y="0">Tb</tspan></text>
+    <text class="tab0" transform="translate(2599.8 1623.1)"><tspan x="0" y="0">Bk</tspan></text>
+    <text class="tab0" transform="translate(2655.4 1566.4)"><tspan x="0" y="0">Dy</tspan></text>
+    <text class="tab0" transform="translate(2659.6 1623.1)"><tspan x="0" y="0">Cf</tspan></text>
+    <text class="tab0" transform="translate(2711.3 1566.4)"><tspan x="0" y="0">Ho</tspan></text>
+    <text class="tab0" transform="translate(2716.4 1623.1)"><tspan x="0" y="0">Es</tspan></text>
+    <text class="tab0" transform="translate(2774 1566.4)"><tspan x="0" y="0">Er</tspan></text>
+    <text class="tab0" transform="translate(2767.1 1623.1)"><tspan x="0" y="0">Fm</tspan></text>
+    <text class="tab0" transform="translate(2823.1 1566.4)"><tspan x="0" y="0">Tm</tspan></text>
+    <text class="tab0" transform="translate(2822 1623.1)"><tspan x="0" y="0">Md</tspan></text>
+    <text class="tab0" transform="translate(2883.1 1566.4)"><tspan x="0" y="0">Yb</tspan></text>
+    <text class="tab0" transform="translate(2881.4 1623.1)"><tspan x="0" y="0">No</tspan></text>
+    <text class="tab0" transform="translate(2942 1566.4)"><tspan x="0" y="0">Lu</tspan></text>
+    <text class="tab0" transform="translate(2944.8 1623.1)"><tspan x="0" y="0">Lr</tspan></text>
+    <text class="tab0" transform="translate(2998 1566.4)"><tspan x="0" y="0">Hf</tspan></text>
+    <text class="tab0" transform="translate(2999.8 1623.1)"><tspan x="0" y="0">Rf</tspan></text>
+    <text class="tab0" transform="translate(3054.9 1566.4)"><tspan x="0" y="0">Ta</tspan></text>
+    <text class="tab0" transform="translate(3051.8 1623.1)"><tspan x="0" y="0">Db</tspan></text>
+    <text class="tab0" transform="translate(3112.5 1566.4)"><tspan x="0" y="0">W</tspan></text>
+    <text class="tab0" transform="translate(3112.2 1623.1)"><tspan x="0" y="0">Sg</tspan></text>
+    <text class="tab0" transform="translate(3167.3 1566.4)"><tspan x="0" y="0">Re</tspan></text>
+    <text class="tab0" transform="translate(3166.6 1623.1)"><tspan x="0" y="0">Bh</tspan></text>
+    <text class="tab0" transform="translate(3223 1566.4)"><tspan x="0" y="0">Os</tspan></text>
+    <text class="tab0" transform="translate(3223.6 1623.1)"><tspan x="0" y="0">Hs</tspan></text>
+    <text class="tab0" transform="translate(3288.2 1566.4)"><tspan x="0" y="0">Ir</tspan></text>
+    <text class="tab0" transform="translate(3278.4 1623.1)"><tspan x="0" y="0">Mt</tspan></text>
+    <text class="tab0" transform="translate(3340 1566.4)"><tspan x="0" y="0">Pt</tspan></text>
+    <text class="tab0" transform="translate(3337.2 1623.1)"><tspan x="0" y="0">Ds</tspan></text>
+    <text class="tab0" transform="translate(3392.8 1566.4)"><tspan x="0" y="0">Au</tspan></text>
+    <text class="tab0" transform="translate(3394.1 1623.1)"><tspan x="0" y="0">Rg</tspan></text>
+    <text class="tab0" transform="translate(3449 1566.4)"><tspan x="0" y="0">Hg</tspan></text>
+    <text class="tab0" transform="translate(3450.3 1623.1)"><tspan x="0" y="0">Cn</tspan></text>
+    <text class="tab0" transform="translate(3512.4 1566.4)"><tspan x="0" y="0">Tl</tspan></text>
+    <text class="tab0" transform="translate(3505.2 1623.1)"><tspan x="0" y="0">Nh</tspan></text>
+    <text class="tab0" transform="translate(3563.9 1566.4)"><tspan x="0" y="0">Pb</tspan></text>
+    <text class="tab0" transform="translate(3569.7 1623.1)"><tspan x="0" y="0">Fl</tspan></text>
+    <text class="tab0" transform="translate(3624.7 1566.4)"><tspan x="0" y="0">Bi</tspan></text>
+    <text class="tab0" transform="translate(3617.1 1623.1)"><tspan x="0" y="0">Mc</tspan></text>
+    <text class="tab0" transform="translate(3677.2 1566.4)"><tspan x="0" y="0">Po</tspan></text>
+    <text class="tab0" transform="translate(3679.5 1623.1)"><tspan x="0" y="0">Lv</tspan></text>
+    <text class="tab0" transform="translate(3735.8 1566.4)"><tspan x="0" y="0">At</tspan></text>
+    <text class="tab0" transform="translate(3736.4 1623.1)"><tspan x="0" y="0">Ts</tspan></text>
+    <text class="tab0" transform="translate(3790.5 1566.4)"><tspan x="0" y="0">Rn</tspan></text>
+    <text class="tab0" transform="translate(3788.6 1623.1)"><tspan x="0" y="0">Og</tspan></text>
+    <text class="tab0" transform="translate(2943.3 1452.7)"><tspan x="0" y="0">Sc</tspan></text>
+    <text class="tab0" transform="translate(2948.9 1509.4)"><tspan x="0" y="0">Y</tspan></text>
+    <text class="tab0" transform="translate(3002.5 1452.7)"><tspan x="0" y="0">Ti</tspan></text>
+    <text class="tab0" transform="translate(3000.7 1509.4)"><tspan x="0" y="0">Zr</tspan></text>
+    <text class="tab0" transform="translate(3061.6 1452.7)"><tspan x="0" y="0">V</tspan></text>
+    <text class="tab0" transform="translate(3052 1509.4)"><tspan x="0" y="0">Nb</tspan></text>
+    <text class="tab0" transform="translate(3113.4 1452.7)"><tspan x="0" y="0">Cr</tspan></text>
+    <text class="tab0" transform="translate(3105.8 1509.4)"><tspan x="0" y="0">Mo</tspan></text>
+    <text class="tab0" transform="translate(3162.6 1452.7)"><tspan x="0" y="0">Mn</tspan></text>
+    <text class="tab0" transform="translate(3169.2 1509.4)"><tspan x="0" y="0">Tc</tspan></text>
+    <text class="tab0" transform="translate(3225.7 1452.7)"><tspan x="0" y="0">Fe</tspan></text>
+    <text class="tab0" transform="translate(3223.8 1509.4)"><tspan x="0" y="0">Ru</tspan></text>
+    <text class="tab0" transform="translate(3280.4 1452.7)"><tspan x="0" y="0">Co</tspan></text>
+    <text class="tab0" transform="translate(3280.5 1509.4)"><tspan x="0" y="0">Rh</tspan></text>
+    <text class="tab0" transform="translate(3339.9 1452.7)"><tspan x="0" y="0">Ni</tspan></text>
+    <text class="tab0" transform="translate(3337.4 1509.4)"><tspan x="0" y="0">Pd</tspan></text>
+    <text class="tab0" transform="translate(3393.6 1452.7)"><tspan x="0" y="0">Cu</tspan></text>
+    <text class="tab0" transform="translate(3393.3 1509.4)"><tspan x="0" y="0">Ag</tspan></text>
+    <text class="tab0" transform="translate(3451 1452.7)"><tspan x="0" y="0">Zn</tspan></text>
+    <text class="tab0" transform="translate(3450.3 1509.4)"><tspan x="0" y="0">Cd</tspan></text>
+    <text class="tab0" transform="translate(3506.8 1452.7)"><tspan x="0" y="0">Ga</tspan></text>
+    <text class="tab0" transform="translate(3512.2 1509.4)"><tspan x="0" y="0">In</tspan></text>
+    <text class="tab0" transform="translate(3563.2 1452.7)"><tspan x="0" y="0">Ge</tspan></text>
+    <text class="tab0" transform="translate(3565.2 1509.4)"><tspan x="0" y="0">Sn</tspan></text>
+    <text class="tab0" transform="translate(3621.4 1452.7)"><tspan x="0" y="0">As</tspan></text>
+    <text class="tab0" transform="translate(3621.9 1509.4)"><tspan x="0" y="0">Sb</tspan></text>
+    <text class="tab0" transform="translate(3679.1 1452.7)"><tspan x="0" y="0">Se</tspan></text>
+    <text class="tab0" transform="translate(3678.3 1509.4)"><tspan x="0" y="0">Te</tspan></text>
+    <text class="tab0" transform="translate(3736.4 1452.7)"><tspan x="0" y="0">Br</tspan></text>
+    <text class="tab0" transform="translate(3747.5 1509.4)"><tspan x="0" y="0">I</tspan></text>
+    <text class="tab0" transform="translate(3792.6 1452.7)"><tspan x="0" y="0">Kr</tspan></text>
+    <text class="tab1" transform="translate(2045.5 1216.2)"><tspan x="0" y="0">1</tspan></text>
+    <text class="tab1" transform="translate(2101.3 1216.2)"><tspan x="0" y="0">2</tspan></text>
+    <text class="tab1" transform="translate(2953.1 1215.8)"><tspan x="0" y="0">3</tspan></text>
+    <text class="tab1" transform="translate(3009.8 1215.8)"><tspan x="0" y="0">4</tspan></text>
+    <text class="tab1" transform="translate(3066.5 1215.8)"><tspan x="0" y="0">5</tspan></text>
+    <text class="tab1" transform="translate(3123.1 1215.8)"><tspan x="0" y="0">6</tspan></text>
+    <text class="tab1" transform="translate(3179.8 1215.8)"><tspan x="0" y="0">7</tspan></text>
+    <text class="tab1" transform="translate(3236.5 1215.8)"><tspan x="0" y="0">8</tspan></text>
+    <text class="tab1" transform="translate(3293.1 1215.8)"><tspan x="0" y="0">9</tspan></text>
+    <text class="tab1" transform="translate(3344 1215.8)"><tspan x="0" y="0">10</tspan></text>
+    <text class="tab1" transform="translate(3400.4 1215.8)"><tspan x="0" y="0">11</tspan></text>
+    <text class="tab1" transform="translate(3457.1 1215.8)"><tspan x="0" y="0">12</tspan></text>
+    <text class="tab1" transform="translate(3513.8 1215.8)"><tspan x="0" y="0">13</tspan></text>
+    <text class="tab1" transform="translate(3570.5 1215.8)"><tspan x="0" y="0">14</tspan></text>
+    <text class="tab1" transform="translate(3627.2 1215.8)"><tspan x="0" y="0">15</tspan></text>
+    <text class="tab1" transform="translate(3683.9 1215.8)"><tspan x="0" y="0">16</tspan></text>
+    <text class="tab1" transform="translate(3740.6 1215.8)"><tspan x="0" y="0">17</tspan></text>
+    <text class="tab1" transform="translate(3797.3 1215.8)"><tspan x="0" y="0">18</tspan></text>
+    <text class="tab0" transform="translate(3790.5 1509.4)"><tspan x="0" y="0">Xe</tspan></text>
+    <text class="tab0" transform="translate(3515.4 1340.4)"><tspan x="0" y="0">B</tspan></text>
+    <text class="tab0" transform="translate(3510.8 1397.1)"><tspan x="0" y="0">Al</tspan></text>
+    <text class="tab0" transform="translate(3572.3 1340.4)"><tspan x="0" y="0">C</tspan></text>
+    <text class="tab0" transform="translate(3569.8 1397.1)"><tspan x="0" y="0">Si</tspan></text>
+    <text class="tab0" transform="translate(3627.1 1340.4)"><tspan x="0" y="0">N</tspan></text>
+    <text class="tab0" transform="translate(3629.3 1397.1)"><tspan x="0" y="0">P</tspan></text>
+    <text class="tab0" transform="translate(3683.3 1340.4)"><tspan x="0" y="0">O</tspan></text>
+    <text class="tab0" transform="translate(3687.2 1397.1)"><tspan x="0" y="0">S</tspan></text>
+    <text class="tab0" transform="translate(3743.7 1340.4)"><tspan x="0" y="0">F</tspan></text>
+    <text class="tab0" transform="translate(3738.5 1397.1)"><tspan x="0" y="0">Cl</tspan></text>
+    <text class="tab0" transform="translate(3789.2 1340.4)"><tspan x="0" y="0">Ne</tspan></text>
+    <text class="tab0" transform="translate(3789.2 1281.5)"><tspan x="0" y="0">He</tspan></text>
+    <text class="tab0" transform="translate(3792.5 1397.1)"><tspan x="0" y="0">Ar</tspan></text>
+  </g></g><g id="lyr-res" visibility="visible"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="Basic_resonance_curve">
+    <path class="res1" d="M2022.8,1244.3c76.6,167.4,245.3,283.5,442,283.5s933.9-233.5,1091.9-233.5,280.3,125.5,280.3,280.3"/>
+  </g></g><g id="lyr-cir" visibility="visible"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  <circle class="cir1" cx="3556.7" cy="1574.9" r="280.3"/>
+  <path class="cir0" d="M2035.1,1338.5"/>
+  <path class="cir0" d="M2465,1042.6"/>
+  <circle class="cir1" cx="2464.4" cy="1042.3" r="485.4"/>
+  <circle class="cir1" cx="2464.4" cy="1042.3" r="485.4"/></g><g id="lyr-dbl" visibility="hidden"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="Doublecube">
+    <rect class="dbl1" x="2022.8" y="714.2" width="926.9" height="926.9"/>
+    <rect class="dbl1" x="2910.1" y="714.2" width="926.9" height="926.9"/>
+  </g></g><g id="lyr-pyr" visibility="hidden"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="_x33_D_structure">
+    <line class="pyr0" x1="3556.7" y1="1574.9" x2="2035.1" y2="1574.9"/>
+    <line class="pyr0" x1="3556.7" y1="1574.9" x2="2034.3" y2="1574.9"/>
+    <path class="pyr0" d="M2465,1042.6"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="3556.7" y2="1574.9"/>
+    <line class="pyr0" x1="3556.7" y1="1574.9" x2="3738.4" y2="1361.5"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="2034.3" y2="1267.7"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="2034.3" y2="1574.9"/>
+    <line class="pyr0" x1="2034.3" y1="1574.9" x2="2034.3" y2="1267.7"/>
+    <line class="pyr0" x1="3738.4" y1="1361.5" x2="2034.3" y2="1267.7"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="3738.4" y2="1361.5"/>
+  </g></g><g id="lyr-ang" visibility="hidden"><g id="Angles_and_relations" class="st26">
+    <g id="Angular_Dimension">
+      <line class="ang11" x1="2519.6" y1="1574.9" x2="2527.6" y2="1574.9"/>
+    </g>
+    <g id="Angular_Dimension1" data-name="Angular_Dimension">
+      <path class="ang0" d="M3653.7,1461.8"/>
+      <path class="ang0" d="M3658.9,1455.7"/>
+    </g>
+    <g id="Angular_Dimension2" data-name="Angular_Dimension">
+      <line class="ang11" x1="2034.7" y1="1454.7" x2="2034.7" y2="1446.7"/>
+      <line class="ang11" x1="2155" y1="1574.9" x2="2163" y2="1574.9"/>
+      <text class="ang17" transform="translate(2122.2 1472.5) rotate(45)"><tspan x="0" y="0" xml:space="preserve"> 90° </tspan></text>
+      <g>
+        <path class="ang11" d="M2158.9,1570.8c-2.1-65.4-54.7-118-120.1-120.1"/>
+        <path class="ang19" d="M2158.8,1569.9l-1.8-1h0c0,0,1.2,3,1.2,3,.3,1,.5,2,.8,3.1.2-1,.4-2.1.6-3.1l1.1-3h0c0,0-1.8,1.1-1.8,1.1Z"/>
+        <path class="ang19" d="M2039.7,1450.8l1,1.8h0s-2.9-1.2-2.9-1.2c-1-.3-2-.5-3.1-.8,1-.2,2.1-.4,3.1-.6l3-1.1h0s-1.1,1.8-1.1,1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension3" data-name="Angular_Dimension">
+      <line class="ang11" x1="3499.2" y1="1574.9" x2="3491.2" y2="1574.9"/>
+      <line class="ang11" x1="3595.1" y1="1530.7" x2="3600.2" y2="1524.6"/>
+      <text class="ang17" transform="translate(3505.2 1519.6) rotate(-24.8)"><tspan x="0" y="0" xml:space="preserve"> 130,479° </tspan></text>
+      <g>
+        <path class="ang11" d="M3594.5,1525.1c-26-19.4-63-15.6-84.4,9.5-8.7,10.2-13.9,22.9-14.7,36.3"/>
+        <path class="ang19" d="M3593.7,1524.6l-2,.7h0c0,0,3,1,3,1,.9.5,1.9.9,2.8,1.4-.7-.8-1.3-1.6-2-2.4l-1.6-2.7h0s-.3,2.1-.3,2.1Z"/>
+        <path class="ang19" d="M3495.4,1569.9l1.8-1h0c0,0-1.3,2.9-1.3,2.9-.3,1-.5,2-.8,3-.2-1-.4-2.1-.5-3.1l-1-3h0c0,0,1.8,1.1,1.8,1.1Z"/>
+      </g>
+    </g>
+    <text class="ang17" transform="translate(1985.5 1455.9) rotate(-90)"><tspan x="0" y="0" xml:space="preserve"> 106,231 mm </tspan></text>
+    <g id="Aligned_Dimension">
+      <line class="ang11" x1="3741.6" y1="1359.7" x2="3743.9" y2="1318.5"/>
+      <line class="ang11" x1="2034.9" y1="1265.7" x2="2037.2" y2="1224.5"/>
+      <text class="ang17" transform="translate(2857.4 1263.6) rotate(3.2)"><tspan x="0" y="0" xml:space="preserve"> 602,992 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="2041" y1="1228.7" x2="3739.6" y2="1322.2"/>
+        <path class="ang19" d="M2041.9,1228.7l1.2-1.7h0s-3,1-3,1c-1,.2-2.1.3-3.1.5,1,.3,2,.6,3,.8l2.9,1.3h0s-1-1.9-1-1.9Z"/>
+        <path class="ang19" d="M3738.7,1322.2l-1-1.9h0s2.9,1.3,2.9,1.3c1,.3,2,.6,3,.8-1,.2-2.1.3-3.1.5l-3,1h0s1.2-1.8,1.2-1.8Z"/>
+      </g>
+    </g>
+    <g id="Aligned_Dimension1" data-name="Aligned_Dimension">
+      <line class="ang11" x1="3740.8" y1="1363" x2="3788" y2="1403.2"/>
+      <line class="ang11" x1="3558.9" y1="1576.2" x2="3606" y2="1616.4"/>
+      <text class="ang17" transform="translate(3687.8 1542) rotate(-49.5)"><tspan x="0" y="0" xml:space="preserve"> 98,877 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="3605.6" y1="1610.7" x2="3782.3" y2="1403.7"/>
+        <path class="ang19" d="M3606.2,1610.1l-.7-2h0s-1,3-1,3c-.5.9-1,1.8-1.5,2.8.8-.6,1.7-1.3,2.5-1.9l2.8-1.5h0c0,0-2.1-.4-2.1-.4Z"/>
+        <path class="ang19" d="M3781.7,1404.4l-2.1-.3h0c0,0,2.8-1.6,2.8-1.6.8-.6,1.7-1.3,2.5-1.9-.5.9-1,1.8-1.5,2.8l-1,3h0s-.7-2-.7-2Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension4" data-name="Angular_Dimension">
+      <line class="ang11" x1="3353.5" y1="1574.9" x2="3345.5" y2="1574.9"/>
+      <line class="ang11" x1="3374.1" y1="1485.6" x2="3366.9" y2="1482.1"/>
+      <text class="ang17" transform="translate(3341 1543.4) rotate(-77)"><tspan x="0" y="0" xml:space="preserve"> 25,98° </tspan></text>
+      <g>
+        <path class="ang11" d="M3368.7,1487.5c-12.1,26.1-18.7,54.5-19.2,83.3"/>
+        <path class="ang19" d="M3368.4,1488.3l1.2,1.7h0s.1-3.2.1-3.2c.2-1,.4-2.1.7-3.1-.6.8-1.3,1.7-1.9,2.5l-2.3,2.2h0c0,0,2.1-.2,2.1-.2Z"/>
+        <path class="ang19" d="M3349.6,1569.9l1.8-1h0c0,0-1.2,3-1.2,3-.3,1-.5,2-.8,3-.2-1-.4-2.1-.6-3.1l-1.1-3h0c0,0,1.8,1.1,1.8,1.1Z"/>
+      </g>
+    </g>
+    <g>
+      <line class="ang4" x1="3952.4" y1="1042.6" x2="3952.4" y2="1574.9"/>
+      <line class="ang8" x1="3973" y1="1574.9" x2="3931.9" y2="1574.9"/>
+      <line class="ang8" x1="3973" y1="1042.6" x2="3931.9" y2="1042.6"/>
+    </g>
+    <line class="ang4" x1="3557.3" y1="1906" x2="2465" y2="1906"/>
+    <line class="ang8" x1="2465" y1="1926.5" x2="2465" y2="1885.4"/>
+    <line class="ang8" x1="3557.3" y1="1926.5" x2="3557.3" y2="1885.4"/>
+    <text class="ang18" transform="translate(4001.9 1268)"><tspan x="0" y="0">Delta y of </tspan><tspan x="0" y="37.1">origo circles:</tspan><tspan x="0" y="74.2">187,78</tspan></text>
+    <text class="ang18" transform="translate(2773.9 1956.8)"><tspan x="0" y="0">Delta x of origo circles: 385,345</tspan></text>
+    <g id="Angular_Dimension5" data-name="Angular_Dimension">
+      <line class="ang11" x1="3475.2" y1="1534.9" x2="3468" y2="1531.4"/>
+      <line class="ang11" x1="3616.6" y1="1505.4" x2="3621.8" y2="1499.3"/>
+      <text class="ang17" transform="translate(3512.2 1476.6) rotate(-11.8)"><tspan x="0" y="0" xml:space="preserve"> 104,499° </tspan></text>
+      <g>
+        <path class="ang11" d="M3616.1,1499.8c-40-31.3-98-25.8-131.2,13.2-4.3,5.1-8.1,10.6-11.3,16.5"/>
+        <path class="ang19" d="M3615.4,1499.2l-2,.7h0c0,0,3,1,3,1,.9.5,1.9.9,2.8,1.4-.7-.8-1.3-1.6-2-2.5l-1.5-2.8h0s-.3,2.1-.3,2.1Z"/>
+        <path class="ang19" d="M3474,1528.7h2.1c0-.1,0,0,0,0l-2.4,2.1c-.7.8-1.4,1.6-2,2.4.3-1,.6-2,.8-3l.3-3.1h0s1.1,1.8,1.1,1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension6" data-name="Angular_Dimension">
+      <line class="ang11" x1="2688.6" y1="1098.6" x2="2696.4" y2="1100.5"/>
+    </g>
+    <g id="Angular_Dimension7" data-name="Angular_Dimension">
+      <line class="ang11" x1="2639.8" y1="1086.4" x2="2647.6" y2="1088.3"/>
+      <line class="ang11" x1="2627" y1="1121.5" x2="2634.2" y2="1125"/>
+      <text class="ang17" transform="translate(2648 1131.7) rotate(-70)"><tspan x="0" y="0" xml:space="preserve"> 11,921° </tspan></text>
+      <g>
+        <path class="ang11" d="M2632.4,1119.6c4.2-9.1,7.7-18.6,10.3-28.3"/>
+        <path class="ang19" d="M2632.7,1118.8l-1.2-1.7h0s-.2,3.2-.2,3.2c-.2,1-.4,2-.7,3.1.6-.8,1.3-1.7,1.9-2.5l2.3-2.2h0c0,0-2.1.2-2.1.2Z"/>
+        <path class="ang19" d="M2642.4,1092.1l-2,.6h0c0,0,1.9-2.6,1.9-2.6.5-.9,1-1.9,1.5-2.8,0,1-.1,2.1-.2,3.1l.3,3.1h0c0,0-1.5-1.5-1.5-1.5Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension8" data-name="Angular_Dimension">
+      <line class="ang11" x1="2764.5" y1="1117.6" x2="2772.3" y2="1119.5"/>
+      <line class="ang11" x1="2191.5" y1="1185.7" x2="2184.4" y2="1189.4"/>
+      <text class="ang17" transform="translate(2480.2 1374.1) rotate(-6.8)"><tspan x="0" y="0" xml:space="preserve"> 138,323° </tspan></text>
+      <g>
+        <path class="ang11" d="M2189.8,1191.2c81.1,150.4,268.3,208,420.2,128.5,77.9-40.7,134.9-112.3,157.4-197.2"/>
+        <path class="ang19" d="M2190.3,1191.9h2.1c0,0,0,0,0,0l-2.4-2c-.7-.8-1.4-1.6-2.1-2.4.3,1,.6,2,.9,3l.4,3.1h0s1.1-1.8,1.1-1.8Z"/>
+        <path class="ang19" d="M2767,1123.4l-2,.6h0c0,0,1.9-2.6,1.9-2.6.5-.9,1-1.9,1.5-2.8,0,1-.1,2.1-.2,3.1l.3,3.1h0c0,0-1.5-1.5-1.5-1.5Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension9" data-name="Angular_Dimension">
+      <line class="ang11" x1="2091.5" y1="1504.7" x2="2096.5" y2="1498.5"/>
+      <line class="ang11" x1="2125" y1="1574.9" x2="2133" y2="1574.9"/>
+      <text class="ang17" transform="translate(2121 1513.7) rotate(64.5)"><tspan x="0" y="0" xml:space="preserve"> 51,05° </tspan></text>
+      <g>
+        <path class="ang11" d="M2128.9,1570.8c-1.1-25.6-12.6-49.6-31.8-66.6"/>
+        <path class="ang19" d="M2128.9,1569.9l-1.8-1h0c0,0,1.2,3,1.2,3,.3,1,.5,2,.8,3.1.2-1,.4-2.1.6-3.1l1.1-3h0c0,0-1.8,1.1-1.8,1.1Z"/>
+        <path class="ang19" d="M2097.8,1504.8l-.3,2.1h0s-1.5-2.8-1.5-2.8c-.6-.8-1.3-1.7-1.9-2.5.9.5,1.8,1,2.8,1.5l3,1h0c0,0-2,.7-2,.7Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension10" data-name="Angular_Dimension">
+      <line class="ang11" x1="2600.3" y1="1108.5" x2="2607.5" y2="1112"/>
+      <line class="ang11" x1="2370.4" y1="1159.7" x2="2365.3" y2="1165.9"/>
+      <text class="ang17" transform="translate(2481.9 1215.8) rotate(-12.5)"><tspan x="0" y="0" xml:space="preserve"> 102,97° </tspan></text>
+      <g>
+        <path class="ang11" d="M2371.1,1165.3c66.3,50.8,161.3,39.8,214.1-25.6,6.5-8,12.1-16.7,16.9-25.8"/>
+        <path class="ang19" d="M2371.8,1165.8l2-.8h0c0,0-3-.9-3-.9-.9-.4-1.9-.9-2.8-1.3.7.8,1.3,1.6,2,2.4l1.6,2.7h0s.2-2.1.2-2.1Z"/>
+        <path class="ang19" d="M2601.6,1114.7h-2.1c0,.1,0,0,0,0l2.4-2.1c.7-.8,1.3-1.6,2-2.4-.3,1-.5,2-.8,3l-.3,3.1h0s-1.1-1.8-1.1-1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension11" data-name="Angular_Dimension">
+      <line class="ang11" x1="2340.5" y1="1196.7" x2="2335.4" y2="1202.9"/>
+      <line class="ang11" x1="2289.5" y1="1134.4" x2="2282.4" y2="1138.2"/>
+      <text class="ang17" transform="translate(2281.2 1165.9) rotate(50.7)"><tspan x="0" y="0" xml:space="preserve"> 23,431° </tspan></text>
+      <g>
+        <path class="ang11" d="M2287.8,1139.9c12,21.8,27.9,41.3,47,57.3"/>
+        <path class="ang19" d="M2288.3,1140.6h2.1c0,0,0,0,0,0l-2.4-2c-.7-.8-1.4-1.6-2.1-2.4.3,1,.6,2,.9,3l.4,3.1h0s1.1-1.8,1.1-1.8Z"/>
+        <path class="ang19" d="M2334.2,1196.6l.3-2.1h0s1.5,2.8,1.5,2.8c.6.8,1.3,1.7,1.9,2.5-.9-.5-1.9-1-2.8-1.5l-3-1h0c0,0,2-.7,2-.7Z"/>
+      </g>
+    </g>
+    <g id="Manual_Dimension">
+      <line class="ang11" x1="3557.3" y1="1576.9" x2="3557.3" y2="1779"/>
+      <line class="ang11" x1="2034.8" y1="1573.2" x2="2034.8" y2="1779"/>
+      <text class="ang17" transform="translate(2762.5 1792.9)"><tspan x="0" y="0" xml:space="preserve"> 537,114 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="2038.9" y1="1775" x2="3553.3" y2="1775"/>
+        <path class="ang19" d="M2039.8,1775l1.1-1.8h0s-2.9,1.1-2.9,1.1c-1,.2-2,.5-3.1.7,1,.2,2,.5,3.1.7l2.9,1.2h0s-1.1-1.8-1.1-1.8Z"/>
+        <path class="ang19" d="M3552.4,1775l-1.1-1.8h0s2.9,1.1,2.9,1.1c1,.2,2,.5,3.1.7-1,.2-2,.5-3.1.7l-2.9,1.2h0s1.1-1.8,1.1-1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension12" data-name="Angular_Dimension">
+      <line class="ang11" x1="2690.7" y1="1099.1" x2="2698.5" y2="1101.1"/>
+      <line class="ang11" x1="2318.7" y1="1223.5" x2="2313.7" y2="1229.8"/>
+      <text class="ang17" transform="translate(2523 1292) rotate(-18.5)"><tspan x="0" y="0" xml:space="preserve"> 114,891° </tspan></text>
+      <g>
+        <path class="ang11" d="M2319.4,1229.2c101.6,79.3,248.3,62.8,329.7-37.8,20.8-25.7,35.9-55.5,44.5-87.3"/>
+        <path class="ang19" d="M2320.2,1229.7l2-.8h0c0,0-3-.9-3-.9-.9-.4-1.9-.9-2.8-1.3.7.8,1.3,1.6,2,2.4l1.6,2.7h0s.2-2.1.2-2.1Z"/>
+        <path class="ang19" d="M2693.3,1104.9l-2,.6h0c0,0,1.9-2.6,1.9-2.6.5-.9,1-1.9,1.5-2.8,0,1-.1,2.1-.2,3.1l.3,3.1h0c0,0-1.4-1.5-1.4-1.5Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension13" data-name="Angular_Dimension">
+      <line class="ang11" x1="3330.1" y1="1339" x2="3322.1" y2="1338.6"/>
+      <line class="ang11" x1="3341.8" y1="1262.1" x2="3334" y2="1260.2"/>
+      <text class="ang17" transform="translate(3317.1 1319.1) rotate(-81.4)"><tspan x="0" y="0" xml:space="preserve"> 10,906° </tspan></text>
+      <g>
+        <path class="ang11" d="M3336.9,1265.1c-5.5,22.9-9,46.1-10.5,69.6"/>
+        <path class="ang19" d="M3336.8,1266l1.5,1.5h0c0,0-.5-3.2-.5-3.2,0-1,0-2.1,0-3.1-.4.9-.9,1.9-1.3,2.8l-1.8,2.6h0c0,0,2-.6,2-.6Z"/>
+        <path class="ang19" d="M3326.5,1333.9l1.9-1h0c0,0-1.4,2.9-1.4,2.9-.3,1-.6,2-.9,3-.1-1-.3-2.1-.4-3.1l-.9-3h0c0,0,1.7,1.2,1.7,1.2Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension14" data-name="Angular_Dimension">
+      <line class="ang11" x1="3668.2" y1="1444.9" x2="3663" y2="1451"/>
+      <line class="ang11" x1="3633.1" y1="1335.1" x2="3625.4" y2="1333.2"/>
+      <text class="ang17" transform="translate(3607.4 1381.7) rotate(72.3)"><tspan x="0" y="0" xml:space="preserve"> 63,579° </tspan></text>
+      <g>
+        <path class="ang11" d="M3628.3,1338.1c-8.4,39.3,4.7,80,34.3,107.2"/>
+        <path class="ang19" d="M3628.2,1339l1.5,1.4h0c0,0-.5-3.2-.5-3.2,0-1,0-2.1,0-3.1-.4,1-.9,1.9-1.3,2.9l-1.8,2.6h0c0,0,2-.6,2-.6Z"/>
+        <path class="ang19" d="M3662,1444.6l.4-2.1h0s1.4,2.9,1.4,2.9c.6.9,1.2,1.7,1.8,2.6-.9-.5-1.8-1.1-2.7-1.6l-3-1.1h0c0,0,2-.7,2-.7Z"/>
+      </g>
+    </g>
+    <g id="Radial_Dimension">
+      <text class="ang17" transform="translate(2959.7 1054.8) rotate(1.4)"><tspan x="0" y="0" xml:space="preserve"> R 171,25 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="2464.4" y1="1042.3" x2="2945.6" y2="1054.4"/>
+        <path class="ang19" d="M2944.7,1054.4l-1.1-1.8h0s2.9,1.2,2.9,1.2c1,.3,2,.5,3.1.8-1,.2-2.1.4-3.1.6l-3,1.1h0s1.1-1.8,1.1-1.8Z"/>
+      </g>
+    </g>
+    <g id="Radial_Dimension1" data-name="Radial_Dimension">
+      <text class="ang17" transform="translate(3817.5 1703.5) rotate(26.3)"><tspan x="0" y="0" xml:space="preserve"> R 98,875 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="3557.3" y1="1574.9" x2="3804.9" y2="1697.3"/>
+        <path class="ang19" d="M3804.1,1696.9l-.2-2.1h0s2.1,2.3,2.1,2.3c.8.7,1.6,1.3,2.5,2-1-.3-2-.5-3.1-.8l-3.2-.3h0c0,0,1.8-1.2,1.8-1.2Z"/>
+      </g>
+    </g>
+    <g id="Aligned_Dimension2" data-name="Aligned_Dimension">
+      <line class="ang11" x1="2029.2" y1="1271.8" x2="1991.4" y2="1271.8"/>
+      <line class="ang11" x1="2029.2" y1="1572.9" x2="1991.4" y2="1572.9"/>
+      <g>
+        <line class="ang11" x1="1995.4" y1="1568.8" x2="1995.4" y2="1275.8"/>
+        <path class="ang19" d="M1995.4,1567.9l-1.8-1.1h0c0,0,1.2,3,1.2,3,.2,1,.5,2,.7,3.1.2-1,.5-2,.7-3.1l1.2-2.9h0c0,0-1.8,1-1.8,1Z"/>
+        <path class="ang19" d="M1995.4,1276.7l-1.8,1.1h0c0,0,1.2-3,1.2-3,.2-1,.5-2,.7-3.1.2,1,.5,2,.7,3.1l1.2,2.9h0c0,0-1.8-1-1.8-1Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension15" data-name="Angular_Dimension">
+      <line class="ang11" x1="3638.6" y1="1479.6" x2="3633.4" y2="1485.7"/>
+      <line class="ang11" x1="3584.5" y1="1353.2" x2="3576.5" y2="1352.7"/>
+      <text class="ang17" transform="translate(3568 1412.1) rotate(66.8)"><tspan x="0" y="0" xml:space="preserve"> 52,678° </tspan></text>
+      <g>
+        <path class="ang11" d="M3580.3,1357c-1.4,46.7,17.9,91.7,52.7,123"/>
+        <path class="ang19" d="M3580.4,1357.9l1.8,1.1h0c0,0-1.1-3-1.1-3-.2-1-.4-2.1-.6-3.1-.3,1-.5,2-.8,3.1l-1.2,2.9h0c0,0,1.8-1,1.8-1Z"/>
+        <path class="ang19" d="M3632.3,1479.3l.4-2.1h0s1.4,2.8,1.4,2.8c.6.9,1.2,1.7,1.8,2.6-.9-.5-1.8-1-2.7-1.6l-3-1.1h0c0,0,2-.7,2-.7Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension16" data-name="Angular_Dimension">
+      <line class="ang11" x1="2161.1" y1="1201.6" x2="2168.2" y2="1197.9"/>
+      <line class="ang11" x1="2177.2" y1="1275.5" x2="2185.2" y2="1276"/>
+      <text class="ang17" transform="translate(2183.4 1213.9) rotate(77.8)"><tspan x="0" y="0" xml:space="preserve"> 30,776° </tspan></text>
+      <g>
+        <path class="ang11" d="M2181.3,1271.7c.6-23.6-4.4-47.1-14.8-68.3"/>
+        <path class="ang19" d="M2181.3,1270.8l-1.8-1.1h0c0,0,1.1,3,1.1,3,.2,1,.4,2.1.6,3.1.2-1,.5-2,.7-3.1l1.2-2.9h0c0,0-1.8,1-1.8,1Z"/>
+        <path class="ang19" d="M2166.8,1204.2l-1.1,1.8h0s-.2-3.2-.2-3.2c-.2-1-.5-2-.7-3.1.6.8,1.3,1.6,1.9,2.5l2.3,2.1h0c0,0-2.1-.1-2.1-.1Z"/>
+      </g>
+    </g>
+  </g></g><g id="lyr-pri" visibility="hidden"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="primtall">
+    <text class="pri1" transform="translate(1939.4 1251.2)"><tspan x="0" y="0">2</tspan></text>
+    <text class="pri2" transform="translate(1929 1283.1)"><tspan x="0" y="0">1/2</tspan></text>
+    <text class="pri1" transform="translate(1939.4 1364.7)"><tspan x="0" y="0">3</tspan></text>
+    <text class="pri2" transform="translate(1929 1337.4)"><tspan x="0" y="0">2/3</tspan></text>
+    <text class="pri2" transform="translate(1929 1395.9)"><tspan x="0" y="0">3/2</tspan></text>
+    <text class="pri2" transform="translate(1929 1452.6)"><tspan x="0" y="0">4/5</tspan></text>
+    <text class="pri2" transform="translate(1929 1508.9)"><tspan x="0" y="0">5/4</tspan></text>
+    <text class="pri2" transform="translate(1929 1565.7)"><tspan x="0" y="0">6/7</tspan></text>
+    <text class="pri2" transform="translate(1929 1623.4)"><tspan x="0" y="0">7/6</tspan></text>
+    <text class="pri1" transform="translate(1939.4 1478.3)"><tspan x="0" y="0">5</tspan></text>
+    <text class="pri1" transform="translate(1939.4 1591.9)"><tspan x="0" y="0">7</tspan></text>
+    <text class="pri1" transform="translate(1926.6 1712.4)"><tspan x="0" y="0">7 perioder</tspan><tspan x="0" y="24">4 primtall</tspan><tspan x="0" y="48">7/4=1,75</tspan></text>
+  </g></g>
+      </svg>
+    </div>
+  </div>
+  <button class="expand-btn" onclick="openFullscreen()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5"/></svg>
+    Open in full screen
+  </button>
+</div>
+
+<div class="sec-label" style="margin-top:48px;">The double cube</div>
+<h2 class="sec-title">An overlap that lands somewhere</h2>
+<p>The √3 ratio between C1 and C2, combined with the long rectangular form of the wide-format table, geometrically suggested a natural next step: a double cube. The right-hand reach of C1 sits close to the geometric centre of the table, making it a natural boundary for the first cube. Two cubes of that size, placed side by side, would span the full table.</p>
+<p>They did not tessellate. The geometric intuition appeared to be falsified.</p>
+<p>Then the overlap was measured.</p>
+<p>The two cubes overlap by a small amount — δ = 14 units against a cube side of 327. That overlap lands precisely at the boundary between group 2 and group 3 — between the s-block and the d-block.</p>
+<p>In this light, the almost tessellating cubes might be evaluated as a signal and not a failure.</p>
+<p>The side length 327 follows from the chosen cell size of 20 mm. The ratio δ/side = 14/327 is scale-independent. The system is dimensionless.</p>
+<div class="accordion" id="acc-dbl1"><button class="acc-btn" onclick="toggleAcc('dbl1')"><span>On the choice of the double cube</span><span class="acc-icon">+</span></button><div class="acc-body" id="accb-dbl1"><div class="acc-inner"><p>The use of a double cube rather than a single or triple cube was not arbitrary. A single cube does not contain √7 — the diagonal that signals the spherical element. A triple cube produces diagonals √8 = 2√2 and √9 = 3, which are multiples of existing diagonals rather than new geometric qualities.</p><p>√7 does not traverse beyond the double cube. It is defined by the double cube's full extent — the distance that requires both the full length and both cubes to exist simultaneously. The double cube is the minimal sufficient structure: the smallest system that contains √7 and therefore the smallest system that can carry both the structural and dynamic sides of the geometry.</p></div></div></div>
+
+<div class="sec-label" style="margin-top:48px;">The missing root</div>
+<h2 class="sec-title">√7 and the spherical contribution</h2>
+<p>A double cube is widely recognised as home to the diagonal lines described by the square roots of 1 through 6, addressing the corners of the cubes. However, √7 belongs to the curvature — it needs both cubes to exist, and shows us that the system might also have a dynamic side.</p>
+<p>Recognising √7 as a natural part of a two-cube system, its dynamic expression might be quantised as:</p>
+<div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
+<p>√7 is the geometry. 7/4 is its dynamic expression.</p>
+<p>Now connect this to delta. The percolation interval — the channel width — is 1/12. And:</p>
+<div class="formula">7/4 × 12 = 21 = 3 × 7</div>
+<p>The overlapping double cube delta is 14 = 2 × 7. The full percolation space is 21 = 3 × 7. It seems these are not separate instances, but the same geometric fact expressed at three different scales.</p>
+<div class="accordion" id="acc-sqrt7"><button class="acc-btn" onclick="toggleAcc('sqrt7')"><span>The geometric derivation of 1/12</span><span class="acc-icon">+</span></button><div class="acc-body" id="accb-sqrt7"><div class="acc-inner"><p>The percolation interval 1/12 is not imported from biology. It is derived from the double cube's own diagonal structure.</p><p>The structural cube contributes the ratio of its face diagonal to its space diagonal:</p><div class="formula">√2 / √3</div><p>The dynamic cube contributes the ratio of its space diagonal to the double cube's full length:</p><div class="formula">√3 / √4 = √3 / 2</div><p>When squared, these ratios produce the percolation boundary conditions:</p><div class="formula">(√2 / √3)² = 2/3</div><div class="formula">(√3 / √4)² = 3/4</div><p>The percolation interval is the difference between them:</p><div class="formula">3/4 − 2/3 = 1/12</div><p>√7 is the coupling term that requires both cubes simultaneously. Without it, the structural and dynamic sides are independent. With it, the interval 1/12 becomes geometrically necessary.</p></div></div></div>
+
+<hr id="predictions">
+
+<div class="sec-label">Predictions</div>
+<h2 class="sec-title">What the geometry predicts</h2>
+<p>A geometric model is only as interesting as what it predicts. The following observations were not derived from chemical knowledge — they follow from the position of elements relative to C1, C2 and the resonance curve. The chemistry was checked afterwards. In each case, the chemical fact was already known. What the model offers is an independent geometric derivation of known results — which is a different kind of evidence.</p>
+
+<div class="pred"><span class="pred-tag" style="background:#e8f4d4;color:#5a7a10;">Confirmed</span><h4>Fe, Ru and Os as universal mediators</h4><p>The geometry places these elements at the crossing point between the stable boundary interior and the open percolation zone. The prediction: they should be the most chemically universal bonders in the transition metals. Fe, Ru and Os are among the most catalytically versatile elements known. Iron is the centre of haemoglobin. The geometry did not need to know this.</p></div>
+
+<div class="pred"><span class="pred-tag" style="background:#e8f4d4;color:#5a7a10;">Confirmed</span><h4>Be and Mg — the diagonal anomaly</h4><p>The resonance curve passes through beryllium and magnesium. The prediction: they should behave anomalously relative to the rest of group 2 — more covalently, resembling their diagonal neighbours more than their vertical group neighbours. This is the diagonal rule — one of the known anomalies of the periodic table. The model placed Be and Mg on the curve independently.</p></div>
+
+<div class="pred"><span class="pred-tag" style="background:#e8f4d4;color:#5a7a10;">Confirmed</span><h4>Pb as a potential minimum</h4><p>C2 has its centre at lead. In the field geometry, C2 is the lower boundary condition. Lead has atomic number 82, a nuclear magic number. It is the heaviest stable element. That the geometry places C2 at Pb is either a remarkable coincidence or a signal worth following.</p></div>
+
+<div class="accordion" id="acc-inert"><button class="acc-btn" onclick="toggleAcc('inert')"><span>Two geometrically distinct types of inertness</span><span class="acc-icon">+</span></button><div class="acc-body" id="accb-inert"><div class="acc-inner"><p><strong>Type 1 — Ti, Zr, Hf:</strong> These sit inside the C1 boundary. The field is maximally stable here; there is no gradient driving bond formation. Their inertness is structural. Confirmed: Ti, Zr and Hf are among the most corrosion-resistant transition metals, used in implants and nuclear cladding.</p><p><strong>Type 2 — heavy halogens, noble gases:</strong> These sit in the peripheral zone where the harmonic series approaches its 7/4 threshold. Their inertness is dynamic: the system is closing one period and beginning the next. Two different geometric mechanisms. Two different chemical characters.</p></div></div></div><div class="accordion" id="acc-conv"><button class="acc-btn" onclick="toggleAcc('conv')"><span>A convergence worth noting</span><span class="acc-icon">+</span></button><div class="acc-body" id="accb-conv"><div class="acc-inner"><p>The atomic number ratio (Z_Yb − Z_Sc) / (Z_Rn − Z_H) = 49/85 = 0.57647 lies within 0.00088 of the percolation threshold 1/√3 = 0.57735.</p><p>The numerator counts the span from the first d-block element to the last lanthanide. The denominator counts the full span of the table through period 6. This is a counting statement about the table itself — no external constants are involved. Whether this proximity is structural or coincidental is not known. It is noted here as a convergence, not a conclusion.</p></div></div></div>
+
+<hr id="biology">
+
+<div class="sec-label">A bridge to biology</div>
+<h2 class="sec-title">Kleibers law</h2>
+<p>In 1932, Max Kleiber observed that the metabolic rate of living organisms scales as M^(3/4) across all scales — from bacteria to whales. The naive geometric prediction from surface-to-volume scaling is M^(2/3). The difference between them is:</p>
+<div class="formula">3/4 − 2/3 = 1/12</div>
+<p>The double cube generates this interval exactly from its own diagonal structure. The structural cube contributes (√2/√3)² = 2/3. The dynamic cube contributes (√3/√4)² = 3/4. The interval between them is 1/12.</p>
+<p>The proposed reading: biological metabolic scaling operates at the upper boundary condition of the double cube's percolation channel. The exponent 3/4 is the squared diagonal ratio of the dynamic cube — the same geometric object that defines the dynamic axis of the periodic table.</p>
+<p>This is proposed as a model, not asserted as a result. The geometric derivation of 2/3, 3/4 and 1/12 from the double cube is exact. The connection to Kleibers law is structurally compelling — but a formal derivation has not yet been produced. That derivation is an open problem.</p>
+<p>What can be said is this: the double cube gives us 1/12. Kleibers law requires 1/12. That is not nothing.</p>
+
+<hr>
+
+<div class="sec-label">Status</div>
+<h2 class="sec-title">Where this leads — and where it does not</h2>
+<p>This is a geometric observation, not a completed theory. It began with a curve drawn by hand through a table that most scientists encounter in a different format. It produced a ratio, a structure and a set of correspondences that were not anticipated at the outset.</p>
+<p>We are aware that the results may appear too tidy. Three chemical predictions confirmed by known chemistry. A geometric interval that matches the gap in Kleibers law exactly. These correspondences invite scepticism — and that scepticism is reasonable.</p>
+<p>What we can say is that each step in the construction follows from the previous one without free parameters. The curve is drawn. The circles emerge. The ratio is measured. The double cube follows. The overlap is what it is. Nothing is fitted to produce a desired result.</p>
+<div class="accordion" id="acc-open"><button class="acc-btn" onclick="toggleAcc('open')"><span>What the model does not yet predict</span><span class="acc-icon">+</span></button><div class="acc-body" id="accb-open"><div class="acc-inner"><p>The geometry of C1 and C2 generates the framework within which molecular bond angles can be located — the system contains the t-point for bond angle geometry. But the algorithm for placing ligands has not been found.</p><p>The lanthanides and actinides have not been placed within the percolation framework in a way that generates predictions.</p><p>The formal derivation of the Laplace solution between C1 and C2 has not been completed. The connection to Kleibers law has not been formally derived. These are the open problems that make the model worth pursuing.</p></div></div></div>
+
+<p style="margin-top:32px;">The model is offered here as a proposal — precise enough to be falsified, open enough to invite collaboration. If the geometric derivations are wrong, they can be shown to be wrong. If they are right, the implications will take time to work through properly.</p>
+<p>That seems like the right place to leave it.</p>
+
+<div style="margin-top:40px;padding:20px;background:var(--white);border:1px solid var(--rule);border-radius:8px;">
+  <div style="font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">Working document</div>
+  <p style="font-size:13px;color:var(--text2);margin:0;">The full mathematical treatment — including formal definitions, the Laplace postulate, orbit correspondence and all open questions — is available as a working document.</p>
+</div>
+
+</div>
+
+<!-- FULLSCREEN OVERLAY -->
+<div class="fs-overlay" id="fs-overlay">
+  <div class="fs-header">
+    <div class="fs-title">Geometric model — interactive layers</div>
+    <button class="fs-close" onclick="closeFullscreen()">&#215;</button>
+  </div>
+  <div class="fs-body">
+    <div class="fs-ctrl">
+      <div class="ctrl-head">Layers</div>
+      <div class="ctrl-btns">
+        <button class="btn-sm" onclick="setAll(true)">All on</button>
+        <button class="btn-sm" onclick="setAll(false)">All off</button>
+      </div>
+      <div class="lr-list" id="fs-lr-list"></div>
+    </div>
+    <div class="fs-svg-wrap">
+      <div class="zoom-ctrl fs-zoom">
+        <button class="z-btn" onclick="zmf(1.25)">＋</button>
+        <button class="z-btn" onclick="zmf(0.8)">－</button>
+        <button class="z-btn" onclick="zrf()">⊡</button>
+      </div>
+      <svg id="fsv" viewBox="1900 517 2000 1400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+    <style>
+      .tab0 {
+        font-family: Lato-Black, Lato;
+        font-size: 30px;
+        font-weight: 800;
+      }
+
+      .tab0, .tab1 {
+        fill: #b3b3b2;
+      }
+
+      .tab2 {
+        fill: none;
+        stroke: #1d1d1c;
+        stroke-miterlimit: 10;
+        stroke-width: .8px;
+      }
+
+      .tab3 {
+        fill:none;
+      }
+
+      .tab1 {
+        font-family: Lato-Medium, Lato;
+        font-size: 20px;
+        font-weight: 500;
+      }
+    </style>
+  
+
+    <style>
+      .res0 {
+        fill:none;
+      }
+
+      .res1 {
+        fill: none;
+        stroke: #ffd500;
+        stroke-miterlimit: 10;
+        stroke-width: 4.3px;
+      }
+    </style>
+  
+
+    <style>
+      .cir0 {
+        stroke-width: .3px;
+      }
+
+      .cir0, .cir1 {
+        fill: none;
+        stroke: #0089cb;
+        stroke-dasharray: 12;
+        stroke-miterlimit: 10;
+      }
+
+      .cir1 {
+        stroke-width: 2.8px;
+      }
+    </style>
+  
+
+    <style>
+      .dbl0 {
+        fill:none;
+      }
+
+      .dbl1 {
+        fill: none;
+        stroke: #009ddf;
+        stroke-dasharray: 8.6;
+        stroke-miterlimit: 10;
+        stroke-width: 1.4px;
+      }
+    </style>
+  
+
+    <style>
+      .pyr0 {
+        fill: none;
+        stroke: #f39200;
+        stroke-miterlimit: 10;
+        stroke-width: .7px;
+      }
+
+      .pyr1 {
+        fill:none;
+      }
+    </style>
+  
+
+    <style>
+      .pri0 {
+        fill:none;
+      }
+
+      .pri1 {
+        fill: #cc5116;
+      }
+
+      .pri1, .pri2 {
+        font-family: Lato-Medium, Lato;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .pri2 {
+        fill: #b3b3b2;
+      }
+    </style>
+  
+
+    <style>
+      .tor0 {
+        stroke: #c7d787;
+      }
+
+      .tor0, .tor1 {
+        fill: none;
+        stroke-miterlimit: 10;
+        stroke-width: 2.8px;
+      }
+
+      .tor2 {
+        fill:none;
+      }
+
+      .tor1 {
+        stroke: #95bb20;
+      }
+    </style>
+  
+
+    <style>
+      .ang0, .ang1, .ang2, .ang3, .ang4, .ang5, .ang6, .ang7, .ang8, .ang9, .ang10, .ang11, .ang12, .ang13, .ang14, .ang15, .ang16 {
+        fill: none;
+      }
+
+      .ang1 {
+        stroke: #c7d787;
+      }
+
+      .ang1, .ang2, .ang3, .ang4, .ang5, .ang6, .ang7, .ang8, .ang9, .ang10, .ang11, .ang12, .ang13, .ang14, .ang15, .ang16 {
+        stroke-miterlimit: 10;
+      }
+
+      .ang1, .ang8, .ang9, .ang15 {
+        stroke-width: 2.8px;
+      }
+
+      .ang17 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 12px;
+      }
+
+      .ang17, .ang18, .ang19 {
+        fill: #1d1d1b;
+      }
+
+      .ang20 {
+        font-family: Lato-Black, Lato;
+        font-size: 30px;
+        font-weight: 800;
+      }
+
+      .ang20, .ang21 {
+        fill: #b3b3b2;
+      }
+
+      .ang2 {
+        stroke-width: .3px;
+      }
+
+      .ang2, .ang9 {
+        stroke-dasharray: 12;
+      }
+
+      .ang2, .ang9, .ang10 {
+        stroke: #0089cb;
+      }
+
+      .ang22 {
+        font-size: 21.3px;
+      }
+
+      .ang22, .ang18, .ang23 {
+        font-family: ArialMT, Arial;
+        isolation: isolate;
+      }
+
+      .ang22, .ang23 {
+        fill: #009ddf;
+      }
+
+      .ang3 {
+        stroke: #f39200;
+        stroke-width: .7px;
+      }
+
+      .ang4, .ang5, .ang8, .ang11 {
+        stroke: #1d1d1b;
+      }
+
+      .ang4, .ang16 {
+        stroke-width: 1.4px;
+      }
+
+      .ang5 {
+        stroke-width: .7px;
+      }
+
+      .ang6 {
+        stroke: #ffd500;
+        stroke-width: 4.3px;
+      }
+
+      .ang18, .ang23 {
+        font-size: 30.9px;
+      }
+
+      .ang7 {
+        stroke: #1d1d1c;
+        stroke-width: .8px;
+      }
+
+      .ang24 {
+        fill: #cc5116;
+      }
+
+      .ang24, .ang21 {
+        font-family: Lato-Medium, Lato;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .ang10 {
+        stroke-dasharray: 23;
+        stroke-width: 5.4px;
+      }
+
+      .ang25 {
+        opacity: .3;
+      }
+
+      .ang12 {
+        stroke-width: .7px;
+      }
+
+      .ang12, .ang13, .ang14 {
+        stroke: #e6007e;
+      }
+
+      .ang13 {
+        stroke-width: .7px;
+      }
+
+      .ang14 {
+        stroke-width: .7px;
+      }
+
+      .ang26 {
+        display: none;
+      }
+
+      .ang15 {
+        stroke: #95bb20;
+      }
+
+      .ang16 {
+        stroke: #009ddf;
+        stroke-dasharray: 8.6;
+      }
+    </style>
+  <style>.tab3,.res1,.dbl0,.pyr1,.ang7,.pri0{fill:none!important;}</style></defs>
+        <g id="fs-lyr-tab" visibility="visible"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="Periodic_Table">
+    <g>
+      <rect class="tab2" x="2022.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2136.2" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2192.9" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2249.6" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2306.3" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2363" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2419.7" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2476.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2533.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2589.7" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2646.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2703.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2759.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2816.5" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2873.2" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1584.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2136.2" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2192.9" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2249.6" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2306.3" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2363" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2419.7" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2476.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2533.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2589.7" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2646.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2703.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2759.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2816.5" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2873.2" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1527.8" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2986.6" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1471.1" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2929.9" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3043.3" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3100" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3156.7" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3213.4" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3270.1" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3326.8" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3383.4" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3440.1" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1414.4" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1357.7" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2079.5" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3553.5" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3496.8" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3610.2" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3666.9" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3723.6" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1301" width="56.7" height="56.7"/>
+      <rect class="tab2" x="2022.8" y="1244.3" width="56.7" height="56.7"/>
+      <rect class="tab2" x="3780.3" y="1244.3" width="56.7" height="56.7"/>
+    </g>
+  </g>
+  <g id="Layer_15">
+    <text class="tab0" transform="translate(2039.6 1283.2)"><tspan x="0" y="0">H</tspan></text>
+    <text class="tab0" transform="translate(2039.4 1339.8)"><tspan x="0" y="0">Li</tspan></text>
+    <text class="tab0" transform="translate(2031.8 1396.5)"><tspan x="0" y="0">Na</tspan></text>
+    <text class="tab0" transform="translate(2040.7 1453.1)"><tspan x="0" y="0">K</tspan></text>
+    <text class="tab0" transform="translate(2032.8 1509.8)"><tspan x="0" y="0">Rb</tspan></text>
+    <text class="tab0" transform="translate(2034.7 1566.4)"><tspan x="0" y="0">Cs</tspan></text>
+    <text class="tab0" transform="translate(2037 1623.1)"><tspan x="0" y="0">Fr</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1283.2)"><tspan x="0" y="0">1</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1339.8)"><tspan x="0" y="0">2</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1396.5)"><tspan x="0" y="0">3</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1453.1)"><tspan x="0" y="0">4</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1509.8)"><tspan x="0" y="0">5</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1566.4)"><tspan x="0" y="0">6</tspan></text>
+    <text class="tab1" transform="translate(1979.5 1623.1)"><tspan x="0" y="0">7</tspan></text>
+    <text class="tab0" transform="translate(2089 1339.8)"><tspan x="0" y="0">Be</tspan></text>
+    <text class="tab0" transform="translate(2084.7 1396.5)"><tspan x="0" y="0">Mg</tspan></text>
+    <text class="tab0" transform="translate(2089.5 1453.1)"><tspan x="0" y="0">Ca</tspan></text>
+    <text class="tab0" transform="translate(2093.1 1509.8)"><tspan x="0" y="0">Sr</tspan></text>
+    <text class="tab0" transform="translate(2090.1 1566.4)"><tspan x="0" y="0">Ba</tspan></text>
+    <text class="tab0" transform="translate(2090.3 1623.1)"><tspan x="0" y="0">Ra</tspan></text>
+    <text class="tab0" transform="translate(2149 1566.4)"><tspan x="0" y="0">La</tspan></text>
+    <text class="tab0" transform="translate(2146.7 1623.1)"><tspan x="0" y="0">Ac</tspan></text>
+    <text class="tab0" transform="translate(2203.4 1566.4)"><tspan x="0" y="0">Ce</tspan></text>
+    <text class="tab0" transform="translate(2203.7 1623.1)"><tspan x="0" y="0">Th</tspan></text>
+    <text class="tab0" transform="translate(2262.8 1566.4)"><tspan x="0" y="0">Pr</tspan></text>
+    <text class="tab0" transform="translate(2260.7 1623.1)"><tspan x="0" y="0">Pa</tspan></text>
+    <text class="tab0" transform="translate(2314.5 1566.4)"><tspan x="0" y="0">Nd</tspan></text>
+    <text class="tab0" transform="translate(2323.5 1623.1)"><tspan x="0" y="0">U</tspan></text>
+    <text class="tab0" transform="translate(2369.1 1566.4)"><tspan x="0" y="0">Pm</tspan></text>
+    <text class="tab0" transform="translate(2371.2 1623.1)"><tspan x="0" y="0">Np</tspan></text>
+    <text class="tab0" transform="translate(2427.1 1566.4)"><tspan x="0" y="0">Sm</tspan></text>
+    <text class="tab0" transform="translate(2430 1623.1)"><tspan x="0" y="0">Pu</tspan></text>
+    <text class="tab0" transform="translate(2487.7 1566.4)"><tspan x="0" y="0">Eu</tspan></text>
+    <text class="tab0" transform="translate(2481.4 1623.1)"><tspan x="0" y="0">Am</tspan></text>
+    <text class="tab0" transform="translate(2542.1 1566.4)"><tspan x="0" y="0">Gd</tspan></text>
+    <text class="tab0" transform="translate(2538.9 1623.1)"><tspan x="0" y="0">Cm</tspan></text>
+    <text class="tab0" transform="translate(2600.5 1566.4)"><tspan x="0" y="0">Tb</tspan></text>
+    <text class="tab0" transform="translate(2599.8 1623.1)"><tspan x="0" y="0">Bk</tspan></text>
+    <text class="tab0" transform="translate(2655.4 1566.4)"><tspan x="0" y="0">Dy</tspan></text>
+    <text class="tab0" transform="translate(2659.6 1623.1)"><tspan x="0" y="0">Cf</tspan></text>
+    <text class="tab0" transform="translate(2711.3 1566.4)"><tspan x="0" y="0">Ho</tspan></text>
+    <text class="tab0" transform="translate(2716.4 1623.1)"><tspan x="0" y="0">Es</tspan></text>
+    <text class="tab0" transform="translate(2774 1566.4)"><tspan x="0" y="0">Er</tspan></text>
+    <text class="tab0" transform="translate(2767.1 1623.1)"><tspan x="0" y="0">Fm</tspan></text>
+    <text class="tab0" transform="translate(2823.1 1566.4)"><tspan x="0" y="0">Tm</tspan></text>
+    <text class="tab0" transform="translate(2822 1623.1)"><tspan x="0" y="0">Md</tspan></text>
+    <text class="tab0" transform="translate(2883.1 1566.4)"><tspan x="0" y="0">Yb</tspan></text>
+    <text class="tab0" transform="translate(2881.4 1623.1)"><tspan x="0" y="0">No</tspan></text>
+    <text class="tab0" transform="translate(2942 1566.4)"><tspan x="0" y="0">Lu</tspan></text>
+    <text class="tab0" transform="translate(2944.8 1623.1)"><tspan x="0" y="0">Lr</tspan></text>
+    <text class="tab0" transform="translate(2998 1566.4)"><tspan x="0" y="0">Hf</tspan></text>
+    <text class="tab0" transform="translate(2999.8 1623.1)"><tspan x="0" y="0">Rf</tspan></text>
+    <text class="tab0" transform="translate(3054.9 1566.4)"><tspan x="0" y="0">Ta</tspan></text>
+    <text class="tab0" transform="translate(3051.8 1623.1)"><tspan x="0" y="0">Db</tspan></text>
+    <text class="tab0" transform="translate(3112.5 1566.4)"><tspan x="0" y="0">W</tspan></text>
+    <text class="tab0" transform="translate(3112.2 1623.1)"><tspan x="0" y="0">Sg</tspan></text>
+    <text class="tab0" transform="translate(3167.3 1566.4)"><tspan x="0" y="0">Re</tspan></text>
+    <text class="tab0" transform="translate(3166.6 1623.1)"><tspan x="0" y="0">Bh</tspan></text>
+    <text class="tab0" transform="translate(3223 1566.4)"><tspan x="0" y="0">Os</tspan></text>
+    <text class="tab0" transform="translate(3223.6 1623.1)"><tspan x="0" y="0">Hs</tspan></text>
+    <text class="tab0" transform="translate(3288.2 1566.4)"><tspan x="0" y="0">Ir</tspan></text>
+    <text class="tab0" transform="translate(3278.4 1623.1)"><tspan x="0" y="0">Mt</tspan></text>
+    <text class="tab0" transform="translate(3340 1566.4)"><tspan x="0" y="0">Pt</tspan></text>
+    <text class="tab0" transform="translate(3337.2 1623.1)"><tspan x="0" y="0">Ds</tspan></text>
+    <text class="tab0" transform="translate(3392.8 1566.4)"><tspan x="0" y="0">Au</tspan></text>
+    <text class="tab0" transform="translate(3394.1 1623.1)"><tspan x="0" y="0">Rg</tspan></text>
+    <text class="tab0" transform="translate(3449 1566.4)"><tspan x="0" y="0">Hg</tspan></text>
+    <text class="tab0" transform="translate(3450.3 1623.1)"><tspan x="0" y="0">Cn</tspan></text>
+    <text class="tab0" transform="translate(3512.4 1566.4)"><tspan x="0" y="0">Tl</tspan></text>
+    <text class="tab0" transform="translate(3505.2 1623.1)"><tspan x="0" y="0">Nh</tspan></text>
+    <text class="tab0" transform="translate(3563.9 1566.4)"><tspan x="0" y="0">Pb</tspan></text>
+    <text class="tab0" transform="translate(3569.7 1623.1)"><tspan x="0" y="0">Fl</tspan></text>
+    <text class="tab0" transform="translate(3624.7 1566.4)"><tspan x="0" y="0">Bi</tspan></text>
+    <text class="tab0" transform="translate(3617.1 1623.1)"><tspan x="0" y="0">Mc</tspan></text>
+    <text class="tab0" transform="translate(3677.2 1566.4)"><tspan x="0" y="0">Po</tspan></text>
+    <text class="tab0" transform="translate(3679.5 1623.1)"><tspan x="0" y="0">Lv</tspan></text>
+    <text class="tab0" transform="translate(3735.8 1566.4)"><tspan x="0" y="0">At</tspan></text>
+    <text class="tab0" transform="translate(3736.4 1623.1)"><tspan x="0" y="0">Ts</tspan></text>
+    <text class="tab0" transform="translate(3790.5 1566.4)"><tspan x="0" y="0">Rn</tspan></text>
+    <text class="tab0" transform="translate(3788.6 1623.1)"><tspan x="0" y="0">Og</tspan></text>
+    <text class="tab0" transform="translate(2943.3 1452.7)"><tspan x="0" y="0">Sc</tspan></text>
+    <text class="tab0" transform="translate(2948.9 1509.4)"><tspan x="0" y="0">Y</tspan></text>
+    <text class="tab0" transform="translate(3002.5 1452.7)"><tspan x="0" y="0">Ti</tspan></text>
+    <text class="tab0" transform="translate(3000.7 1509.4)"><tspan x="0" y="0">Zr</tspan></text>
+    <text class="tab0" transform="translate(3061.6 1452.7)"><tspan x="0" y="0">V</tspan></text>
+    <text class="tab0" transform="translate(3052 1509.4)"><tspan x="0" y="0">Nb</tspan></text>
+    <text class="tab0" transform="translate(3113.4 1452.7)"><tspan x="0" y="0">Cr</tspan></text>
+    <text class="tab0" transform="translate(3105.8 1509.4)"><tspan x="0" y="0">Mo</tspan></text>
+    <text class="tab0" transform="translate(3162.6 1452.7)"><tspan x="0" y="0">Mn</tspan></text>
+    <text class="tab0" transform="translate(3169.2 1509.4)"><tspan x="0" y="0">Tc</tspan></text>
+    <text class="tab0" transform="translate(3225.7 1452.7)"><tspan x="0" y="0">Fe</tspan></text>
+    <text class="tab0" transform="translate(3223.8 1509.4)"><tspan x="0" y="0">Ru</tspan></text>
+    <text class="tab0" transform="translate(3280.4 1452.7)"><tspan x="0" y="0">Co</tspan></text>
+    <text class="tab0" transform="translate(3280.5 1509.4)"><tspan x="0" y="0">Rh</tspan></text>
+    <text class="tab0" transform="translate(3339.9 1452.7)"><tspan x="0" y="0">Ni</tspan></text>
+    <text class="tab0" transform="translate(3337.4 1509.4)"><tspan x="0" y="0">Pd</tspan></text>
+    <text class="tab0" transform="translate(3393.6 1452.7)"><tspan x="0" y="0">Cu</tspan></text>
+    <text class="tab0" transform="translate(3393.3 1509.4)"><tspan x="0" y="0">Ag</tspan></text>
+    <text class="tab0" transform="translate(3451 1452.7)"><tspan x="0" y="0">Zn</tspan></text>
+    <text class="tab0" transform="translate(3450.3 1509.4)"><tspan x="0" y="0">Cd</tspan></text>
+    <text class="tab0" transform="translate(3506.8 1452.7)"><tspan x="0" y="0">Ga</tspan></text>
+    <text class="tab0" transform="translate(3512.2 1509.4)"><tspan x="0" y="0">In</tspan></text>
+    <text class="tab0" transform="translate(3563.2 1452.7)"><tspan x="0" y="0">Ge</tspan></text>
+    <text class="tab0" transform="translate(3565.2 1509.4)"><tspan x="0" y="0">Sn</tspan></text>
+    <text class="tab0" transform="translate(3621.4 1452.7)"><tspan x="0" y="0">As</tspan></text>
+    <text class="tab0" transform="translate(3621.9 1509.4)"><tspan x="0" y="0">Sb</tspan></text>
+    <text class="tab0" transform="translate(3679.1 1452.7)"><tspan x="0" y="0">Se</tspan></text>
+    <text class="tab0" transform="translate(3678.3 1509.4)"><tspan x="0" y="0">Te</tspan></text>
+    <text class="tab0" transform="translate(3736.4 1452.7)"><tspan x="0" y="0">Br</tspan></text>
+    <text class="tab0" transform="translate(3747.5 1509.4)"><tspan x="0" y="0">I</tspan></text>
+    <text class="tab0" transform="translate(3792.6 1452.7)"><tspan x="0" y="0">Kr</tspan></text>
+    <text class="tab1" transform="translate(2045.5 1216.2)"><tspan x="0" y="0">1</tspan></text>
+    <text class="tab1" transform="translate(2101.3 1216.2)"><tspan x="0" y="0">2</tspan></text>
+    <text class="tab1" transform="translate(2953.1 1215.8)"><tspan x="0" y="0">3</tspan></text>
+    <text class="tab1" transform="translate(3009.8 1215.8)"><tspan x="0" y="0">4</tspan></text>
+    <text class="tab1" transform="translate(3066.5 1215.8)"><tspan x="0" y="0">5</tspan></text>
+    <text class="tab1" transform="translate(3123.1 1215.8)"><tspan x="0" y="0">6</tspan></text>
+    <text class="tab1" transform="translate(3179.8 1215.8)"><tspan x="0" y="0">7</tspan></text>
+    <text class="tab1" transform="translate(3236.5 1215.8)"><tspan x="0" y="0">8</tspan></text>
+    <text class="tab1" transform="translate(3293.1 1215.8)"><tspan x="0" y="0">9</tspan></text>
+    <text class="tab1" transform="translate(3344 1215.8)"><tspan x="0" y="0">10</tspan></text>
+    <text class="tab1" transform="translate(3400.4 1215.8)"><tspan x="0" y="0">11</tspan></text>
+    <text class="tab1" transform="translate(3457.1 1215.8)"><tspan x="0" y="0">12</tspan></text>
+    <text class="tab1" transform="translate(3513.8 1215.8)"><tspan x="0" y="0">13</tspan></text>
+    <text class="tab1" transform="translate(3570.5 1215.8)"><tspan x="0" y="0">14</tspan></text>
+    <text class="tab1" transform="translate(3627.2 1215.8)"><tspan x="0" y="0">15</tspan></text>
+    <text class="tab1" transform="translate(3683.9 1215.8)"><tspan x="0" y="0">16</tspan></text>
+    <text class="tab1" transform="translate(3740.6 1215.8)"><tspan x="0" y="0">17</tspan></text>
+    <text class="tab1" transform="translate(3797.3 1215.8)"><tspan x="0" y="0">18</tspan></text>
+    <text class="tab0" transform="translate(3790.5 1509.4)"><tspan x="0" y="0">Xe</tspan></text>
+    <text class="tab0" transform="translate(3515.4 1340.4)"><tspan x="0" y="0">B</tspan></text>
+    <text class="tab0" transform="translate(3510.8 1397.1)"><tspan x="0" y="0">Al</tspan></text>
+    <text class="tab0" transform="translate(3572.3 1340.4)"><tspan x="0" y="0">C</tspan></text>
+    <text class="tab0" transform="translate(3569.8 1397.1)"><tspan x="0" y="0">Si</tspan></text>
+    <text class="tab0" transform="translate(3627.1 1340.4)"><tspan x="0" y="0">N</tspan></text>
+    <text class="tab0" transform="translate(3629.3 1397.1)"><tspan x="0" y="0">P</tspan></text>
+    <text class="tab0" transform="translate(3683.3 1340.4)"><tspan x="0" y="0">O</tspan></text>
+    <text class="tab0" transform="translate(3687.2 1397.1)"><tspan x="0" y="0">S</tspan></text>
+    <text class="tab0" transform="translate(3743.7 1340.4)"><tspan x="0" y="0">F</tspan></text>
+    <text class="tab0" transform="translate(3738.5 1397.1)"><tspan x="0" y="0">Cl</tspan></text>
+    <text class="tab0" transform="translate(3789.2 1340.4)"><tspan x="0" y="0">Ne</tspan></text>
+    <text class="tab0" transform="translate(3789.2 1281.5)"><tspan x="0" y="0">He</tspan></text>
+    <text class="tab0" transform="translate(3792.5 1397.1)"><tspan x="0" y="0">Ar</tspan></text>
+  </g></g><g id="fs-lyr-res" visibility="visible"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="Basic_resonance_curve">
+    <path class="res1" d="M2022.8,1244.3c76.6,167.4,245.3,283.5,442,283.5s933.9-233.5,1091.9-233.5,280.3,125.5,280.3,280.3"/>
+  </g></g><g id="fs-lyr-cir" visibility="visible"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  <circle class="cir1" cx="3556.7" cy="1574.9" r="280.3"/>
+  <path class="cir0" d="M2035.1,1338.5"/>
+  <path class="cir0" d="M2465,1042.6"/>
+  <circle class="cir1" cx="2464.4" cy="1042.3" r="485.4"/>
+  <circle class="cir1" cx="2464.4" cy="1042.3" r="485.4"/></g><g id="fs-lyr-dbl" visibility="hidden"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="Doublecube">
+    <rect class="dbl1" x="2022.8" y="714.2" width="926.9" height="926.9"/>
+    <rect class="dbl1" x="2910.1" y="714.2" width="926.9" height="926.9"/>
+  </g></g><g id="fs-lyr-pyr" visibility="hidden"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="_x33_D_structure">
+    <line class="pyr0" x1="3556.7" y1="1574.9" x2="2035.1" y2="1574.9"/>
+    <line class="pyr0" x1="3556.7" y1="1574.9" x2="2034.3" y2="1574.9"/>
+    <path class="pyr0" d="M2465,1042.6"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="3556.7" y2="1574.9"/>
+    <line class="pyr0" x1="3556.7" y1="1574.9" x2="3738.4" y2="1361.5"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="2034.3" y2="1267.7"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="2034.3" y2="1574.9"/>
+    <line class="pyr0" x1="2034.3" y1="1574.9" x2="2034.3" y2="1267.7"/>
+    <line class="pyr0" x1="3738.4" y1="1361.5" x2="2034.3" y2="1267.7"/>
+    <line class="pyr0" x1="2465" y1="1042.6" x2="3738.4" y2="1361.5"/>
+  </g></g><g id="fs-lyr-ang" visibility="hidden"><g id="Angles_and_relations" class="st26">
+    <g id="Angular_Dimension">
+      <line class="ang11" x1="2519.6" y1="1574.9" x2="2527.6" y2="1574.9"/>
+    </g>
+    <g id="Angular_Dimension1" data-name="Angular_Dimension">
+      <path class="ang0" d="M3653.7,1461.8"/>
+      <path class="ang0" d="M3658.9,1455.7"/>
+    </g>
+    <g id="Angular_Dimension2" data-name="Angular_Dimension">
+      <line class="ang11" x1="2034.7" y1="1454.7" x2="2034.7" y2="1446.7"/>
+      <line class="ang11" x1="2155" y1="1574.9" x2="2163" y2="1574.9"/>
+      <text class="ang17" transform="translate(2122.2 1472.5) rotate(45)"><tspan x="0" y="0" xml:space="preserve"> 90° </tspan></text>
+      <g>
+        <path class="ang11" d="M2158.9,1570.8c-2.1-65.4-54.7-118-120.1-120.1"/>
+        <path class="ang19" d="M2158.8,1569.9l-1.8-1h0c0,0,1.2,3,1.2,3,.3,1,.5,2,.8,3.1.2-1,.4-2.1.6-3.1l1.1-3h0c0,0-1.8,1.1-1.8,1.1Z"/>
+        <path class="ang19" d="M2039.7,1450.8l1,1.8h0s-2.9-1.2-2.9-1.2c-1-.3-2-.5-3.1-.8,1-.2,2.1-.4,3.1-.6l3-1.1h0s-1.1,1.8-1.1,1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension3" data-name="Angular_Dimension">
+      <line class="ang11" x1="3499.2" y1="1574.9" x2="3491.2" y2="1574.9"/>
+      <line class="ang11" x1="3595.1" y1="1530.7" x2="3600.2" y2="1524.6"/>
+      <text class="ang17" transform="translate(3505.2 1519.6) rotate(-24.8)"><tspan x="0" y="0" xml:space="preserve"> 130,479° </tspan></text>
+      <g>
+        <path class="ang11" d="M3594.5,1525.1c-26-19.4-63-15.6-84.4,9.5-8.7,10.2-13.9,22.9-14.7,36.3"/>
+        <path class="ang19" d="M3593.7,1524.6l-2,.7h0c0,0,3,1,3,1,.9.5,1.9.9,2.8,1.4-.7-.8-1.3-1.6-2-2.4l-1.6-2.7h0s-.3,2.1-.3,2.1Z"/>
+        <path class="ang19" d="M3495.4,1569.9l1.8-1h0c0,0-1.3,2.9-1.3,2.9-.3,1-.5,2-.8,3-.2-1-.4-2.1-.5-3.1l-1-3h0c0,0,1.8,1.1,1.8,1.1Z"/>
+      </g>
+    </g>
+    <text class="ang17" transform="translate(1985.5 1455.9) rotate(-90)"><tspan x="0" y="0" xml:space="preserve"> 106,231 mm </tspan></text>
+    <g id="Aligned_Dimension">
+      <line class="ang11" x1="3741.6" y1="1359.7" x2="3743.9" y2="1318.5"/>
+      <line class="ang11" x1="2034.9" y1="1265.7" x2="2037.2" y2="1224.5"/>
+      <text class="ang17" transform="translate(2857.4 1263.6) rotate(3.2)"><tspan x="0" y="0" xml:space="preserve"> 602,992 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="2041" y1="1228.7" x2="3739.6" y2="1322.2"/>
+        <path class="ang19" d="M2041.9,1228.7l1.2-1.7h0s-3,1-3,1c-1,.2-2.1.3-3.1.5,1,.3,2,.6,3,.8l2.9,1.3h0s-1-1.9-1-1.9Z"/>
+        <path class="ang19" d="M3738.7,1322.2l-1-1.9h0s2.9,1.3,2.9,1.3c1,.3,2,.6,3,.8-1,.2-2.1.3-3.1.5l-3,1h0s1.2-1.8,1.2-1.8Z"/>
+      </g>
+    </g>
+    <g id="Aligned_Dimension1" data-name="Aligned_Dimension">
+      <line class="ang11" x1="3740.8" y1="1363" x2="3788" y2="1403.2"/>
+      <line class="ang11" x1="3558.9" y1="1576.2" x2="3606" y2="1616.4"/>
+      <text class="ang17" transform="translate(3687.8 1542) rotate(-49.5)"><tspan x="0" y="0" xml:space="preserve"> 98,877 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="3605.6" y1="1610.7" x2="3782.3" y2="1403.7"/>
+        <path class="ang19" d="M3606.2,1610.1l-.7-2h0s-1,3-1,3c-.5.9-1,1.8-1.5,2.8.8-.6,1.7-1.3,2.5-1.9l2.8-1.5h0c0,0-2.1-.4-2.1-.4Z"/>
+        <path class="ang19" d="M3781.7,1404.4l-2.1-.3h0c0,0,2.8-1.6,2.8-1.6.8-.6,1.7-1.3,2.5-1.9-.5.9-1,1.8-1.5,2.8l-1,3h0s-.7-2-.7-2Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension4" data-name="Angular_Dimension">
+      <line class="ang11" x1="3353.5" y1="1574.9" x2="3345.5" y2="1574.9"/>
+      <line class="ang11" x1="3374.1" y1="1485.6" x2="3366.9" y2="1482.1"/>
+      <text class="ang17" transform="translate(3341 1543.4) rotate(-77)"><tspan x="0" y="0" xml:space="preserve"> 25,98° </tspan></text>
+      <g>
+        <path class="ang11" d="M3368.7,1487.5c-12.1,26.1-18.7,54.5-19.2,83.3"/>
+        <path class="ang19" d="M3368.4,1488.3l1.2,1.7h0s.1-3.2.1-3.2c.2-1,.4-2.1.7-3.1-.6.8-1.3,1.7-1.9,2.5l-2.3,2.2h0c0,0,2.1-.2,2.1-.2Z"/>
+        <path class="ang19" d="M3349.6,1569.9l1.8-1h0c0,0-1.2,3-1.2,3-.3,1-.5,2-.8,3-.2-1-.4-2.1-.6-3.1l-1.1-3h0c0,0,1.8,1.1,1.8,1.1Z"/>
+      </g>
+    </g>
+    <g>
+      <line class="ang4" x1="3952.4" y1="1042.6" x2="3952.4" y2="1574.9"/>
+      <line class="ang8" x1="3973" y1="1574.9" x2="3931.9" y2="1574.9"/>
+      <line class="ang8" x1="3973" y1="1042.6" x2="3931.9" y2="1042.6"/>
+    </g>
+    <line class="ang4" x1="3557.3" y1="1906" x2="2465" y2="1906"/>
+    <line class="ang8" x1="2465" y1="1926.5" x2="2465" y2="1885.4"/>
+    <line class="ang8" x1="3557.3" y1="1926.5" x2="3557.3" y2="1885.4"/>
+    <text class="ang18" transform="translate(4001.9 1268)"><tspan x="0" y="0">Delta y of </tspan><tspan x="0" y="37.1">origo circles:</tspan><tspan x="0" y="74.2">187,78</tspan></text>
+    <text class="ang18" transform="translate(2773.9 1956.8)"><tspan x="0" y="0">Delta x of origo circles: 385,345</tspan></text>
+    <g id="Angular_Dimension5" data-name="Angular_Dimension">
+      <line class="ang11" x1="3475.2" y1="1534.9" x2="3468" y2="1531.4"/>
+      <line class="ang11" x1="3616.6" y1="1505.4" x2="3621.8" y2="1499.3"/>
+      <text class="ang17" transform="translate(3512.2 1476.6) rotate(-11.8)"><tspan x="0" y="0" xml:space="preserve"> 104,499° </tspan></text>
+      <g>
+        <path class="ang11" d="M3616.1,1499.8c-40-31.3-98-25.8-131.2,13.2-4.3,5.1-8.1,10.6-11.3,16.5"/>
+        <path class="ang19" d="M3615.4,1499.2l-2,.7h0c0,0,3,1,3,1,.9.5,1.9.9,2.8,1.4-.7-.8-1.3-1.6-2-2.5l-1.5-2.8h0s-.3,2.1-.3,2.1Z"/>
+        <path class="ang19" d="M3474,1528.7h2.1c0-.1,0,0,0,0l-2.4,2.1c-.7.8-1.4,1.6-2,2.4.3-1,.6-2,.8-3l.3-3.1h0s1.1,1.8,1.1,1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension6" data-name="Angular_Dimension">
+      <line class="ang11" x1="2688.6" y1="1098.6" x2="2696.4" y2="1100.5"/>
+    </g>
+    <g id="Angular_Dimension7" data-name="Angular_Dimension">
+      <line class="ang11" x1="2639.8" y1="1086.4" x2="2647.6" y2="1088.3"/>
+      <line class="ang11" x1="2627" y1="1121.5" x2="2634.2" y2="1125"/>
+      <text class="ang17" transform="translate(2648 1131.7) rotate(-70)"><tspan x="0" y="0" xml:space="preserve"> 11,921° </tspan></text>
+      <g>
+        <path class="ang11" d="M2632.4,1119.6c4.2-9.1,7.7-18.6,10.3-28.3"/>
+        <path class="ang19" d="M2632.7,1118.8l-1.2-1.7h0s-.2,3.2-.2,3.2c-.2,1-.4,2-.7,3.1.6-.8,1.3-1.7,1.9-2.5l2.3-2.2h0c0,0-2.1.2-2.1.2Z"/>
+        <path class="ang19" d="M2642.4,1092.1l-2,.6h0c0,0,1.9-2.6,1.9-2.6.5-.9,1-1.9,1.5-2.8,0,1-.1,2.1-.2,3.1l.3,3.1h0c0,0-1.5-1.5-1.5-1.5Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension8" data-name="Angular_Dimension">
+      <line class="ang11" x1="2764.5" y1="1117.6" x2="2772.3" y2="1119.5"/>
+      <line class="ang11" x1="2191.5" y1="1185.7" x2="2184.4" y2="1189.4"/>
+      <text class="ang17" transform="translate(2480.2 1374.1) rotate(-6.8)"><tspan x="0" y="0" xml:space="preserve"> 138,323° </tspan></text>
+      <g>
+        <path class="ang11" d="M2189.8,1191.2c81.1,150.4,268.3,208,420.2,128.5,77.9-40.7,134.9-112.3,157.4-197.2"/>
+        <path class="ang19" d="M2190.3,1191.9h2.1c0,0,0,0,0,0l-2.4-2c-.7-.8-1.4-1.6-2.1-2.4.3,1,.6,2,.9,3l.4,3.1h0s1.1-1.8,1.1-1.8Z"/>
+        <path class="ang19" d="M2767,1123.4l-2,.6h0c0,0,1.9-2.6,1.9-2.6.5-.9,1-1.9,1.5-2.8,0,1-.1,2.1-.2,3.1l.3,3.1h0c0,0-1.5-1.5-1.5-1.5Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension9" data-name="Angular_Dimension">
+      <line class="ang11" x1="2091.5" y1="1504.7" x2="2096.5" y2="1498.5"/>
+      <line class="ang11" x1="2125" y1="1574.9" x2="2133" y2="1574.9"/>
+      <text class="ang17" transform="translate(2121 1513.7) rotate(64.5)"><tspan x="0" y="0" xml:space="preserve"> 51,05° </tspan></text>
+      <g>
+        <path class="ang11" d="M2128.9,1570.8c-1.1-25.6-12.6-49.6-31.8-66.6"/>
+        <path class="ang19" d="M2128.9,1569.9l-1.8-1h0c0,0,1.2,3,1.2,3,.3,1,.5,2,.8,3.1.2-1,.4-2.1.6-3.1l1.1-3h0c0,0-1.8,1.1-1.8,1.1Z"/>
+        <path class="ang19" d="M2097.8,1504.8l-.3,2.1h0s-1.5-2.8-1.5-2.8c-.6-.8-1.3-1.7-1.9-2.5.9.5,1.8,1,2.8,1.5l3,1h0c0,0-2,.7-2,.7Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension10" data-name="Angular_Dimension">
+      <line class="ang11" x1="2600.3" y1="1108.5" x2="2607.5" y2="1112"/>
+      <line class="ang11" x1="2370.4" y1="1159.7" x2="2365.3" y2="1165.9"/>
+      <text class="ang17" transform="translate(2481.9 1215.8) rotate(-12.5)"><tspan x="0" y="0" xml:space="preserve"> 102,97° </tspan></text>
+      <g>
+        <path class="ang11" d="M2371.1,1165.3c66.3,50.8,161.3,39.8,214.1-25.6,6.5-8,12.1-16.7,16.9-25.8"/>
+        <path class="ang19" d="M2371.8,1165.8l2-.8h0c0,0-3-.9-3-.9-.9-.4-1.9-.9-2.8-1.3.7.8,1.3,1.6,2,2.4l1.6,2.7h0s.2-2.1.2-2.1Z"/>
+        <path class="ang19" d="M2601.6,1114.7h-2.1c0,.1,0,0,0,0l2.4-2.1c.7-.8,1.3-1.6,2-2.4-.3,1-.5,2-.8,3l-.3,3.1h0s-1.1-1.8-1.1-1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension11" data-name="Angular_Dimension">
+      <line class="ang11" x1="2340.5" y1="1196.7" x2="2335.4" y2="1202.9"/>
+      <line class="ang11" x1="2289.5" y1="1134.4" x2="2282.4" y2="1138.2"/>
+      <text class="ang17" transform="translate(2281.2 1165.9) rotate(50.7)"><tspan x="0" y="0" xml:space="preserve"> 23,431° </tspan></text>
+      <g>
+        <path class="ang11" d="M2287.8,1139.9c12,21.8,27.9,41.3,47,57.3"/>
+        <path class="ang19" d="M2288.3,1140.6h2.1c0,0,0,0,0,0l-2.4-2c-.7-.8-1.4-1.6-2.1-2.4.3,1,.6,2,.9,3l.4,3.1h0s1.1-1.8,1.1-1.8Z"/>
+        <path class="ang19" d="M2334.2,1196.6l.3-2.1h0s1.5,2.8,1.5,2.8c.6.8,1.3,1.7,1.9,2.5-.9-.5-1.9-1-2.8-1.5l-3-1h0c0,0,2-.7,2-.7Z"/>
+      </g>
+    </g>
+    <g id="Manual_Dimension">
+      <line class="ang11" x1="3557.3" y1="1576.9" x2="3557.3" y2="1779"/>
+      <line class="ang11" x1="2034.8" y1="1573.2" x2="2034.8" y2="1779"/>
+      <text class="ang17" transform="translate(2762.5 1792.9)"><tspan x="0" y="0" xml:space="preserve"> 537,114 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="2038.9" y1="1775" x2="3553.3" y2="1775"/>
+        <path class="ang19" d="M2039.8,1775l1.1-1.8h0s-2.9,1.1-2.9,1.1c-1,.2-2,.5-3.1.7,1,.2,2,.5,3.1.7l2.9,1.2h0s-1.1-1.8-1.1-1.8Z"/>
+        <path class="ang19" d="M3552.4,1775l-1.1-1.8h0s2.9,1.1,2.9,1.1c1,.2,2,.5,3.1.7-1,.2-2,.5-3.1.7l-2.9,1.2h0s1.1-1.8,1.1-1.8Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension12" data-name="Angular_Dimension">
+      <line class="ang11" x1="2690.7" y1="1099.1" x2="2698.5" y2="1101.1"/>
+      <line class="ang11" x1="2318.7" y1="1223.5" x2="2313.7" y2="1229.8"/>
+      <text class="ang17" transform="translate(2523 1292) rotate(-18.5)"><tspan x="0" y="0" xml:space="preserve"> 114,891° </tspan></text>
+      <g>
+        <path class="ang11" d="M2319.4,1229.2c101.6,79.3,248.3,62.8,329.7-37.8,20.8-25.7,35.9-55.5,44.5-87.3"/>
+        <path class="ang19" d="M2320.2,1229.7l2-.8h0c0,0-3-.9-3-.9-.9-.4-1.9-.9-2.8-1.3.7.8,1.3,1.6,2,2.4l1.6,2.7h0s.2-2.1.2-2.1Z"/>
+        <path class="ang19" d="M2693.3,1104.9l-2,.6h0c0,0,1.9-2.6,1.9-2.6.5-.9,1-1.9,1.5-2.8,0,1-.1,2.1-.2,3.1l.3,3.1h0c0,0-1.4-1.5-1.4-1.5Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension13" data-name="Angular_Dimension">
+      <line class="ang11" x1="3330.1" y1="1339" x2="3322.1" y2="1338.6"/>
+      <line class="ang11" x1="3341.8" y1="1262.1" x2="3334" y2="1260.2"/>
+      <text class="ang17" transform="translate(3317.1 1319.1) rotate(-81.4)"><tspan x="0" y="0" xml:space="preserve"> 10,906° </tspan></text>
+      <g>
+        <path class="ang11" d="M3336.9,1265.1c-5.5,22.9-9,46.1-10.5,69.6"/>
+        <path class="ang19" d="M3336.8,1266l1.5,1.5h0c0,0-.5-3.2-.5-3.2,0-1,0-2.1,0-3.1-.4.9-.9,1.9-1.3,2.8l-1.8,2.6h0c0,0,2-.6,2-.6Z"/>
+        <path class="ang19" d="M3326.5,1333.9l1.9-1h0c0,0-1.4,2.9-1.4,2.9-.3,1-.6,2-.9,3-.1-1-.3-2.1-.4-3.1l-.9-3h0c0,0,1.7,1.2,1.7,1.2Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension14" data-name="Angular_Dimension">
+      <line class="ang11" x1="3668.2" y1="1444.9" x2="3663" y2="1451"/>
+      <line class="ang11" x1="3633.1" y1="1335.1" x2="3625.4" y2="1333.2"/>
+      <text class="ang17" transform="translate(3607.4 1381.7) rotate(72.3)"><tspan x="0" y="0" xml:space="preserve"> 63,579° </tspan></text>
+      <g>
+        <path class="ang11" d="M3628.3,1338.1c-8.4,39.3,4.7,80,34.3,107.2"/>
+        <path class="ang19" d="M3628.2,1339l1.5,1.4h0c0,0-.5-3.2-.5-3.2,0-1,0-2.1,0-3.1-.4,1-.9,1.9-1.3,2.9l-1.8,2.6h0c0,0,2-.6,2-.6Z"/>
+        <path class="ang19" d="M3662,1444.6l.4-2.1h0s1.4,2.9,1.4,2.9c.6.9,1.2,1.7,1.8,2.6-.9-.5-1.8-1.1-2.7-1.6l-3-1.1h0c0,0,2-.7,2-.7Z"/>
+      </g>
+    </g>
+    <g id="Radial_Dimension">
+      <text class="ang17" transform="translate(2959.7 1054.8) rotate(1.4)"><tspan x="0" y="0" xml:space="preserve"> R 171,25 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="2464.4" y1="1042.3" x2="2945.6" y2="1054.4"/>
+        <path class="ang19" d="M2944.7,1054.4l-1.1-1.8h0s2.9,1.2,2.9,1.2c1,.3,2,.5,3.1.8-1,.2-2.1.4-3.1.6l-3,1.1h0s1.1-1.8,1.1-1.8Z"/>
+      </g>
+    </g>
+    <g id="Radial_Dimension1" data-name="Radial_Dimension">
+      <text class="ang17" transform="translate(3817.5 1703.5) rotate(26.3)"><tspan x="0" y="0" xml:space="preserve"> R 98,875 mm </tspan></text>
+      <g>
+        <line class="ang11" x1="3557.3" y1="1574.9" x2="3804.9" y2="1697.3"/>
+        <path class="ang19" d="M3804.1,1696.9l-.2-2.1h0s2.1,2.3,2.1,2.3c.8.7,1.6,1.3,2.5,2-1-.3-2-.5-3.1-.8l-3.2-.3h0c0,0,1.8-1.2,1.8-1.2Z"/>
+      </g>
+    </g>
+    <g id="Aligned_Dimension2" data-name="Aligned_Dimension">
+      <line class="ang11" x1="2029.2" y1="1271.8" x2="1991.4" y2="1271.8"/>
+      <line class="ang11" x1="2029.2" y1="1572.9" x2="1991.4" y2="1572.9"/>
+      <g>
+        <line class="ang11" x1="1995.4" y1="1568.8" x2="1995.4" y2="1275.8"/>
+        <path class="ang19" d="M1995.4,1567.9l-1.8-1.1h0c0,0,1.2,3,1.2,3,.2,1,.5,2,.7,3.1.2-1,.5-2,.7-3.1l1.2-2.9h0c0,0-1.8,1-1.8,1Z"/>
+        <path class="ang19" d="M1995.4,1276.7l-1.8,1.1h0c0,0,1.2-3,1.2-3,.2-1,.5-2,.7-3.1.2,1,.5,2,.7,3.1l1.2,2.9h0c0,0-1.8-1-1.8-1Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension15" data-name="Angular_Dimension">
+      <line class="ang11" x1="3638.6" y1="1479.6" x2="3633.4" y2="1485.7"/>
+      <line class="ang11" x1="3584.5" y1="1353.2" x2="3576.5" y2="1352.7"/>
+      <text class="ang17" transform="translate(3568 1412.1) rotate(66.8)"><tspan x="0" y="0" xml:space="preserve"> 52,678° </tspan></text>
+      <g>
+        <path class="ang11" d="M3580.3,1357c-1.4,46.7,17.9,91.7,52.7,123"/>
+        <path class="ang19" d="M3580.4,1357.9l1.8,1.1h0c0,0-1.1-3-1.1-3-.2-1-.4-2.1-.6-3.1-.3,1-.5,2-.8,3.1l-1.2,2.9h0c0,0,1.8-1,1.8-1Z"/>
+        <path class="ang19" d="M3632.3,1479.3l.4-2.1h0s1.4,2.8,1.4,2.8c.6.9,1.2,1.7,1.8,2.6-.9-.5-1.8-1-2.7-1.6l-3-1.1h0c0,0,2-.7,2-.7Z"/>
+      </g>
+    </g>
+    <g id="Angular_Dimension16" data-name="Angular_Dimension">
+      <line class="ang11" x1="2161.1" y1="1201.6" x2="2168.2" y2="1197.9"/>
+      <line class="ang11" x1="2177.2" y1="1275.5" x2="2185.2" y2="1276"/>
+      <text class="ang17" transform="translate(2183.4 1213.9) rotate(77.8)"><tspan x="0" y="0" xml:space="preserve"> 30,776° </tspan></text>
+      <g>
+        <path class="ang11" d="M2181.3,1271.7c.6-23.6-4.4-47.1-14.8-68.3"/>
+        <path class="ang19" d="M2181.3,1270.8l-1.8-1.1h0c0,0,1.1,3,1.1,3,.2,1,.4,2.1.6,3.1.2-1,.5-2,.7-3.1l1.2-2.9h0c0,0-1.8,1-1.8,1Z"/>
+        <path class="ang19" d="M2166.8,1204.2l-1.1,1.8h0s-.2-3.2-.2-3.2c-.2-1-.5-2-.7-3.1.6.8,1.3,1.6,1.9,2.5l2.3,2.1h0c0,0-2.1-.1-2.1-.1Z"/>
+      </g>
+    </g>
+  </g></g><g id="fs-lyr-pri" visibility="hidden"><!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  
+  
+  <g id="primtall">
+    <text class="pri1" transform="translate(1939.4 1251.2)"><tspan x="0" y="0">2</tspan></text>
+    <text class="pri2" transform="translate(1929 1283.1)"><tspan x="0" y="0">1/2</tspan></text>
+    <text class="pri1" transform="translate(1939.4 1364.7)"><tspan x="0" y="0">3</tspan></text>
+    <text class="pri2" transform="translate(1929 1337.4)"><tspan x="0" y="0">2/3</tspan></text>
+    <text class="pri2" transform="translate(1929 1395.9)"><tspan x="0" y="0">3/2</tspan></text>
+    <text class="pri2" transform="translate(1929 1452.6)"><tspan x="0" y="0">4/5</tspan></text>
+    <text class="pri2" transform="translate(1929 1508.9)"><tspan x="0" y="0">5/4</tspan></text>
+    <text class="pri2" transform="translate(1929 1565.7)"><tspan x="0" y="0">6/7</tspan></text>
+    <text class="pri2" transform="translate(1929 1623.4)"><tspan x="0" y="0">7/6</tspan></text>
+    <text class="pri1" transform="translate(1939.4 1478.3)"><tspan x="0" y="0">5</tspan></text>
+    <text class="pri1" transform="translate(1939.4 1591.9)"><tspan x="0" y="0">7</tspan></text>
+    <text class="pri1" transform="translate(1926.6 1712.4)"><tspan x="0" y="0">7 perioder</tspan><tspan x="0" y="24">4 primtall</tspan><tspan x="0" y="48">7/4=1,75</tspan></text>
+  </g></g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<footer>A geometric field model of the periodic table &mdash; work in progress &mdash; all values relational, model hand-drawn in Adobe Illustrator</footer>
+
+<script>
+var openObs=null;
+var layers=[{"id": "tab", "title": "Periodic Table", "sub": "Wide format, 32 columns", "color": "#b3b3b2", "on": true, "obs": "The wide-format (Janet) periodic table with 32 columns. s-block left, f-block centre, d- and p-blocks right. Most versions fold the lanthanides away. This format reveals the full geometric structure."}, {"id": "res", "title": "Resonance Curve", "sub": "The S-curve through the system", "color": "#ffd500", "on": true, "obs": "The resonance curve runs from hydrogen, arcs upward through the empty space above the table, and descends to meet the heavy elements on the right. It emerges from the visual core of the wide format."}, {"id": "cir", "title": "C1 and C2", "sub": "The two resonance circles", "color": "#0089cb", "on": true, "obs": "C1 (the larger circle) sits above the table. C2 has its centre at lead \u2014 Pb, atomic number 82, the heaviest stable element and a nuclear magic number. Their radius ratio R1/R2 is so close to \u221a3 that in a computed version we expect the ratio to be exactly \u221a3."}, {"id": "dbl", "title": "Double Cube", "sub": "Two overlapping squares", "color": "#009ddf", "on": false, "obs": "The outer reach of C1 defines the first cube. Two cubes placed side by side almost span the table. They overlap by \u03b4 = 14 units against a side of 327. That overlap lands precisely at the boundary between group 2 and group 3."}, {"id": "pyr", "title": "Asymmetric Pyramid", "sub": "Connecting C1 and C2", "color": "#f39200", "on": false, "obs": "The asymmetric pyramidal form connects C1 and C2. \u0394x = 385.345 mm, \u0394y = 187.78 mm."}, {"id": "ang", "title": "Angles & Measures", "sub": "Geometric constants", "color": "#555550", "on": false, "obs": "Angular and dimensional measurements. Key angles: 90\u00b0, 51.05\u00b0, 25.98\u00b0, 138.32\u00b0, 114.89\u00b0, 102.97\u00b0. Use zoom to read details."}, {"id": "pri", "title": "Prime Periods", "sub": "7 periods \u2014 4 primes \u2014 7/4=1.75", "color": "#cc5116", "on": false, "obs": "Seven periods pair with the first four primes (2,3,5,7) as reciprocal pairs."}];
+var msc=1,msv,msVB,fsc=1,fsv,fsVB;
+
+function init(){
+  msv=document.getElementById('msv');
+  fsv=document.getElementById('fsv');
+  if(msv)msVB=msv.getAttribute('viewBox');
+  if(fsv)fsVB=fsv.getAttribute('viewBox');
+}
+
+function toggleLayer(id){
+  var chk=document.getElementById('chk-'+id);
+  var vis=chk.checked?'visible':'hidden';
+  var el=document.getElementById('lyr-'+id);
+  var elF=document.getElementById('fs-lyr-'+id);
+  var chkF=document.getElementById('fs-chk-'+id);
+  if(el)el.setAttribute('visibility',vis);
+  if(elF)elF.setAttribute('visibility',vis);
+  if(chkF)chkF.checked=chk.checked;
+}
+
+function toggleLayerFs(id){
+  var chkF=document.getElementById('fs-chk-'+id);
+  var vis=chkF.checked?'visible':'hidden';
+  var el=document.getElementById('lyr-'+id);
+  var elF=document.getElementById('fs-lyr-'+id);
+  var chk=document.getElementById('chk-'+id);
+  if(el)el.setAttribute('visibility',vis);
+  if(elF)elF.setAttribute('visibility',vis);
+  if(chk)chk.checked=chkF.checked;
+}
+
+function setAll(on){
+  layers.forEach(function(lr){
+    var vis=on?'visible':'hidden';
+    var el=document.getElementById('lyr-'+lr.id);
+    var elF=document.getElementById('fs-lyr-'+lr.id);
+    var chk=document.getElementById('chk-'+lr.id);
+    var chkF=document.getElementById('fs-chk-'+lr.id);
+    if(el)el.setAttribute('visibility',vis);
+    if(elF)elF.setAttribute('visibility',vis);
+    if(chk)chk.checked=on;
+    if(chkF)chkF.checked=on;
+  });
+}
+
+function showObs(id){
+  var box=document.getElementById('obs-'+id);
+  if(!box)return;
+  if(openObs&&openObs!==id){var p=document.getElementById('obs-'+openObs);if(p)p.classList.remove('open');}
+  box.classList.toggle('open');
+  openObs=box.classList.contains('open')?id:null;
+}
+
+function toggleAcc(id){
+  var btn=document.querySelector('#acc-'+id+' .acc-btn');
+  var body=document.getElementById('accb-'+id);
+  if(!btn||!body)return;
+  var isOpen=body.classList.contains('open');
+  body.classList.toggle('open');
+  btn.querySelector('.acc-icon').textContent=isOpen?'+':'×';
+}
+
+function applyZoom(svg,scale,origVB){
+  var p=origVB.split(' ').map(Number);
+  var cx=p[0]+p[2]/2,cy=p[1]+p[3]/2;
+  svg.setAttribute('viewBox',(cx-p[2]/scale/2)+' '+(cy-p[3]/scale/2)+' '+(p[2]/scale)+' '+(p[3]/scale));
+}
+
+function zm(f){msc*=f;applyZoom(msv,msc,msVB);}
+function zr(){msc=1;if(msv)msv.setAttribute('viewBox',msVB);}
+function zmf(f){fsc*=f;applyZoom(fsv,fsc,fsVB);}
+function zrf(){fsc=1;if(fsv)fsv.setAttribute('viewBox',fsVB);}
+
+function buildFsControls(){
+  var list=document.getElementById('fs-lr-list');
+  layers.forEach(function(lr){
+    var row=document.createElement('div');
+    row.className='lr';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.id = 'fs-chk-' + lr.id;
+    cb.checked = lr.on;
+    cb.addEventListener('change', (function(id){ return function(){ toggleLayerFs(id); }; })(lr.id));
+    var swLabel = document.createElement('label');
+    swLabel.className = 'sw';
+    swLabel.addEventListener('click', function(e){ e.stopPropagation(); });
+    var swTrack = document.createElement('span');
+    swTrack.className = 'sw-track';
+    swLabel.appendChild(cb);
+    swLabel.appendChild(swTrack);
+    var dot = document.createElement('span');
+    dot.className = 'lr-dot';
+    dot.style.background = lr.color;
+    var info = document.createElement('div');
+    info.className = 'lr-info';
+    info.innerHTML = '<div class="lr-name">' + lr.title + '</div><div class="lr-sub">' + lr.sub + '</div>';
+    row.appendChild(swLabel);
+    row.appendChild(dot);
+    row.appendChild(info);
+    list.appendChild(row);
+  });
+}
+
+function openFullscreen(){document.getElementById('fs-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeFullscreen(){document.getElementById('fs-overlay').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFullscreen();});
+
+window.addEventListener('load',function(){init();buildFsControls();});
+</script>
+</body>
+</html>
