@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Possible Implications — A Geometric Exploration</title>
+<style>
+:root {
+  --bg:#f2f1ef; --bg2:#eae9e6; --white:#fff;
+  --text:#1a1a18; --text2:#555550; --text3:#888882;
+  --accent:#95bb20; --rule:#ddddd8;
+  --serif:Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  --max:720px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.8; }
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(242,241,239,0.95); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px; height:52px;
+}
+.brand { font-size:13px; font-weight:600; }
+.brand span { color:var(--accent); }
+nav ul { list-style:none; display:flex; gap:24px; }
+nav a { font-size:11px; text-decoration:none; color:var(--text3);
+  letter-spacing:0.5px; text-transform:uppercase; transition:color 0.2s; }
+nav a:hover { color:var(--text); }
+
+.page { max-width:var(--max); margin:0 auto; padding:110px 40px 100px; }
+hr { border:none; border-top:1px solid var(--rule); margin:64px 0; }
+
+.hero { padding:20px 0 48px; }
+.hero-label { font-size:11px; font-weight:600; letter-spacing:1.2px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+.hero h1 { font-family:var(--serif); font-size:clamp(32px,5vw,52px);
+  font-weight:normal; line-height:1.1; margin-bottom:20px; }
+.hero h1 em { font-style:normal; color:var(--accent); }
+.hero-note {
+  font-size:14px; color:var(--text3); font-style:italic;
+  padding:16px 20px; background:var(--white);
+  border:1px solid var(--rule); border-radius:6px;
+  line-height:1.7; margin-top:8px;
+}
+
+.sec-label { font-size:11px; font-weight:600; letter-spacing:1.2px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
+.sec-title { font-family:var(--serif); font-size:clamp(22px,3vw,32px);
+  font-weight:normal; line-height:1.2; margin-bottom:24px; }
+
+p { font-size:15px; color:var(--text2); line-height:1.85; margin-bottom:18px; }
+
+.subsec { margin:40px 0 0; }
+.subsec h3 { font-family:var(--serif); font-size:19px; font-weight:normal;
+  color:var(--text); margin-bottom:14px; border-bottom:1px solid var(--rule);
+  padding-bottom:8px; }
+
+.formula {
+  font-family:'Courier New',monospace; font-size:14px;
+  background:var(--bg2); padding:14px 20px; border-radius:6px;
+  margin:24px 0; color:var(--text); letter-spacing:0.3px;
+  border-left:2px solid var(--accent);
+}
+
+.accordion { border:1px solid var(--rule); border-radius:8px;
+  margin:24px 0; background:var(--white); overflow:hidden; }
+.acc-btn { width:100%; display:flex; justify-content:space-between;
+  align-items:center; padding:14px 18px; background:none; border:none;
+  cursor:pointer; font-family:var(--sans); font-size:13px; font-weight:500;
+  color:var(--text2); text-align:left; transition:background 0.15s; }
+.acc-btn:hover { background:var(--bg); }
+.acc-icon { font-size:18px; color:var(--text3); margin-left:12px; }
+.acc-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+.acc-body.open { max-height:3000px; }
+.acc-inner { padding:16px 18px 20px; font-size:14px; color:var(--text2);
+  line-height:1.75; border-top:1px solid var(--rule); }
+.acc-inner p { font-size:14px; margin-bottom:12px; }
+.acc-inner .formula { font-size:13px; padding:10px 14px; }
+
+.open-q {
+  background:var(--white); border:1px solid var(--rule);
+  border-radius:8px; padding:20px 24px; margin:28px 0;
+}
+.open-q .label { font-size:10px; font-weight:700; letter-spacing:0.8px;
+  text-transform:uppercase; color:var(--text3); margin-bottom:8px; }
+.open-q p { margin:0; font-size:14px; color:var(--text2); font-style:italic; }
+
+.nav-links { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:48px; }
+.nav-link {
+  display:block; padding:20px 24px;
+  background:var(--white); border:1px solid var(--rule);
+  border-radius:10px; text-decoration:none;
+  transition:box-shadow 0.2s;
+}
+.nav-link:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); }
+.nav-link .nl-label { font-size:10px; font-weight:700; letter-spacing:0.8px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.nav-link h4 { font-family:var(--serif); font-size:16px; font-weight:normal;
+  color:var(--text); margin-bottom:4px; }
+.nav-link p { font-size:12px; color:var(--text3); margin:0; }
+.nav-link .arrow { font-size:16px; color:var(--accent); margin-top:10px; display:block; }
+
+footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
+  font-size:12px; color:var(--text3); }
+
+@media(max-width:600px) {
+  nav ul { display:none; }
+  .page { padding:80px 20px 80px; }
+  .nav-links { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">A <span>Resonance</span> Mapping</div>
+  <ul>
+    <li><a href="numbers.html">The Double Cube</a></li>
+    <li><a href="index.html">The Periodic Table</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Speculative observations</div>
+  <h1>Possible<br><em>Implications.</em></h1>
+  <div class="hero-note">The observations on this page are not formally derived from the double cube's axiomatic core. They are consistent with it, and point in the same direction — but they require independent verification before they can be considered results. They are presented here because they are too interesting to ignore, and too uncertain to include in the main argument.</div>
+</div>
+
+<hr>
+
+<!-- GAMMA -->
+<div class="sec-label">The remainder</div>
+<h2 class="sec-title">γ — what always stays behind.</h2>
+
+<p>When two regimes negotiate, something is always left over. The negotiation is never perfect. This is not a flaw — it is a structural guarantee.</p>
+
+<p>Euler's constant γ = 0.57722... is that remainder.</p>
+
+<p>Reading γ as a geometric address in the double cube: 0 sits below one full cycle. 5 points to the √5 corner — the full cube must be included. 7 via the saddle point. 2×2 spans two cubes. The digits describe a position in the system before we even do the mathematics.</p>
+
+<p>And the mathematics is striking:</p>
+
+<div class="formula">γ · √3 = 0.57722 × 1.73205 ≈ 1.00000</div>
+
+<p>Euler's constant, scaled by the face diagonal of the cube, returns approximately one full cycle — with a deviation of just 0.023%. γ is not obviously a geometric constant. It measures the gap between discrete summation and continuous integration — the harmonic series versus the natural logarithm. That this gap should approximate the reciprocal of √3 — a pure geometric property of cubic space — is either a deep structural connection or a remarkable numerical coincidence. It has not been formally explained.</p>
+
+<div class="open-q">
+  <div class="label">Open question</div>
+  <p>Is γ · √3 = 1 exact, or merely approximate? If exact, it would connect the discrete–continuous divide directly to cubic geometry. If approximate, the deviation of 0.023% may itself carry geometric meaning — possibly related to the overlap δ = 14/327 in the periodic table construction.</p>
+</div>
+
+<div class="subsec">
+  <h3>e — the rotation that completes the cycle</h3>
+
+  <p>If γ is the remainder that always stays behind, e is the rotation that carries the system forward into the next cycle.</p>
+
+  <p>Euler's number e = 2.71828... reads in two layers.</p>
+
+  <p>The integer — 2 — is two complete cubic cycles. Exact. No remainder. The structure is satisfied.</p>
+
+  <p>The decimals — 0.71828... — describe a path: 7 → 1 → 8 → 2. In the double cube, these are not arbitrary digits. They suggest a journey through the system's own geometry — from the saddle point √7, via the unit √1, through the triple cube's threshold √8 = 2√2, and back to the ground tone √2 where the rotation is complete.</p>
+
+  <p>Now imagine placing e on a circle of radius √7. The rotation angle is 44.09°. Almost 45° — and 45° is the angle of √2, the double cube's own ground tone. e lands just short of where the double cube naturally rests. That gap is e's own geometric signature in the system.</p>
+
+  <p>e does not belong to the double cube. It belongs to the transition — the rotation that carries the system from the double cube into the triple cube. e^(iπ) = −1 is not halfway through something arbitrary. It is one step in a two-step cycle where the triple cube is the natural endpoint.</p>
+
+  <div class="accordion" id="acc-euler">
+    <button class="acc-btn" onclick="toggleAcc('euler')">
+      <span>The exact derivation</span>
+      <span class="acc-icon">+</span>
+    </button>
+    <div class="acc-body" id="accb-euler">
+      <div class="acc-inner">
+        <p>Place e − 2 on a circle of radius √7:</p>
+        <div class="formula">Re = √7 · (e − 2)
+Im = √7 · sin(arccos(e − 2))</div>
+        <p>Then:</p>
+        <div class="formula">Re² + Im² = 7</div>
+        <p>This is an exact algebraic identity — it follows directly from sin²θ + cos²θ = 1, scaled by √7. No numerical approximation. It holds for any value of e.</p>
+        <p>The rotation angle produces a second exact identity:</p>
+        <div class="formula">sin²(θ) = (3 − e)(e − 1)</div>
+        <p>e sits between 1 and 3 — the cube's own boundary values. The gap from each boundary is e's precise position in the system.</p>
+        <p>The triangle (√2, √7, √8) that this rotation generates:</p>
+        <div class="formula">√8² − √7² = 1 · √8² − √2² = 6 · √7² − √2² = 5</div>
+        <p>Combined with its own sides, this triangle covers the entire double cube.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subsec">
+  <h3>γ and e — a family</h3>
+  <p>γ measures what cannot be resolved inside the period. e rotates through what remains and completes it. They are two sides of the same fundamental tension — as the double cube's two regimes are two sides of the same structure.</p>
+  <p>The normalisation factor that connects them:</p>
+  <div class="formula">γ · √3 ≈ 1
+e · γ · √3 ≈ e  (deviation 0.023%)</div>
+  <p>The same factor — γ · √3 — returns both to themselves. Whether this is structural or coincidental is the open question.</p>
+</div>
+
+<hr>
+
+<!-- CONVERGENCES -->
+<div class="sec-label">Convergences</div>
+<h2 class="sec-title">Three values, one threshold.</h2>
+
+<p>The percolation threshold 1/√3 = 0.57735... appears to attract values from independent directions:</p>
+
+<div class="formula">1/√3        = 0.57735...  (geometric — reciprocal body diagonal)
+γ           = 0.57722...  (analytic — Euler–Mascheroni constant)
+49/85       = 0.57647...  (from the periodic table — counting argument)</div>
+
+<p>The ratio 49/85 counts: (Z_Yb − Z_Sc) / (Z_Rn − Z_H) — the span of the d- and f-blocks divided by the full span of the table through period 6. No external constants. A pure counting statement about element positions.</p>
+
+<p>All three differ from each other by less than 0.00088. Whether this is a structural convergence or a numerical coincidence has not been determined.</p>
+
+<div class="open-q">
+  <div class="label">Open question</div>
+  <p>Does the double cube's geometry — specifically the saddle point 7/4 and the percolation interval 1/12 — provide a geometric explanation for why the Euler–Mascheroni constant and the element-count ratio converge near 1/√3?</p>
+</div>
+
+<hr>
+
+<!-- GENERALISATION -->
+<div class="sec-label">A hypothesis</div>
+<h2 class="sec-title">Geometric addresses in the double cube.</h2>
+
+<p>The digit-reading of γ = 0.57722... as a geometric address in the double cube — 0 below one cycle, 5 at the √5 corner, 7 via the saddle point, 2×2 spanning two cubes — is an illustration, not a proof. But it raises a question worth asking formally:</p>
+
+<p>Are the decimal expansions of transcendental constants random, or do they encode geometric positions in a structured space? If the double cube is the minimal structure that couples periodicity to Euclidean geometry, then constants that arise at the boundary between discrete and continuous mathematics — γ, e, π, α — might have geometric addresses in this structure.</p>
+
+<p>This is a falsifiable hypothesis: for each constant, there should exist a geometric path in the double cube's square-root system that reproduces the decimal structure — not numerically by chance, but by structural necessity. This has been demonstrated suggestively for γ and e. It has not been systematically tested for π or α.</p>
+
+<div class="open-q">
+  <div class="label">Conjecture — not yet tested</div>
+  <p>The decimal expansions of γ, e, π and α are coordinates on paths through the double cube's spherical geometry — readable as rotations and projections in the same system. This conjecture is falsifiable: a single constant whose decimals cannot be geometrically addressed would refute it.</p>
+</div>
+
+<hr>
+
+<div class="nav-links">
+  <a href="numbers.html" class="nav-link">
+    <div class="nl-label">Back to</div>
+    <h4>The Double Cube</h4>
+    <p>The axiomatic core — Legendre, Lagrange, the tangent proof</p>
+    <span class="arrow">←</span>
+  </a>
+  <a href="index.html" class="nav-link">
+    <div class="nl-label">The evidence</div>
+    <h4>The Periodic Table</h4>
+    <p>Where the geometry becomes visible in the physical world</p>
+    <span class="arrow">→</span>
+  </a>
+</div>
+
+</div>
+
+<footer>
+  Speculative observations — not formally derived — work in progress
+</footer>
+
+<script>
+function toggleAcc(id) {
+  var btn = document.querySelector('#acc-' + id + ' .acc-btn');
+  var body = document.getElementById('accb-' + id);
+  if (!btn || !body) return;
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  btn.querySelector('.acc-icon').textContent = isOpen ? '+' : '×';
+}
+</script>
+
+</body>
+</html>
