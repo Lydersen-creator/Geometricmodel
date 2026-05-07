@@ -194,7 +194,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <p>The double cube has been used since ancient times to explain the geometric properties of numbers. It is a visual and educational masterpiece. But it might be more than that.</p>
 
 <div class="quote-block" style="font-style: italic; font-size: 0.95rem;">
-This page proposes that the double cube — two unit cubes joined along a shared face — constitutes a complete geometric system in which structure and dynamics are symmetrically coupled through the introduction of √7 as an integral part of the double cube. The system can be shown to contain characteristic fractions (7/4, 3/4, 2/3, 1/12, 1/7) that emerge from a single geometric object through three independent lines of argument. The combinator √7, forbidden from the integer lattice by Legendre's three-square theorem, enters the system as both a saddle point and a dynamic operator — the same value described algebraically and geometrically. What follows is a layered proof of this claim.
+This page proposes that the double cube — two unit cubes joined along a shared face — constitutes a complete geometric system in which structure and dynamics are symmetrically coupled through the introduction of √7 as an integral part of the double cube. The system can be shown to contain characteristic fractions (7/4, 3/4, 2/3, 1/12, 1/7) that emerge from a single geometric object through five converging arguments. The combinator √7, forbidden from the integer lattice by Legendre's three-square theorem, enters the system as both a saddle point and a dynamic operator — the same value described algebraically and geometrically. What follows is a layered proof of this claim.
 </div>
 
 <hr>
@@ -202,7 +202,7 @@ This page proposes that the double cube — two unit cubes joined along a shared
 <div class="sec-label">Ordinary and extraordinary</div>
 <h2 class="sec-title">The cornered numbers — and the presence of φ.</h2>
 
-<p>A single cube shows us √1, √2 and √3 — edge, face diagonal, space diagonal. Add a second cube sharing a face, and something interesting happens. √4 and √6 are natural doublings of what we already know. But you see — the second cube is not just a repetition of the single cube, and √5 is the snitch telling us that something new emerges when the two seemingly similar structures are placed side by side.</p>
+<p>A single cube shows us √1, √2 and √3 — edge, face diagonal, space diagonal. Add a second cube sharing a face, and something interesting happens. √4 and √6 are natural doublings of what we already know. As it seems, the second cube is not just a repetition of the single cube. √5 tells us that something new emerges when the two seemingly similar structures are combined — as tessellating cubes.</p>
 
 <div class="sqrt-card-wide">
   <div class="num">√4 and √6</div>
@@ -227,70 +227,53 @@ This page proposes that the double cube — two unit cubes joined along a shared
 <div class="sec-label">The invisible turns visible</div>
 <h2 class="sec-title">The one missing in action.</h2>
 
-<div class="subsec">
-  <p>When studying the double cube, something else peculiar turns up: adding a third cube will not create the same magic. You won't get another √5 factor, but instead end up with a cleaner, more easily divisible √10 corner, echoing √2.</p>
-  <p>And before we even go so far as to thinking of adding another cube — where exactly is √7?</p>
+<p>When studying the double cube, something else peculiar turns up: adding a third cube will not create the same magic. You won't get another √5 factor, but instead end up with a cleaner, more easily divisible √10 corner, echoing √2.</p>
+<p>And before we even go so far as to thinking of adding another cube — where exactly is √7?</p>
+<p>If we take this question seriously, we may propose one major assumption considering the mathematical proof: the double cube, bound by √5 as its dynamic connector, points towards a closed system. √7, in this scenario, is not a stranger to this cubic system (as the mathematical proofs suggest), creating an escaping diagonal, but might actually suggest the presence of a curve inside the system.</p>
 
-  <p>Here's where the real magic starts — if we take this question seriously, we may propose one major assumption considering the mathematical proof: the double cube, bound by √5 as its dynamic connector, points towards a closed system. √7, in this scenario, is not a stranger to this cubic system (as layer 3 in the mathematical proofs suggests), creating an escaping diagonal, but might actually curve inside the system.</p>
+<div class="accordion" id="acc-sqrt7bg">
+  <button class="acc-btn" onclick="toggleAcc('sqrt7bg')">
+    <span>Why √7 sits outside, but might belong inside the double cube — the mathematical proof</span>
+    <span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-sqrt7bg">
+    <div class="acc-inner">
+      <p>The cube effectively codes √1 to √3, and adding a tessellating cube expands this to √1 to √6. These are all natural cubic proportions. √7 is a combinator: √(2² + (√3)²) = √7. It is constructable over both regimes at the same time as it is not part of the convex outer shell of the double cube. The tangent from the √7 sphere to the √6 surface is √(7−6) = √1 = 1 exactly.</p>
+      <p>The double cube, historically, has not been regarded as a system of numbers. That may be why the question about which square roots it produces — and more pressing, why √7 sits outside the system — seems not to have been asked formally.</p>
 
-  <div class="subsec">
-    <h3>The halfpoint of return</h3>
-    <p>By treating √7 as an anomalous 4D object in a 3D lattice, and considering the position of its tangent (as proof Layer 3b indicates), it makes sense to find its mathematical midpoint as well as its geometric position. By halving √7 and then squaring the result, we get:</p>
+      <h4>Layer 1 — Exhaustive verification</h4>
+      <p>All 12 corners of the 2×1×1 double cube have coordinates (x,y,z) where x∈{0,1,2}, y∈{0,1}, z∈{0,1}. The squared distances x²+y²+z² from the origin — and between all corner pairs — produce exactly the set {0,1,2,3,4,5,6}. No pair of corners produces a squared distance of 7. This is not an axiom. It is a finite, exhaustive proof.</p>
 
-    <div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
+      <h4>Layer 2 — Legendre's three-square theorem (1798)</h4>
+      <p>A positive integer n can be written as the sum of three squares of integers if and only if n is <em>not</em> of the form 4ᵃ(8b+7). The number 7 satisfies this exactly: 7 = 4⁰(8·0+7). It is the simplest and smallest member of this infinite family of forbidden values — {7, 15, 23, 28, 31, ...}. This is a proved theorem. √7 is absent from the double cube's lattice by mathematical necessity.</p>
 
-    <p>This is the same value as the tangential proof. 7/4 seems to be a valid candidate for the geometric signature of the curvature in two ways — both geometrically derived and by pure mathematics. It hints at 7/4 being a candidate saddle point at the interface between cubic and spherical symmetry in the double cube — where these two geometries can negotiate without either dominating. √7's value also places it in the second cube.</p>
+      <h4>Layer 3 — Lagrange's four-square theorem</h4>
+      <p>To realise 7 as a sum of integer squares, four terms are required: 7 = 2²+1²+1²+1². Geometrically, this means √7 requires a fourth spatial dimension to exist as a lattice point. In the context of the double cube, this fourth degree of freedom is interpreted as periodicity: a temporal or cyclic dimension that complements the three spatial ones.</p>
 
-    <p>As the numbers and examples show, assuming √7 as part of the double cube is more than a fair assumption.</p>
-  </div>
-
-  <div class="accordion" id="acc-sqrt7bg">
-    <button class="acc-btn" onclick="toggleAcc('sqrt7bg')">
-      <span>Why √7 sits outside, but might belong inside the double cube — the mathematical proof</span>
-      <span class="acc-icon">+</span>
-    </button>
-    <div class="acc-body" id="accb-sqrt7bg">
-      <div class="acc-inner">
-        <p>The cube effectively codes √1 to √3, and adding a tessellating cube expands this to √1 to √6. These are all natural cubic proportions. √7 is a combinator: √(2² + (√3)²) = √7. It is constructable over both regimes at the same time as it is not part of the convex outer shell of the double cube. The tangent from the √7 sphere to the √6 surface is √(7−6) = √1 = 1 exactly.</p>
-        <p>The double cube, historically, has not been regarded as a system of numbers. That may be why the question about which square roots it produces — and more pressing, why √7 sits outside the system — seems not to have been asked formally.</p>
-
-        <h4>Layer 1 — Exhaustive verification</h4>
-        <p>All 12 corners of the 2×1×1 double cube have coordinates (x,y,z) where x∈{0,1,2}, y∈{0,1}, z∈{0,1}. The squared distances x²+y²+z² from the origin — and between all corner pairs — produce exactly the set {0,1,2,3,4,5,6}. No pair of corners produces a squared distance of 7. This is not an axiom. It is a finite, exhaustive proof.</p>
-
-        <h4>Layer 2 — Legendre's three-square theorem (1798)</h4>
-        <p>A positive integer n can be written as the sum of three squares of integers if and only if n is <em>not</em> of the form 4ᵃ(8b+7). The number 7 satisfies this exactly: 7 = 4⁰(8·0+7). It is the simplest and smallest member of this infinite family of forbidden values — {7, 15, 23, 28, 31, ...}. This is a proved theorem. √7 is absent from the double cube's lattice by mathematical necessity.</p>
-
-        <h4>Layer 3 — Lagrange's four-square theorem</h4>
-        <p>To realise 7 as a sum of integer squares, four terms are required: 7 = 2²+1²+1²+1². Geometrically, this means √7 requires a fourth spatial dimension to exist as a lattice point. In the context of the double cube, this fourth degree of freedom is interpreted as periodicity: a temporal or cyclic dimension that complements the three spatial ones.</p>
-
-        <h4>Layer 3b — Geometric proof of 7/4 as the saddle point</h4>
-        <p>Draw a circle of radius √7 centred at the origin. Place an external point P = (4, 0) — the square of the double cube's length (2² = 4). The tangent length is exact:</p>
-        <div class="formula">|PT| = √(16 − 7) = √9 = 3</div>
-        <p>The x-coordinate of the tangent point:</p>
-        <div class="formula">Tₓ = r² / |OP| = 7 / 4 = 1.75</div>
-        <p>The saddle point is not placed by assumption — it is where the tangent from the double cube's squared length meets the √7 sphere.</p>
-
-        <h4>Layer 4 — An exact identity connecting √7 and ∛2</h4>
-        <p>√7 = ∛2 + (√7 − ∛2). Squaring gives:</p>
-        <div class="formula">(∛2)² + 2·∛2·(√7 − ∛2) + (√7 − ∛2)² = 7</div>
-        <p>∛4 (Delian²) + transition term + gap² = 7, exactly. The gap √7 − ∛2 = 1.38583... is the precise distance between the double cube's spherical boundary and the Delian constant. The Delian problem appears to operate in the same gap — this connection deserves formal attention.</p>
-
-        <h4>Layer 5 — The 1/7 decimal cycle as internal periodicity</h4>
-        <p>The double cube's vertex count encodes 7 as a cyclic structure — not just as an absent lattice point.</p>
-        <p>The two corner counts, 16 (uncoupled) and 12 (coupled), share a common factor: 48 is the least common multiple of both. Scaling each by 3 gives the natural pair 48 and 36, which preserve the system's ratio 4:3. When both are divided by the saddle point 7/4:</p>
-        <div class="formula">36 ÷ (7/4) = 144/7 = 20 + 4/7</div>
-        <div class="formula">48 ÷ (7/4) = 192/7 = 27 + 3/7</div>
-        <p>The fractional remainders are 4/7 and 3/7. In decimal, these are mirror rotations within the same cycle:</p>
-        <div class="formula">4/7 = 0.571428 571428…</div>
-        <div class="formula">3/7 = 0.428571 428571…</div>
-        <p>Both are rotations of 142857 — the repeating cycle of 1/7. They sum to exactly 1 (a closed cycle), and their numerators satisfy:</p>
-        <div class="formula">4 + 3 = 7 &nbsp;&nbsp;&nbsp; 4 × 3 = 12</div>
-        <p>The sum recovers the combinator. The product recovers the coupled vertex count. The saddle point 7/4, when applied to the system's own scaling numbers, unfolds 7 from the inside — not as a missing corner, but as a period. This is precisely what Layer 3 anticipated: √7 requires a cyclic, temporal dimension. Here it is, encoded in the decimal structure of the vertex arithmetic.</p>
-      </div>
     </div>
   </div>
-
 </div>
+
+<hr>
+
+<div class="sec-label">The first argument</div>
+<h2 class="sec-title">Argument 1: The tangent proof.</h2>
+
+<p>Draw a circle of radius √7 centred at the origin. Place an external point P = (4, 0) — the square of the double cube's length (2² = 4). The tangent length is exact:</p>
+<div class="formula">|PT| = √(16 − 7) = √9 = 3</div>
+<p>The x-coordinate of the tangent point:</p>
+<div class="formula">Tₓ = r² / |OP| = 7 / 4 = 1.75</div>
+<p>The saddle point is not placed by assumption — it is where the tangent from the double cube's squared length meets the √7 sphere. This is a geometric derivation: 7/4 emerges from the construction itself.</p>
+
+<hr>
+
+<div class="sec-label">The second argument</div>
+<h2 class="sec-title">Argument 2: The midpoint proof.</h2>
+
+<p>Independently of the tangent construction, the same value appears through pure arithmetic. By halving √7 and squaring the result:</p>
+<div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
+<p>This is the same value as Argument 1. 7/4 is therefore a valid candidate for the geometric signature of the curvature in two independent ways — geometrically derived and arithmetically confirmed. It hints at 7/4 being a candidate saddle point at the interface between cubic and spherical symmetry in the double cube — where these two geometries can negotiate without either dominating.</p>
+<p>As the numbers and examples show, assuming √7 as part of the double cube is more than a fair assumption.</p>
 
 <div class="quote-block">
   √7, given the assumption of existing within the double cube, is the one that will not be squared into a corner. The √7 diagonal traverses space and ends up roaming the cubes — the negotiator between the two regimes.
@@ -299,10 +282,10 @@ This page proposes that the double cube — two unit cubes joined along a shared
 <hr>
 
 <!-- THE TWO BINDERS -->
-<div class="sec-label">The two binders that make up a dual system</div>
+<div class="sec-label">Interlude</div>
 <h2 class="sec-title">Two in One.</h2>
 
-<p>We have two separate cubes and two numbers that bind them together: √5 and √7.</p>
+<p>Before continuing, let's pause for a second and absorb what these first two arguments actually mean. We have two separate cubes joined in a special relationship by two numbers: √5 and √7.</p>
 
 <div class="sqrt-card-wide">
   <div class="num">√5</div>
@@ -314,71 +297,59 @@ This page proposes that the double cube — two unit cubes joined along a shared
   <p>The odd one. It tells us that negotiating the cyclical geometry that √5 hints at involves more than the corners. It needs the space. And it does so by hinting about the fact that the double cube hides a spherical, periodic element.</p>
 </div>
 
-<div class="subsec">
-  <h3>Two cubes, one system</h3>
+<p>The double cube is a geometric <em>nexus</em> — it allows us to see numbers in their true dual-natured properties: the cyclic/periodic and the structural/geometric. Simply put: √7 is the geometry. 7/4 is what it does.</p>
 
-  <p>The double cube is a peculiar object in this way — it is a geometric <em>nexus</em>. It allows us to see numbers in their true dual-natured properties: the cyclic/periodic and the structural/geometric.</p>
+<div class="quote-block">
+  The modest double cube may turn out to deliver a great punch for its size and shape. Assuming √7 is contained in the construction, it gives us an operating system where the cyclical and geometric domains meet.
+</div>
 
-  <p>This tension between these two modes is built into the structure itself:</p>
+<hr>
 
-  <ol style="margin:0 0 18px 24px;color:var(--text2);font-size:15px;line-height:1.85;">
-    <li>The double cube consists of two similar cubes.</li>
-    <li>Each cube has eight corners — two cubes give 16 corners.</li>
-    <li>When they share a face, as in the double cube, they also become a unit and lose 4 corners — leaving 12.</li>
-    <li>The double cube is simultaneously 16 and 12 corners. Both a regular, static lattice and a dynamic space.</li>
-  </ol>
+<div class="sec-label">The third argument</div>
+<h2 class="sec-title">Argument 3: The corner count.</h2>
 
-  <p>At first glance this might seem contradictory. But it is not a contradiction — it is the system's own way of holding two regimes at once.</p>
+<p>The double cube is simultaneously two things: a structure of two separate cubes, each with 8 corners — giving 16 in total — and a coupled system where the shared face removes 4 of those corners, leaving 12. These are not two different objects. They are two readings of the same object: one structural, one dynamic.</p>
 
-  <p>The spherical element that the √7 tangent revealed might not just be a geometric curiosity. It has a precise half expression given its place in the double cube, and names the candidate saddle point in the system, as mentioned before:</p>
+<p>The saddle point 7/4 responds to both readings precisely. Combined with the shared face's unit √(1/16) = 1/4, it produces two exact identities:</p>
 
-  <div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
+<div class="formula">(7/4) + √(1/16) = 2</div>
+<p>The saddle point plus the shared face's unit returns exactly the double cube's full length — √4 = 2.</p>
 
-  <p>Simply put: √7 is the geometry. 7/4 is what it does.</p>
+<div class="formula">(7/4) ÷ √(1/16) = 7</div>
+<p>The saddle point divided by the shared face's unit returns exactly the combinator.</p>
 
-  <div class="subsec">
-  <h3>The corner count</h3>
+<p>√(1/16) = 1/4 is not an arbitrary factor — it is the geometric unit of the shared face itself. One face of a unit cube has area 1, divided by 16 corners gives 1/16. The shared face is precisely the interface where the structural and dynamic readings diverge: it is present in one reading and absent in the other. That the saddle point both completes the double cube's length and recovers the combinator through this single factor suggests that 7/4 is not just a property of the system — it is sensitive to the system's own internal boundary.</p>
 
-  <p>The double cube is simultaneously two things: a structure of two separate cubes, each with 8 corners — giving 16 in total — and a coupled system where the shared face removes 4 of those corners, leaving 12. These are not two different objects. They are two readings of the same object: one structural, one dynamic.</p>
+<p>This tension between two readings is built into the structure itself:</p>
 
-  <p>The saddle point 7/4 responds to both readings precisely. Combined with the shared face's unit √(1/16) = 1/4, it produces two exact identities:</p>
+<ol style="margin:0 0 18px 24px;color:var(--text2);font-size:15px;line-height:1.85;">
+  <li>The double cube consists of two similar cubes.</li>
+  <li>Each cube has eight corners — two cubes give 16 corners.</li>
+  <li>When they share a face, as in the double cube, they also become a unit and lose 4 corners — leaving 12.</li>
+  <li>The double cube is simultaneously 16 and 12 corners. Both a regular, static lattice and a dynamic space.</li>
+</ol>
 
-  <div class="formula">(7/4) + √(1/16) = 2</div>
-  <p>The saddle point plus the shared face's unit returns exactly the double cube's full length — √4 = 2.</p>
+<p>At first glance this might seem contradictory. But it is not a contradiction — it is the system's own way of holding two regimes at once.</p>
 
-  <div class="formula">(7/4) ÷ √(1/16) = 7</div>
-  <p>The saddle point divided by the shared face's unit returns exactly the combinator.</p>
-
-  <p>√(1/16) = 1/4 is not an arbitrary factor — it is the geometric unit of the shared face itself. One face of a unit cube has area 1, divided by 16 corners gives 1/16. The shared face is precisely the interface where the structural and dynamic readings diverge: it is present in one reading and absent in the other. That the saddle point both completes the double cube's length and recovers the combinator through this single factor suggests that 7/4 is not just a property of the system — it is sensitive to the system's own internal boundary.</p>
-
-  <div class="accordion" id="acc-geoobs">
-    <button class="acc-btn" onclick="toggleAcc('geoobs')">
-      <span>Geometric observation — structurally closed, dynamically open</span>
-      <span class="acc-icon">+</span>
-    </button>
-    <div class="acc-body" id="accb-geoobs">
-      <div class="acc-inner">
-        <p>When 7/4 is combined with the 1/16 factor — the shared face factor of a tesselating double cube — it completes the double cube's full length: (7/4) + √(1/16) = 2 = √4. At the same time, the saddle point 7/4 avoids the lattice, hinting at a perturbative nature. This becomes visible when the same operation is applied with the 1/12 factor: (7/4) + √(1/12) ≈ 2.0386 — exceeding the double cube's boundary by a small but non-zero amount. The double cube is structurally closed but dynamically open: it can only close itself with the structural complement 1/16, not with the negotiating gap 1/12.</p>
-      </div>
+<div class="accordion" id="acc-geoobs">
+  <button class="acc-btn" onclick="toggleAcc('geoobs')">
+    <span>Geometric observation — structurally closed, dynamically open</span>
+    <span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-geoobs">
+    <div class="acc-inner">
+      <p>When 7/4 is combined with the 1/16 factor — the shared face factor of a tesselating double cube — it completes the double cube's full length: (7/4) + √(1/16) = 2 = √4. At the same time, the saddle point 7/4 avoids the lattice, hinting at a perturbative nature. This becomes visible when the same operation is applied with the 1/12 factor: (7/4) + √(1/12) ≈ 2.0386 — exceeding the double cube's boundary by a small but non-zero amount. The double cube is structurally closed but dynamically open: it can only close itself with the structural complement 1/16, not with the negotiating gap 1/12.</p>
     </div>
-  </div>
-
-  </div><!-- end corner count subsec -->
-
-  <div class="quote-block">
-    The modest double cube may turn out to deliver a great punch for its size and shape. Assuming √7 is contained in the construction, it gives us an operating system where the cyclical and geometric domains meet.
   </div>
 </div>
 
 <hr>
 
 <!-- THE CONNECTING SEQUENCE -->
-<div class="sec-label">The connecting sequence</div>
-<h2 class="sec-title">1/7 — locked to the double cube.</h2>
+<div class="sec-label">The fourth argument</div>
+<h2 class="sec-title">Argument 4: The connecting sequence.</h2>
 
-<p>The double cube may be understood as two systems operating simultaneously.</p>
-
-<p>A structural system of two separate but tesselating cubes — each with 8 corners, giving 8 + 8 = 16 corners in total. And a dynamic system of two combined cubes sharing a face — reducing the corner count to 16 − 4 = 12.</p>
+<p>As we have seen, the double cube may be understood as two systems operating simultaneously. A structural system of two separate but tessellating cubes, and a dynamic system of two combined cubes sharing a face.</p>
 
 <p>These two properties are tied in a proportional relationship with deep connections to the interplay between structure and dynamics. The numbers that emerge are striking:</p>
 
@@ -413,11 +384,31 @@ This page proposes that the double cube — two unit cubes joined along a shared
 
 <p>1/7 does not merely appear in the double cube. It is locked to it — a consequence of φ and √4 existing in the same geometric system.</p>
 
+<div class="accordion" id="acc-1over7">
+  <button class="acc-btn" onclick="toggleAcc('1over7')">
+    <span>A further derivation — the 1/7 cycle from vertex arithmetic</span>
+    <span class="acc-icon">+</span>
+  </button>
+  <div class="acc-body" id="accb-1over7">
+    <div class="acc-inner">
+      <p>The same result can be approached from a different direction, using the double cube's own vertex counts as the starting point. The two corner counts, 16 (uncoupled) and 12 (coupled), share a least common multiple of 48. Scaling each by 3 gives the natural pair 48 and 36, which preserve the system's ratio 4:3. When both are divided by the saddle point 7/4:</p>
+      <div class="formula">36 ÷ (7/4) = 144/7 = 20 + 4/7</div>
+      <div class="formula">48 ÷ (7/4) = 192/7 = 27 + 3/7</div>
+      <p>The fractional remainders are 4/7 and 3/7 — mirror rotations within the same cycle:</p>
+      <div class="formula">4/7 = 0.571428 571428…</div>
+      <div class="formula">3/7 = 0.428571 428571…</div>
+      <p>Both are rotations of 142857, the repeating cycle of 1/7. They sum to exactly 1 (a closed cycle), and their numerators satisfy:</p>
+      <div class="formula">4 + 3 = 7 &nbsp;&nbsp;&nbsp; 4 × 3 = 12</div>
+      <p>The sum recovers the combinator. The product recovers the coupled vertex count. The saddle point 7/4, when applied to the system's own scaling numbers, unfolds 7 from the inside — not as a missing corner, but as a period. This is a second, independent route to the same result.</p>
+    </div>
+  </div>
+</div>
+
 <hr id="synthesis">
 
 <!-- THE THRESHOLD -->
-<div class="sec-label">The dynamic expression</div>
-<h2 class="sec-title">Curving the structure.</h2>
+<div class="sec-label">The fifth argument</div>
+<h2 class="sec-title">Argument 5: Curving the structure.</h2>
 
 <p>In the double cube, √7 acts as the dynamic operator within the structural framework of √1 through √6. It does so through (√7/2)² = 1.75 — indicating a series of scaling primes of the form 0.75 + n, where 0.75 itself is the base value given by (√3/2)² — the unit cube's space diagonal.</p>
 
@@ -504,11 +495,11 @@ This page proposes that the double cube — two unit cubes joined along a shared
 <!-- SYNTHESIS -->
 <div class="sec-label">The numbers</div>
 <h2 class="sec-title">What the double cube gives us.</h2>
-<div class="sec-sub">Structure and dynamics, joined through five relationships.</div>
+<div class="sec-sub">Five arguments, five fractions, one system.</div>
 
-<p>The double cube carries two axes: a linear, cubic extent — the x-axis, the direction along which the two cubes are joined — and a spherical, curved contribution — the y-axis, the direction in which √7 departs from the lattice.</p>
+<p>The five arguments developed above each approach the double cube from a different direction — tangent geometry, arithmetic midpoint, corner topology, connecting sequence, and spherical inscription. They converge on the same set of characteristic fractions. This section collects what they jointly produce.</p>
 
-<p>In each of the system's characteristic fractions, these two axes appear as numerator and denominator.</p>
+<p>The double cube carries two axes: a linear, cubic extent and a spherical, curved contribution. In each of the system's characteristic fractions, these two axes appear as numerator and denominator — and their difference names the irreducible gap between them.</p>
 
 <p><strong>7/4</strong> — the spherical element √7 (numerator) curves over the double cube's squared length 2² = 4 (denominator). This is the saddle point: the projection of the √7 sphere onto the cubic axis, derived exactly from the tangent point construction. Reading: spherical over cubic.</p>
 
