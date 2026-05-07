@@ -668,7 +668,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <p>√(1/16) = 1/4 is not an arbitrary factor — it is the geometric unit of the shared face itself. One face of a unit cube has area 1, divided by 16 corners gives 1/16. The shared face is precisely the interface where the structural and dynamic readings diverge: it is present in one reading and absent in the other. That the saddle point both completes the double cube's length and recovers the combinator through this single factor suggests that 7/4 is not just a property of the system — it is sensitive to the system's own internal boundary.</p>
 
 
-<figure style="max-width:600px; margin: 2rem auto;">
+<div style="max-width:600px; margin: 2rem auto;">
+<p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:8px; margin-top:0;">16 corners — two separate cubes</p>
+<figure style="margin:0;">
 <svg viewBox="0 0 680 590" xmlns="http://www.w3.org/2000/svg">
 <defs>
   <style>
@@ -686,8 +688,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <!-- ══════════════════════════════════ -->
 <!-- TOP: 16 corners — two separate    -->
 <!-- ══════════════════════════════════ -->
-
-<text x="340" y="44" text-anchor="middle" class="mt lbl">16 corners — two separate cubes</text>
 
 <!-- Kube 1: rektangel 160×160, øverst venstre hjørne (80, 50) -->
 <rect x="80" y="50" width="160" height="160"
@@ -755,20 +755,14 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <text x="340" y="285" text-anchor="middle" class="mt eq">
   8 + 8 = <tspan font-weight="700" font-size="17">16</tspan>
 </text>
-
-
-<!-- ══════════════════════════════════ -->
-<!-- SEPARATOR                         -->
-<!-- ══════════════════════════════════ -->
-<line x1="60" y1="315" x2="620" y2="315"
-  stroke="var(--color-text-tertiary,#9b9b96)" stroke-width="0.7" opacity="0.3"/>
-
-
+</svg>
+</figure>
+<p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:8px; margin-top:20px;">12 corners — joined double cube, with one shared face</p>
+<figure style="margin:0;">
+<svg viewBox="0 315 680 280" xmlns="http://www.w3.org/2000/svg" style="width:100%">
 <!-- ══════════════════════════════════ -->
 <!-- BOTTOM: 12 corners — joined       -->
 <!-- ══════════════════════════════════ -->
-
-<text x="340" y="358" text-anchor="middle" class="mt lbl">12 corners — joined double cube, with one shared face</text>
 
 <!-- Dobbelkube: to rektangler side om side (320×160), øverst venstre (80, 365) -->
 <!-- Kube 1 -->
@@ -820,31 +814,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 </text>
 
 </svg>
-
-
-
-<figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">Corner count — separated (16) and joined (12). Pink dots mark the 4 corners removed at the shared face.</figcaption>
 </figure>
-<p>This tension between two readings is built into the structure itself:</p>
-
-<ol style="margin:0 0 18px 24px;color:var(--text2);font-size:15px;line-height:1.85;">
-  <li>The double cube consists of two similar cubes.</li>
-  <li>Each cube has eight corners — two cubes give 16 corners.</li>
-  <li>When they share a face, as in the double cube, they also become a unit and lose 4 corners — leaving 12.</li>
-  <li>The double cube is simultaneously 16 and 12 corners. Both a regular, static lattice and a dynamic space.</li>
-</ol>
-
-<p>At first glance this might seem contradictory. But it is not a contradiction — it is the system's own way of holding two regimes at once.</p>
-
-<div class="accordion" id="acc-geoobs">
-  <button class="acc-btn" onclick="toggleAcc('geoobs')">
-    <span>Geometric observation — structurally closed, dynamically open</span>
-    <span class="acc-icon">+</span>
-  </button>
-  <div class="acc-body" id="accb-geoobs">
-    <div class="acc-inner">
-      <p>When 7/4 is combined with the 1/16 factor — the shared face factor of a tesselating double cube — it completes the double cube's full length: (7/4) + √(1/16) = 2 = √4. At the same time, the saddle point 7/4 avoids the lattice, hinting at a perturbative nature. This becomes visible when the same operation is applied with the 1/12 factor: (7/4) + √(1/12) ≈ 2.0386 — exceeding the double cube's boundary by a small but non-zero amount. The double cube is structurally closed but dynamically open: it can only close itself with the structural complement 1/16, not with the negotiating gap 1/12.</p>
-    </div>
+<figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">Corner count — separated (16) and joined (12). Pink dots mark the 4 corners removed at the shared face.</figcaption>
+</div>
   </div>
 </div>
 
