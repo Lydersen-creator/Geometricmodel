@@ -671,7 +671,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <div style="max-width:600px; margin: 2rem auto;">
 <p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:8px; margin-top:0;">16 corners — two separate cubes</p>
 <figure style="margin:0;">
-<svg viewBox="0 0 680 275" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 680 225" xmlns="http://www.w3.org/2000/svg">
 <defs>
   <style>
     .mt { font-family: system-ui, sans-serif; }
@@ -714,10 +714,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
   stroke="var(--color-text-tertiary,#9b9b96)" stroke-width="1"
   stroke-dasharray="3 3" opacity="0.5"/>
 
-<!-- Labels under kubene -->
-<text x="160" y="232" text-anchor="middle" class="mt cnt">4 corners</text>
-<text x="370" y="232" text-anchor="middle" class="mt cnt">4 corners</text>
-
 <!-- Men dette er 2D — en kube har 8 hjørner, vis det med front+bak -->
 <!-- Legg til bakre firkant med stiplet linje -->
 <!-- Kube 1 bakre firkant, offset (20,-20) -->
@@ -750,16 +746,17 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <circle cx="470" cy="190" r="5" class="cn" opacity="0.4"/>
 
 <!-- Hjørnetelling -->
-<text x="160" y="232" text-anchor="middle" class="mt cnt">8 corners</text>
-<text x="380" y="232" text-anchor="middle" class="mt cnt">8 corners</text>
-<text x="340" y="258" text-anchor="middle" class="mt eq">
-  8 + 8 = <tspan font-weight="700" font-size="17">16</tspan>
-</text>
+<text x="160" y="240" text-anchor="middle" class="mt cnt">8 corners</text>
+<text x="420" y="240" text-anchor="middle" class="mt cnt">8 corners</text>
+
 </svg>
 </figure>
+<p style="text-align:center; font-size:15px; color:var(--color-text-primary); opacity:0.75; margin:2px 0 0;">
+  8 + 8 = <strong style="font-size:17px;">16</strong>
+</p>
 <p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-text-secondary); margin-bottom:8px; margin-top:8px;">12 corners — joined double cube, with one shared face</p>
 <figure style="margin:0;">
-<svg viewBox="0 330 680 265" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+<svg viewBox="0 355 680 190" xmlns="http://www.w3.org/2000/svg" style="width:100%">
 <!-- ══════════════════════════════════ -->
 <!-- BOTTOM: 12 corners — joined       -->
 <!-- ══════════════════════════════════ -->
@@ -806,15 +803,12 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <!-- Midtre bakre (delt, fjernet) -->
 
 <!-- Label for delte hjørner -->
-<text x="240" y="558" text-anchor="middle" class="mt cnt" fill="#e6007e" opacity="0.8">4 shared — removed</text>
-
-<!-- Hjørnetelling -->
-<text x="340" y="490" text-anchor="middle" class="mt eq">
-  8 + 8 − <tspan fill="#e6007e">4</tspan> = <tspan font-weight="700" font-size="17">12</tspan>
-</text>
 
 </svg>
 </figure>
+<p style="text-align:center; font-size:15px; color:var(--color-text-primary); opacity:0.75; margin:2px 0 0;">
+  8 + 8 − <span style="color:#e6007e;">4</span> = <strong style="font-size:17px;">12</strong>
+</p>
 <figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">Corner count — separated (16) and joined (12). Pink dots mark the 4 corners removed at the shared face.</figcaption>
 </div>
   </div>
