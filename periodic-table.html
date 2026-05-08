@@ -123,6 +123,15 @@ function showObs(id){
   var box=document.getElementById('obs-'+id);
   if(box)box.style.display='block';
 }
+function openFullscreen(){
+  document.getElementById('fs-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeFullscreen(){
+  document.getElementById('fs-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFullscreen();});
 </script>
 </head>
 <body>
