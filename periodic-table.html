@@ -1982,6 +1982,7 @@ function init(){
 
 function toggleLayer(id){
   var chk=document.getElementById('chk-'+id);
+  if(!chk)return;
   var vis=chk.checked?'visible':'hidden';
   var el=document.getElementById('lyr-'+id);
   var elF=document.getElementById('fs-lyr-'+id);
@@ -1993,6 +1994,7 @@ function toggleLayer(id){
 
 function toggleLayerFs(id){
   var chkF=document.getElementById('fs-chk-'+id);
+  if(!chkF)return;
   var vis=chkF.checked?'visible':'hidden';
   var el=document.getElementById('lyr-'+id);
   var elF=document.getElementById('fs-lyr-'+id);
