@@ -1145,7 +1145,15 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeFullscr
         <button class="btn-sm" onclick="setAll(true)">All on</button>
         <button class="btn-sm" onclick="setAll(false)">All off</button>
       </div>
-      <div class="lr-list" id="fs-lr-list"></div>
+      <div class="lr-list" id="fs-lr-list">
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-tab" checked onchange="toggleLayerFs('tab')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#b3b3b2"></span><div class="lr-info"><div class="lr-name">Periodic Table</div><div class="lr-sub">Wide format, 32 columns</div></div></div>
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-res" checked onchange="toggleLayerFs('res')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#ffd500"></span><div class="lr-info"><div class="lr-name">Resonance Curve</div><div class="lr-sub">The S-curve through the system</div></div></div>
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-cir" checked onchange="toggleLayerFs('cir')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#0089cb"></span><div class="lr-info"><div class="lr-name">C1 and C2</div><div class="lr-sub">The two resonance circles</div></div></div>
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-dbl" onchange="toggleLayerFs('dbl')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#009ddf"></span><div class="lr-info"><div class="lr-name">Double Cube</div><div class="lr-sub">Two overlapping squares</div></div></div>
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-pyr" onchange="toggleLayerFs('pyr')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#f39200"></span><div class="lr-info"><div class="lr-name">Asymmetric Pyramid</div><div class="lr-sub">Connecting C1 and C2</div></div></div>
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-ang" onchange="toggleLayerFs('ang')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#555550"></span><div class="lr-info"><div class="lr-name">Angles &amp; Measures</div><div class="lr-sub">Geometric constants</div></div></div>
+<div class="lr"><label class="sw" onclick="event.stopPropagation()"><input type="checkbox" id="fs-chk-pri" onchange="toggleLayerFs('pri')"><span class="sw-track"></span></label><span class="lr-dot" style="background:#cc5116"></span><div class="lr-info"><div class="lr-name">Prime Periods</div><div class="lr-sub">7 periods — 4 primes — 7/4=1.75</div></div></div>
+</div>
     </div>
     <div class="fs-svg-wrap">
       <div class="zoom-ctrl fs-zoom">
