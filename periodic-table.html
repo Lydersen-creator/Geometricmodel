@@ -95,6 +95,34 @@ function toggleAcc(id){
   body.classList.toggle('open');
   btn.querySelector('.acc-icon').textContent=isOpen?'+':'×';
 }
+function toggleLayer(id){
+  var chk=document.getElementById('chk-'+id);
+  if(!chk)return;
+  var vis=chk.checked?'visible':'hidden';
+  var el=document.getElementById('lyr-'+id);
+  var elF=document.getElementById('fs-lyr-'+id);
+  var chkF=document.getElementById('fs-chk-'+id);
+  if(el)el.setAttribute('visibility',vis);
+  if(elF)elF.setAttribute('visibility',vis);
+  if(chkF)chkF.checked=chk.checked;
+}
+function toggleLayerFs(id){
+  var chkF=document.getElementById('fs-chk-'+id);
+  if(!chkF)return;
+  var vis=chkF.checked?'visible':'hidden';
+  var el=document.getElementById('lyr-'+id);
+  var elF=document.getElementById('fs-lyr-'+id);
+  var chk=document.getElementById('chk-'+id);
+  if(el)el.setAttribute('visibility',vis);
+  if(elF)elF.setAttribute('visibility',vis);
+  if(chk)chk.checked=chkF.checked;
+}
+function showObs(id){
+  var boxes=document.querySelectorAll('.obs-box');
+  boxes.forEach(function(b){b.style.display='none';});
+  var box=document.getElementById('obs-'+id);
+  if(box)box.style.display='block';
+}
 </script>
 </head>
 <body>
