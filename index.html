@@ -811,8 +811,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 </p>
 <figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">Corner count — separated (16) and joined (12). Pink dots mark the 4 corners removed at the shared face.</figcaption>
 </div>
-  </div>
-</div>
 
 <hr>
 
@@ -823,7 +821,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <p>As we have seen, the double cube may be understood as two systems operating simultaneously. A structural system of two separate but tessellating cubes, and a dynamic system of two combined cubes sharing a face.</p>
 
 <p>These two properties are tied in a proportional relationship with deep connections to the interplay between structure and dynamics. The numbers that emerge are striking:</p>
-
 
 <div class="formula">(16 − 12) / (16 + 12) = 4/28 = 1/7</div>
 
@@ -836,7 +833,13 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <div class="formula">36 ÷ (7/4) = 144/7 = 20 + 4/7</div>
 <div class="formula">48 ÷ (7/4) = 192/7 = 27 + 3/7</div>
 
-<p>The fractional remainders — 4/7 and 3/7 — are mirror rotations within the same 142857 cycle. They sum to exactly 1, and their numerators satisfy 4 + 3 = 7 and 4 × 3 = 12. The saddle point 7/4, when applied to the system's scaled corner numbers, unfolds the 1/7 sequence from within the double cube's own arithmetic.</p>
+<p>The fractional remainders — 4/7 and 3/7 — are mirror rotations within the same cycle:</p>
+
+<div style="font-family:'Courier New',monospace; font-size:15px; line-height:2; margin:20px 0 20px 0; color:var(--color-text-primary);">
+  <div>4/7 &nbsp;= 0.<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span> &nbsp;<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span> &nbsp;<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span>…</div>
+  <div>3/7 &nbsp;= 0.<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span> &nbsp;<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span> &nbsp;<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span>…</div>
+  <div style="margin-top:8px; font-size:12px; color:var(--color-text-tertiary); font-family:system-ui,sans-serif;">4/7 + 3/7 = 1 &nbsp;&nbsp; 4 + 3 = 7 &nbsp;&nbsp; 4 × 3 = 12</div>
+</div> They sum to exactly 1, and their numerators satisfy 4 + 3 = 7 and 4 × 3 = 12. The saddle point 7/4, when applied to the system's scaled corner numbers, unfolds the 1/7 sequence from within the double cube's own arithmetic.</p>
 
 <p>The two residuals are not arbitrary: 4 = 2² is the squared length of the double cube, and 3 is the spherical content (½ + 1 + ½). The saddle point 7/4, as divisor, separates the system's cubic and spherical signatures into two distinct positions within the 1/7 cycle.</p>
 
