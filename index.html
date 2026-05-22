@@ -92,6 +92,17 @@ p { font-size:15px; color:var(--text2); line-height:1.85; margin-bottom:18px; }
   font-style:normal;
 }
 
+.method-note {
+  font-size:14px; color:var(--text2);
+  padding:18px 22px; margin:32px 0;
+  background:#f7f9ee; border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0; line-height:1.8;
+}
+.method-note .method-label {
+  font-size:10px; font-weight:700; letter-spacing:0.8px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:8px;
+}
+
 .sqrt-pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:28px 0; }
 .sqrt-card {
   background:var(--white); border:1px solid var(--rule);
@@ -181,6 +192,11 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
   </div>
 </div>
 
+<div class="method-note">
+  <div class="method-label">A note on method</div>
+  This is a conceptual geometric exploration — not a proof. It moves between metric geometry, number theory, and graph theory, because the suggestion is that these perspectives converge on the same object. Throughout, <em>observations</em> are what the geometry shows directly; <em>interpretations</em> are what that might mean. The two are kept distinct.
+</div>
+
 <hr id="doublecube">
 
 <!-- THE STRUCTURE -->
@@ -193,9 +209,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <div class="quote-block" style="font-style: italic; font-size: 0.95rem;">
 <p style="margin-bottom:14px;">This page explores the possibility that the double cube — two unit cubes joined along a shared face — may constitute a complete geometric system in which structure and dynamics are symmetrically coupled through the introduction of √7 as an integral part of the double cube.</p>
 
-<p style="margin-bottom:14px;">If so, √7 may turn out to be the system's combinator — appearing to negotiate between the double cube's two regimes, the cyclical and the structural. Despite being forbidden from the integer lattice by Legendre's three-square theorem, it appears to enter the system as both a saddle point and a dynamic operator — the same value suggested algebraically and geometrically.</p>
+<p style="margin-bottom:14px;">If so, √7 may turn out to be the system's combinator — appearing to negotiate between the double cube's two regimes, the cyclical and the structural. Despite being forbidden from the integer lattice by Legendre's three-square theorem, it appears to enter the system as both a tangent value and a structural mediator — the same value suggested algebraically and geometrically.</p>
 
-<p style="margin-bottom:14px;">By treating √7 as a structurally privileged excluded value, the double cube appears to contain characteristic fractions (7/4, 3/4, 2/3, 1/12, 1/7) — emerging from five converging and independent observations.</p>
+<p style="margin-bottom:14px;">By treating √7 as a structurally privileged excluded value, the double cube appears to contain characteristic fractions (7/4, 3/4, 2/3, 1/12, 1/7) — emerging from five observations approaching from different directions — three of which establish 7 as the privileged value through methodologically distinct routes.</p>
 
 <p style="margin:0;">What follows is a layered observation for this possibility.</p>
 </div>
@@ -457,17 +473,17 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <hr>
 
 <div class="sec-label">The first observation</div>
-<h2 class="sec-title">Observation 1: The tangent construction.</h2>
+<h2 class="sec-title">Observation 1a: The tangent construction.</h2>
 
 <p>The double cube has length √4 = 2. Working with squared distances — as required by Legendre's theorem, which establishes that √7 is only realisable through a four-term sum of squares — the external point is placed at (√4)² = 4. Draw a circle of radius √7 centred at the origin. Place an external point P = (4, 0). The tangent length is exact:</p>
 <div class="formula">|PT| = √(16 − 7) = √9 = 3</div>
 <p>The x-coordinate of the tangent point:</p>
 <div class="formula">Tₓ = r² / |OP| = 7 / 4 = 1.75</div>
-<p>Geometric construction: the saddle point emerges where the tangent from the double cube's squared length meets the √7 sphere. 7/4 is not placed by assumption — it follows from the construction.</p>
+<p>Geometric construction: the tangent value 7/4 emerges where the tangent from the double cube's squared length meets the √7 sphere. It is not placed by assumption — it follows from the construction.</p>
 
 <figure style="max-width:560px; margin: 2rem auto;">
 <svg viewBox="0 0 560 580" xmlns="http://www.w3.org/2000/svg" role="img">
-<title>The tangent construction — saddle point 7/4</title>
+<title>The tangent construction — tangent value 7/4</title>
 
 <!-- Grid/axes -->
 <line x1="40" y1="300" x2="500" y2="300" stroke="#3d3d3a" stroke-width="1" opacity="0.3"/>
@@ -561,12 +577,12 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <hr>
 
-<div class="sec-label">The second observation</div>
-<h2 class="sec-title">Observation 2: The midpoint derivation.</h2>
+<div class="sec-label">The first observation, continued</div>
+<h2 class="sec-title">Observation 1b: The midpoint derivation.</h2>
 
 <p>Independently of the tangent construction, the same value appears through pure arithmetic. By halving √7 and squaring the result:</p>
 <div class="formula">(√7 / 2)² = 7/4 = 1.75</div>
-<p>This is the same value as Observation 1. That two independent routes — one geometric, one arithmetic — converge on precisely 7/4 suggests it as the saddle point: the value at which the √7 sphere and the double cube's own geometry appear to meet. Structural observation: the value is consistent across both derivations.</p>
+<p>This is the same value as Observation 1a. That two independent routes — one geometric, one arithmetic — converge on precisely 7/4 — the value at which the √7 sphere and the double cube's own geometry appear to meet. Structural observation: the value is consistent across both derivations.</p>
 
 <figure style="margin: 2rem 0; text-align: center;">
 <?xml version="1.0" encoding="UTF-8"?>
@@ -627,11 +643,27 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <hr>
 
+<div class="sec-label">The first observation, confirmed</div>
+<h2 class="sec-title">Observation 1c: The spectral invariant.</h2>
+
+<p>The two preceding observations approach 7 through metric geometry — distances, tangent points, and squared lengths. A third, independent route arrives at the same conclusion through the combinatorial structure of the double cube itself.</p>
+
+<p>Treating the double cube as a graph — 12 vertices (see Observation 2) connected by 20 unit-length edges — one can construct its Laplace matrix <em>L</em> = <em>D</em> − <em>A</em>, where <em>D</em> is the degree matrix and <em>A</em> is the adjacency matrix. The eigenvalues of <em>L</em> are a structural fingerprint of the graph: they depend only on how the vertices are connected, not on how the graph is drawn or measured.</p>
+
+<p>The full Laplace spectrum of the double cube is:</p>
+<div class="formula">{0, 1, 2, 2, 3, 3, 3, 4, 5, 5, 5, <strong>7</strong>}</div>
+
+<p>All integers. The largest eigenvalue — the spectral radius — is exactly 7. This is not a near-miss: the difference is zero to numerical precision.</p>
+
+<p>The result is exclusive to the double cube within its family. The single cube (1×1×1) has spectral radius 6. The triple cube (3×1×1) has spectral radius 6 + √2 ≈ 7.414 — not an integer. The double cube is the only configuration in this series for which the spectral radius is a whole number, and that number is 7.</p>
+
+<p>Observations 1a and 1b establish 7 through the metric geometry of the double cube — the tangent construction and the midpoint derivation both land on 7/4. Observation 1c establishes 7 through the connectivity of its vertices, with no reference to distances or coordinates. The two routes approach from different directions. That both single out 7 as the privileged value suggests this is not a coincidence of construction, but a structural property of the object itself.</p>
+
 <!-- THE TWO BINDERS -->
 <div class="sec-label">Interlude</div>
 <h2 class="sec-title">Two in One?</h2>
 
-<p>Before continuing, let's pause for a second and absorb what these first two observations may actually mean. We have two separate cubes joined in a special relationship by two numbers: √5 and √7.</p>
+<p>Before continuing, let's pause for a second and absorb what these first three observations may actually mean. We have two separate cubes joined in a special relationship by two numbers: √5 and √7.</p>
 
 <div class="sqrt-card-wide">
   <div class="num">√5</div>
@@ -651,20 +683,20 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <hr>
 
-<div class="sec-label">The third observation</div>
-<h2 class="sec-title">Observation 3: The corner count.</h2>
+<div class="sec-label">The second observation</div>
+<h2 class="sec-title">Observation 2: The corner count.</h2>
 
 <p>The double cube can be translated as two things simultaneously: a structure of two separate cubes, each with 8 corners — giving 16 in total — and a coupled system where the shared face removes 4 of those corners, leaving 12. These can be understood as more than merely two different objects. In light of our examination, it could be said to be two readings of the same object: one structural, one dynamic.</p>
 
-<p>The saddle point 7/4 responds to both readings precisely. Combined with the shared face's unit √(1/16) = 1/4, it produces two exact identities:</p>
+<p>7/4 responds to both readings precisely. Combined with the shared face's unit √(1/16) = 1/4, it produces two exact identities:</p>
 
 <div class="formula">(7/4) + √(1/16) = 2</div>
-<p>The saddle point plus the shared face's unit returns exactly the double cube's full length — √4 = 2.</p>
+<p>7/4 plus the shared face's unit returns exactly the double cube's full length — √4 = 2.</p>
 
 <div class="formula">(7/4) ÷ √(1/16) = 7</div>
-<p>The saddle point divided by the shared face's unit returns exactly the combinator.</p>
+<p>7/4 divided by the shared face's unit returns exactly the combinator.</p>
 
-<p>√(1/16) = 1/4 seems to not be an arbitrary factor — instead it can be seen as the geometric unit of the shared face itself. One face of a unit cube has area 1, divided by 16 corners gives 1/16. The shared face is precisely the interface where the structural and dynamic readings diverge: it is present in one reading and absent in the other. That the saddle point both completes the double cube's length and recovers the combinator through this single factor suggests that 7/4 is not just a property of the system — it is sensitive to the system's own internal boundary.</p>
+<p>√(1/16) = 1/4 seems to not be an arbitrary factor — instead it can be seen as the geometric unit of the shared face itself. One face of a unit cube has area 1, divided by 16 corners gives 1/16. The shared face is precisely the interface where the structural and dynamic readings diverge: it is present in one reading and absent in the other. That 7/4 both completes the double cube's length and recovers the combinator through this single factor suggests that 7/4 is not just a property of the system — it is sensitive to the system's own internal boundary.</p>
 
 
 <div style="max-width:600px; margin: 2rem auto;">
@@ -814,8 +846,8 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <hr>
 
 <!-- THE CONNECTING SEQUENCE -->
-<div class="sec-label">The fourth observation</div>
-<h2 class="sec-title">Observation 4: The connecting sequence.</h2>
+<div class="sec-label">The third observation</div>
+<h2 class="sec-title">Observation 3: The connecting sequence.</h2>
 
 <p>If the double cube may be understood as two systems operating simultaneously — a structural system of two separate but tessellating cubes, and a dynamic system of two combined cubes sharing a face — these two properties may be tied in a proportional relationship with deep connections to the interplay between structure and dynamics.</p>
 
@@ -827,7 +859,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>The 12 and 16 corner counts meet in a common denominator when scaled by 3: 3 × 12 = 36 and 3 × 16 = 48. The number 48 is the least common multiple of both — the first number into which both 12 and 16 divide exactly.</p>
 
-<p>When both are divided by the saddle point 7/4:</p>
+<p>When both are divided by 7/4:</p>
 
 <div class="formula">36 ÷ (7/4) = 144/7 = 20 + 4/7</div>
 <div class="formula">48 ÷ (7/4) = 192/7 = 27 + 3/7</div>
@@ -838,9 +870,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
   <div>4/7 &nbsp;= 0.<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span> &nbsp;<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span> &nbsp;<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span>…</div>
   <div>3/7 &nbsp;= 0.<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span> &nbsp;<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span> &nbsp;<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span>…</div>
   <div style="margin-top:8px; font-size:12px; color:var(--color-text-tertiary); font-family:system-ui,sans-serif;">4/7 + 3/7 = 1 &nbsp;&nbsp; 4 + 3 = 7 &nbsp;&nbsp; 4 × 3 = 12</div>
-</div> They sum to exactly 1, and their numerators satisfy 4 + 3 = 7 and 4 × 3 = 12. The saddle point 7/4, when applied to the system's scaled corner numbers, unfolds the 1/7 sequence from within the double cube's own arithmetic.</p>
+</div> They sum to exactly 1, and their numerators satisfy 4 + 3 = 7 and 4 × 3 = 12. 7/4, when applied to the system's scaled corner numbers, unfolds the 1/7 sequence from within the double cube's own arithmetic.</p>
 
-<p>The two residuals seem not arbitrary in relation to the double cube: 4 = 2² is the squared length of the double cube, and 3 is the spherical content (½ + 1 + ½). The saddle point 7/4, as divisor, separates the system's cubic and spherical signatures into two distinct positions within the 1/7 cycle.</p>
+<p>The two residuals seem not arbitrary in relation to the double cube: 4 = 2² is the squared length of the double cube, and 3 is the spherical content (½ + 1 + ½). 7/4, as divisor, separates the system's cubic and spherical signatures into two distinct positions within the 1/7 cycle.</p>
 
 <p>Three relationships now stand together:</p>
 
@@ -855,14 +887,14 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <hr id="synthesis">
 
 <!-- THE THRESHOLD -->
-<div class="sec-label">The fifth observation</div>
-<h2 class="sec-title">Observation 5: Curving the structure.</h2>
+<div class="sec-label">The fourth observation</div>
+<h2 class="sec-title">Observation 4: Curving the structure.</h2>
 
-<h3 class="sec-sub" style="margin-top:1.5rem;">5.1 — The dynamic operator</h3>
+<h3 class="sec-sub" style="margin-top:1.5rem;">5.1 — The structural mediator</h3>
 
-<p>In the double cube, √7 may act as the dynamic operator within the structural framework of √1 through √6. If it does, it does so through (√7/2)² = 1.75 — the saddle point at which the system's cubic and spherical geometries meet without either dominating.</p>
+<p>In the double cube, √7 may act as a structural mediator within the framework of √1 through √6 — the value that sits at the boundary between what the lattice realises and what it excludes. If it does, it does so through (√7/2)² = 1.75 — the tangent value at which the system's cubic and spherical geometries meet without either dominating.</p>
 
-<p>The scaling value 1.75 = 7/4, in this case, is not only an arithmetic property — it might operate as the saddle point through which the dynamic curve passes. Speculatively: the operator and the curve are the same phenomenon, one described algebraically, the other geometrically.</p>
+<p>The scaling value 1.75 = 7/4, in this case, is not only an arithmetic property — it might operate as the tangent value through which the dynamic curve passes. Speculatively: the mediating value and the curve are the same phenomenon, one described algebraically, the other geometrically.</p>
 
 <h3 class="sec-sub" style="margin-top:1.5rem;">5.2 — The sinusoidal curve</h3>
 
@@ -898,9 +930,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <h3 class="sec-sub" style="margin-top:1.5rem;">5.3 — Tessellation and the 3×7 product</h3>
 
-<p>The half-spheres at each end have radius ½ — exactly matching the half-sphere of the adjacent double cube in an orthogonal tessellation. The saddle point 7/4 is defined relative to the double cube's internal geometry and is therefore translationally invariant: the same saddle point applies in each tessellating unit. The product 7/4 × 12 = 21 = 3 × 7 is not a local result — it is a structural property of the entire tessellating system.</p>
+<p>The half-spheres at each end have radius ½ — exactly matching the half-sphere of the adjacent double cube in an orthogonal tessellation. 7/4 is defined relative to the double cube's internal geometry and is therefore translationally invariant: the same value applies in each tessellating unit. The product 7/4 × 12 = 21 = 3 × 7 is not a local result — it is a structural property of the entire tessellating system.</p>
 
-<p>The double cube has 12 vertices — 16 minus the 4 shared at the joining face. The saddle point 7/4, as a property of the whole system, scales with this vertex count:</p>
+<p>The double cube has 12 vertices — 16 minus the 4 shared at the joining face. 7/4, as a property of the whole system, scales with this vertex count:</p>
 
 <div class="formula">7/4 × 12 = 21 = 3 × 7</div>
 
@@ -1021,8 +1053,8 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
     <div class="acc-inner">
       <h4>Proposition: The dynamic side of the double cube</h4>
       <p><strong>Definition 1.</strong> Let a double cube be two unit cubes linked along one shared face. The double cube has 2×8 − 4 = 12 corners, where 4 shared corners are subtracted.</p>
-      <p><strong>Definition 2.</strong> Let the saddle point S be defined as S = (√7/2)² = 7/4, where √7 is the combinator — established as forbidden by Legendre's three-square theorem.</p>
-      <p><strong>Lemma.</strong> For n linked unit cubes, the number of corners is 4(n+1), and the product with the saddle point is:</p>
+      <p><strong>Definition 2.</strong> Let the tangent value S be defined as S = (√7/2)² = 7/4, where √7 is the combinator — established as forbidden by Legendre's three-square theorem.</p>
+      <p><strong>Lemma.</strong> For n linked unit cubes, the number of corners is 4(n+1), and the product with 7/4 is:</p>
       <div class="formula">4(n+1) · 7/4 = 7(n+1)</div>
       <p><strong>Corollary for n = 2:</strong></p>
       <div class="formula">12 · 7/4 = 21 = 3 × 7</div>
@@ -1042,7 +1074,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>By observation: while (√6/2)² = 6/4 = 1.500 turns out geometrically predictable, (√7/2)² = 7/4 = 1.750 shows its anomalous nature. The value 7/4 exceeds √3 by exactly 0.018.</p>
 
-<p>A possible translation: placing itself this close to the half-point of the double cube when treated as both a linear and a geometric number at once makes for a compelling argument of curvature through this value as a saddle point. In this sense, the delta area between √3 and 7/4 might be considered an area of interconnection, hinging the two cubes through the introduced curve.</p>
+<p>A possible translation: placing itself this close to the half-point of the double cube when treated as both a linear and a geometric number at once makes for a compelling argument of curvature through this value. In this sense, the delta area between √3 and 7/4 might be considered an area of interconnection, hinging the two cubes through the introduced curve.</p>
 
 <hr id="evidence">
 
@@ -1055,9 +1087,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>The double cube, given the observations, seems to be carrying two axes: a linear, cubic extent and a spherical, curved contribution. In each of the system's characteristic fractions, these two axes appear as numerator and denominator — and their difference names the irreducible gap between them. The following presents as a speculation.</p>
 
-<p><strong>7/4</strong> — the spherical element √7 (numerator) curves over the double cube's squared length 2² = 4 (denominator). This is the saddle point: the projection of the √7 sphere onto the cubic axis, derived exactly from the tangent point construction. Reading: spherical over cubic.</p>
+<p><strong>7/4</strong> — the spherical element √7 (numerator) curves over the double cube's squared length 2² = 4 (denominator). This is the tangent value: the projection of the √7 sphere onto the cubic axis, derived exactly from the tangent construction. Reading: spherical over cubic.</p>
 
-<p><strong>3/4</strong> — the spatial remainder from the saddle point decomposition 7/4 = 1 + 3/4. The numerator corresponds to the three spheres inscribed in the double cube (½ + 1 + ½). The denominator is the squared length of the double cube (2² = 4) — the same structural unit that anchors 7/4. Reading: spherical content over cubic extent.</p>
+<p><strong>3/4</strong> — the spatial remainder from the decomposition 7/4 = 1 + 3/4. The numerator corresponds to the three spheres inscribed in the double cube (½ + 1 + ½). The denominator is the squared length of the double cube (2² = 4) — the same structural unit that anchors 7/4. Reading: spherical content over cubic extent.</p>
 
 <p><strong>2/3</strong> — two cubic units (numerator) over three spherical units (denominator). Here the double cube itself becomes the unit: two cubes constitute the structure, three spheres constitute the periodicity. The same relationship, read from the opposite direction. Reading: cubic over spherical.</p>
 
@@ -1078,7 +1110,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>A more precise statement of this minimality: √5 is the first diagonal that cannot exist within a single cube. It is unavoidable in the double cube, yet irreducible to any one cube alone. In this sense, √5 is a relational quantity — emergent from the meeting of two cubic units, not from either unit in isolation. It is the double cube's proof of its own necessity.</p>
 
-<p>This gives the double cube a dual geometric nature that runs deeper than its shape. Its central axis admits two descriptions: linear (distance = 1, rational, internal) and quadratic (√3, irrational, boundary) — the same axis, two measurement languages. √7 inherits this duality directly: it appears linearly as the tangent distance, and quadratically as the saddle point (√7/2)² = 7/4. It is the only diagonal that changes status depending on which language is applied — boundary in one, interior in the other. This is what it means for the double cube to be a minimal system where the linear and the quadratic meet.</p>
+<p>This gives the double cube a dual geometric nature that runs deeper than its shape. Its central axis admits two descriptions: linear (distance = 1, rational, internal) and quadratic (√3, irrational, boundary) — the same axis, two measurement languages. √7 inherits this duality directly: it appears linearly as the tangent distance, and quadratically as the tangent value (√7/2)² = 7/4. It is the only diagonal that changes status depending on which language is applied — boundary in one, interior in the other. This is what it means for the double cube to be a minimal system where the linear and the quadratic meet.</p>
 
 <p>A number-theoretic resonance suggests itself here. All primes greater than 2 divide into exactly two classes: those congruent to 1 mod 4, which can be expressed as a sum of two squares, and those congruent to 3 mod 4, which cannot. This is not an analogy — it is an independent mathematical fact. But it shares the same grammar as the double cube's dual nature: one class admits a quadratic decomposition, the other does not. The double cube may be read as a geometric operand that makes this abstract partition visible — giving the two prime classes a spatial form, one internal and rational, the other a boundary that resists decomposition.</p>
 
