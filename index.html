@@ -464,7 +464,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
       <p>A positive integer n can be written as the sum of three squares of integers if and only if n is <em>not</em> of the form 4ᵃ(8b+7). The number 7 satisfies this exactly: 7 = 4⁰(8·0+7). It is the simplest and smallest member of this infinite family of forbidden values — {7, 15, 23, 28, 31, ...}. This is a proved theorem. √7 is absent from the double cube's lattice by mathematical necessity.</p>
 
       <h4>Layer 3 — Lagrange's four-square theorem</h4>
-      <p>To realise 7 as a sum of integer squares, four terms are required: 7 = 2²+1²+1²+1². Geometrically, this means √7 requires a fourth spatial dimension to exist as a lattice point. In the context of the double cube, this fourth degree of freedom is interpreted as periodicity: a temporal or cyclic dimension that complements the three spatial ones.</p>
+      <p>To realise 7 as a sum of integer squares, four terms are required: 7 = 2²+1²+1²+1². Lagrange's four-square theorem establishes that four terms are both necessary and sufficient. In the context of the double cube, this fourth degree of freedom is speculatively interpreted as periodicity — a dimension beyond the three spatial ones. This is a heuristic reading, not a geometric theorem.</p>
 
     </div>
   </div>
@@ -843,6 +843,21 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
   8 + 8 − <span style="color:#e6007e;">4</span> = <strong style="font-size:17px;">12</strong>
 </p>
 <figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">Corner count — separated (16) and joined (12). Pink dots mark the 4 corners removed at the shared face.</figcaption>
+</div>
+
+<div class="subsec">
+<h3>Euler's polyhedron formula</h3>
+<p>Euler's formula V − E + F = 2 holds for any single convex polyhedron. Applied to the double cube's two readings, it does not merely verify the corner counts — it registers the topological difference between them.</p>
+
+<p>For two separate unit cubes, each contributes its own V − E + F = 2, and the combined result is:</p>
+<div class="formula">V − E + F = 16 − 24 + 12 = 4 = 2 + 2</div>
+<p>The formula returns χ = 4: a signature of two topologically distinct objects. The cubes are separate, and the formula reflects this.</p>
+
+<p>For the joined double cube — 12 lattice vertices, 20 unit-length edges, 10 faces — the formula returns:</p>
+<div class="formula">V − E + F = 12 − 20 + 10 = 2</div>
+<p>χ = 2: the signature of a single connected polyhedron. The joining of the two cubes produces a single connected polyhedron.</p>
+
+<p>The same geometric arrangement therefore supports two distinct topological descriptions — χ = 4 when read as two separate units, χ = 2 when read as one connected body. The two readings are not merely different counts of the same object — they are topologically distinct configurations. Euler's formula registers this difference in a single number.</p>
 </div>
 
 <hr>
