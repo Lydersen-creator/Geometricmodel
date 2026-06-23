@@ -464,7 +464,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
       <p>A positive integer n can be written as the sum of three squares of integers if and only if n is <em>not</em> of the form 4ᵃ(8b+7). The number 7 satisfies this exactly: 7 = 4⁰(8·0+7). It is the simplest and smallest member of this infinite family of forbidden values — {7, 15, 23, 28, 31, ...}. This is a proved theorem. √7 is absent from the double cube's lattice by mathematical necessity.</p>
 
       <h4>Layer 3 — Lagrange's four-square theorem</h4>
-      <p>To realise 7 as a sum of integer squares, four terms are required: 7 = 2²+1²+1²+1². Lagrange's four-square theorem establishes that four terms are both necessary and sufficient. In the context of the double cube, this fourth degree of freedom is speculatively interpreted as periodicity — a dimension beyond the three spatial ones. This is a heuristic reading, not a geometric theorem.</p>
+      <p>To realise 7 as a sum of integer squares, four terms are required: 7 = 2²+1²+1²+1². Geometrically, this means √7 requires a fourth spatial dimension to exist as a lattice point. In the context of the double cube, this fourth degree of freedom is interpreted as periodicity: a temporal or cyclic dimension that complements the three spatial ones.</p>
 
     </div>
   </div>
@@ -657,9 +657,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>The result is exclusive to the double cube within its family. The single cube (1×1×1) has spectral radius 6. The triple cube (3×1×1) has spectral radius 6 + √2 ≈ 7.414 — not an integer. The double cube is the only configuration in this series for which the spectral radius is a whole number, and that number is 7.</p>
 
-<p>Observations 1a and 1b establish 7 through the metric geometry of the double cube — the tangent construction and the midpoint derivation both land on 7/4. Observation 1c establishes 7 through the connectivity of its vertices, with no reference to distances or coordinates. The two are distinct mathematical descriptions of the same object. That both single out 7 as the privileged value suggests this is not a coincidence of construction, but a structural property of the object itself.
-
-<p>A direct consequence follows: the reciprocal of the spectral radius is 1/7. This is the same value that emerges from the double cube's corner counts — (16 − 12) / (16 + 12) = 1/7 — derived in Observation 3 through a completely different route. The two routes share no mathematical machinery: one comes from graph connectivity, the other from combinatorial counting. That both produce 1/7 suggests the value is not an artifact of either method, but a property of the object itself.</p></p>
+<p>Observations 1a and 1b establish 7 through the metric geometry of the double cube — the tangent construction and the midpoint derivation both land on 7/4. Observation 1c establishes 7 through the connectivity of its vertices, with no reference to distances or coordinates. The two are distinct mathematical descriptions of the same object. That both single out 7 as the privileged value suggests this is not a coincidence of construction, but a structural property of the object itself.</p>
 
 <hr>
 
@@ -847,21 +845,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">Corner count — separated (16) and joined (12). Pink dots mark the 4 corners removed at the shared face.</figcaption>
 </div>
 
-<div class="subsec">
-<h3>Euler's polyhedron formula</h3>
-<p>Euler's formula V − E + F = 2 holds for any single convex polyhedron. Applied to the double cube's two readings, it does not merely verify the corner counts — it registers the topological difference between them.</p>
-
-<p>For two separate unit cubes, each contributes its own V − E + F = 2, and the combined result is:</p>
-<div class="formula">V − E + F = 16 − 24 + 12 = 4 = 2 + 2</div>
-<p>The formula returns χ = 4: a signature of two topologically distinct objects. The cubes are separate, and the formula reflects this.</p>
-
-<p>For the joined double cube — 12 lattice vertices, 20 unit-length edges, 10 faces — the formula returns:</p>
-<div class="formula">V − E + F = 12 − 20 + 10 = 2</div>
-<p>χ = 2: the signature of a single connected polyhedron. The joining of the two cubes produces a single connected polyhedron.</p>
-
-<p>The same geometric arrangement therefore supports two distinct topological descriptions — χ = 4 when read as two separate units, χ = 2 when read as one connected body. The two readings are not merely different counts of the same object — they are topologically distinct configurations. Euler's formula registers this difference in a single number.</p>
-</div>
-
 <hr>
 
 <!-- THE CONNECTING SEQUENCE -->
@@ -873,8 +856,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <p>Indeed, the numbers that emerge are quite striking:</p>
 
 <div class="formula">(16 − 12) / (16 + 12) = 4/28 = 1/7</div>
-
-<p>The 4 in the numerator is not arithmetically arbitrary — it is ΔV, the exact number of vertices identified on the shared face when two cubes are joined. This is the same topological event registered by Euler's polyhedron formula in Observation 2: the transition from χ = 4 to χ = 2 is produced by precisely this identification. The operation (16 − 12) / (16 + 12) can therefore be read as the ratio of <em>what changes topologically</em> to <em>what exists across both readings</em> — not a freely chosen arithmetic, but a geometrically grounded one.</p>
 
 <p>1/7 is one of the most fascinating relationships in mathematics, producing the repeating decimal sequence 0.142857142857... — a closed, self-returning cycle of six digits. That this sequence emerges directly from the double cube's own corner arithmetic provides grounds for further investigation.</p>
 
@@ -891,7 +872,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
   <div>4/7 &nbsp;= 0.<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span> &nbsp;<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span> &nbsp;<span style="color:#e6007e; font-weight:600;">5 7 1 4 2 8</span>…</div>
   <div>3/7 &nbsp;= 0.<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span> &nbsp;<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span> &nbsp;<span style="color:#378ADD; font-weight:600;">4 2 8 5 7 1</span>…</div>
   <div style="margin-top:8px; font-size:12px; color:var(--color-text-tertiary); font-family:system-ui,sans-serif;">4/7 + 3/7 = 1 &nbsp;&nbsp; 4 + 3 = 7 &nbsp;&nbsp; 4 × 3 = 12</div>
-</div> They sum to exactly 1, and their numerators satisfy 4 + 3 = 7 and 4 × 3 = 12. As mirror images within the cycle, they sum exactly: 571428 + 428571 = 999999. 7/4, when applied to the system's scaled corner numbers, unfolds the 1/7 sequence from within the double cube's own arithmetic.</p>
+</div> They sum to exactly 1, and their numerators satisfy 4 + 3 = 7 and 4 × 3 = 12. 7/4, when applied to the system's scaled corner numbers, unfolds the 1/7 sequence from within the double cube's own arithmetic.</p>
 
 <p>The two residuals seem not arbitrary in relation to the double cube: 4 = 2² is the squared length of the double cube, and 3 is the spherical content (½ + 1 + ½). 7/4, as divisor, separates the system's cubic and spherical signatures into two distinct positions within the 1/7 cycle.</p>
 
@@ -1075,9 +1056,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
       <h4>Proposition: The dynamic side of the double cube</h4>
       <p><strong>Definition 1.</strong> Let a double cube be two unit cubes linked along one shared face. The double cube has 2×8 − 4 = 12 corners, where 4 shared corners are subtracted.</p>
       <p><strong>Definition 2.</strong> Let the tangent value S be defined as S = (√7/2)² = 7/4, where √7 is the combinator — established as forbidden by Legendre's three-square theorem.</p>
-      <p><strong>Lemma.</strong> For n linked unit cubes, the number of corners is 4(n+1), and the product with 7/4 is:</p>
+      <p><strong>Observation.</strong> For n linked unit cubes, the corner count is 4(n+1). Scaled by 7/4, this gives:</p>
       <div class="formula">4(n+1) · 7/4 = 7(n+1)</div>
-      <p><strong>Corollary for n = 2:</strong></p>
+      <p>For the double cube, n = 2, so 4(3) = 12 corners, and:</p>
       <div class="formula">12 · 7/4 = 21 = 3 × 7</div>
       <p><strong>Two independent convergences on 21:</strong></p>
       <p><strong>1.</strong> √21 = √(1² + 2² + 4²) — space diagonal of a 1×2×4 rectangle, where 1, 2, 4 are the first three powers of 2.</p>
@@ -1102,9 +1083,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <!-- SYNTHESIS -->
 <div class="sec-label">The numbers</div>
 <h2 class="sec-title">What the double cube might actually provide us with.</h2>
-<div class="sec-sub">Five observations and a topological invariant. One system?</div>
+<div class="sec-sub">Five observations, five possible fractions. One system?</div>
 
-<p>The observations developed above each approach the double cube from a different direction — tangent geometry, arithmetic midpoint, graph connectivity, corner topology, connecting sequence, and spherical inscription. A further observation comes from topology. Together they converge on the same set of characteristic fractions. This section collects what they might jointly produce.</p>
+<p>The five observations developed above each approach the double cube from a different direction — tangent geometry, arithmetic midpoint, corner topology, connecting sequence, and spherical inscription. They converge on the same set of characteristic fractions. This section collects what they might jointly produce.</p>
 
 <p>The double cube, given the observations, seems to be carrying two axes: a linear, cubic extent and a spherical, curved contribution. In each of the system's characteristic fractions, these two axes appear as numerator and denominator — and their difference names the irreducible gap between them. The following presents as a speculation.</p>
 
@@ -1120,11 +1101,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <div class="formula">3/4 − 2/3 = 1/12</div>
 
-<p><strong>1/7</strong> — the ratio of difference to sum in the double cube's two corner counts: (16 − 12) / (16 + 12). The combinator, in this way, appears not as a missing corner, but as a period — a return encoded in the system's own arithmetic. Independently, 1/7 is the reciprocal of the double cube's Laplace spectral radius — derived in Observation 1c from graph connectivity alone, with no reference to corner counts or distances. Two routes, no shared machinery, the same value.</p>
+<p><strong>1/7</strong> — the ratio of difference to sum in the double cube's two corner counts: (16 − 12) / (16 + 12). The combinator, in this way, appears not as a missing corner, but as a period — a return encoded in the system's own arithmetic.</p>
 
 <div class="formula">(16 − 12) / (16 + 12) = 4/28 = 1/7</div>
-
-<p>A further observation follows from Euler's polyhedron formula: the same geometric arrangement yields χ = 4 when read as two separate units, and χ = 2 when read as one connected body. This is not arithmetic — it is a topological invariant. The two readings of the double cube are not merely different counts; they are topologically distinct configurations of the same object. The transition from χ = 4 to χ = 2 is what the joining of the two cubes produces — registered not by the geometry itself, but by a formula that depends only on connectivity.</p>
 
 <div class="quote-block">
 <p>The double cube, read and translated through the appearing √7, emerges as a possible geometric nexus. Seen through its speculative dual lens, it allows us to see numbers in their true dual-natured properties working purposefully together: the structural and the periodic. In this way, it is the minimal system connecting these domains numerically, showing an exact relation.</p>
@@ -1137,7 +1116,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>This gives the double cube a dual geometric nature that runs deeper than its shape. Its central axis admits two descriptions: linear (distance = 1, rational, internal) and quadratic (√3, irrational, boundary) — the same axis, two measurement languages. √7 inherits this duality directly: it appears linearly as the tangent distance, and quadratically as the tangent value (√7/2)² = 7/4. It is the only diagonal that changes status depending on which language is applied — boundary in one, interior in the other. This is what it means for the double cube to be a minimal system where the linear and the quadratic meet.</p>
 
-<p>A number-theoretic resonance suggests itself here. All primes greater than 2 divide into exactly two classes: those congruent to 1 mod 4, which can be expressed as a sum of two squares, and those congruent to 3 mod 4, which cannot. This is not an analogy — it is an independent mathematical fact. But it shares the same grammar as the double cube's dual nature: one class admits a quadratic decomposition, the other does not. The double cube may be read as a geometric operand that makes this abstract partition visible — giving the two prime classes a spatial form, one internal and rational, the other a boundary that resists decomposition.</p>
+<p>A number-theoretic resonance suggests itself here. All primes greater than 2 divide into exactly two classes: those congruent to 1 mod 4, which can be expressed as a sum of two squares, and those congruent to 3 mod 4, which cannot. This is not an analogy — it is an independent mathematical fact. At the same time, it bears a striking resemblance to the dual nature observed in the double cube: one class admits a quadratic decomposition, the other does not. The double cube may be read as a geometric operand that makes this abstract partition visible — giving the two prime classes a spatial form, one internal and rational, the other a boundary that resists decomposition.</p>
 
 <p>The observations, riding on the translations, show a convergence of the structural and the periodic that points to being non-arbitrary. It follows as a geometric consequence of a number-theoretic constraint: 7 cannot be realised as a diagonal in any three-dimensional integer lattice. Despite this, we have shown that it may indeed, though speculatively, be realized in the specific lattice of a double cube.</p>
 </div>
