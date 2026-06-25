@@ -197,8 +197,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
   This is a geometric conjecture — not a proof. It moves between metric geometry, number theory, and graph theory, because the suggestion is that these perspectives converge on the same object. Throughout, <em>observations</em> are what the geometry shows directly; <em>interpretations</em> are what that might mean. The two are kept distinct. The conjecture itself is stated in the final section.
 </div>
 
-<p style="font-size:14px; color:var(--text3); font-style:italic; margin: 28px 0 0;">The geometric suggested structure is not conceived here as a physical object, but as the minimal geometric solution to a Laplacian with cubic boundary conditions. The significance of this solution is that it couples structure with periodicity — the same operator that determines what distances are geometrically forbidden, and which are privileged, also determines the rhythm at which the system repeats.</p>
-
 <hr id="doublecube">
 
 <!-- THE STRUCTURE -->
@@ -661,6 +659,85 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>Observations 1a and 1b establish 7 through the metric geometry of the double cube — the tangent construction and the midpoint derivation both land on 7/4. Observation 1c establishes 7 through the connectivity of its vertices, with no reference to distances or coordinates. The two are distinct mathematical descriptions of the same object. That both single out 7 as the privileged value suggests this is not a coincidence of construction, but a structural property of the object itself.</p>
 
+<div class="accordion" id="acc-matrices">
+  <button class="acc-btn" onclick="toggleAcc('matrices')" aria-expanded="false" aria-controls="accb-matrices">
+    The matrices: symmetry made visible
+    <span class="acc-icon" id="aci-matrices">+</span>
+  </button>
+  <div class="acc-body" id="accb-matrices">
+    <div class="acc-inner">
+      <p>The three matrices underlying the spectral result are not just computational scaffolding — their internal patterns are direct readings of the double cube's geometry. All three are symmetric about two axes, reflecting the object's structural symmetry: kube 1 and kube 2 are identical, and every connection is mutual.</p>
+      <p>In <strong>A</strong> (the adjacency matrix), blue cells mark connections: 1 where two vertices share an edge, 0 elsewhere. The pattern repeats in four quadrants, mirroring the double cube's bilateral symmetry. In <strong>D</strong> (the degree matrix), only the diagonal is populated: eight 3s for the outer corners, and four 4s for the shared face (vertices 5–8), which belong to both cubes simultaneously. In <strong>L = D − A</strong>, the diagonal carries the degree and every neighbour appears as −1. The number of −1s in each column always equals the diagonal value — a balance that ensures the uniform vector (1,1,…,1) always yields eigenvalue 0.</p>
+      <p>The four 4s at the centre of D are not incidental. They mark the shared face as a faster diffusion channel: a disturbance entering there propagates through four neighbours rather than three. The spectral radius 7 emerges from precisely this asymmetry between interior and exterior — encoded in the degree matrix before any eigenvalue computation begins.</p>
+      <div id="matrix-tables" style="margin-top:18px; overflow-x:auto;">
+        <style>
+          .mtx-section { margin-bottom:20px; }
+          .mtx-label { font-size:11px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+          .mtx table { border-collapse:collapse; font-family:'Courier New',monospace; font-size:11px; }
+          .mtx td, .mtx th { width:22px; height:20px; text-align:center; vertical-align:middle; padding:0; }
+          .mtx th { color:var(--text3); font-weight:400; font-size:10px; }
+          .mtx td.rl { color:var(--text3); font-size:10px; width:18px; }
+          .mtx td.z  { color:var(--text3); opacity:0.3; }
+          .mtx td.one { color:#5a8a1a; font-weight:600; }
+          .mtx td.dg  { color:#5a8a1a; font-weight:600; }
+          .mtx td.dg4 { color:#c05000; font-weight:600; }
+          .mtx td.neg { color:#c05000; font-weight:600; }
+        </style>
+        <script>
+        (function(){
+          var A=[
+            [0,1,0,1,1,0,0,0,0,0,0,0],
+            [1,0,1,0,0,1,0,0,0,0,0,0],
+            [0,1,0,1,0,0,1,0,0,0,0,0],
+            [1,0,1,0,0,0,0,1,0,0,0,0],
+            [1,0,0,0,0,1,0,1,1,0,0,0],
+            [0,1,0,0,1,0,1,0,0,1,0,0],
+            [0,0,1,0,0,1,0,1,0,0,1,0],
+            [0,0,0,1,1,0,1,0,0,0,0,1],
+            [0,0,0,0,1,0,0,0,0,1,0,1],
+            [0,0,0,0,0,1,0,0,1,0,1,0],
+            [0,0,0,0,0,0,1,0,0,1,0,1],
+            [0,0,0,0,0,0,0,1,1,0,1,0]
+          ];
+          var deg=[3,3,3,3,4,4,4,4,3,3,3,3];
+          function makeTable(type,label){
+            var h='<div class="mtx-section"><div class="mtx-label">'+label+'</div><div class="mtx"><table>';
+            h+='<tr><th></th>';
+            for(var j=0;j<12;j++) h+='<th>'+(j+1)+'</th>';
+            h+='</tr>';
+            for(var i=0;i<12;i++){
+              h+='<tr><td class="rl">'+(i+1)+'</td>';
+              for(var j=0;j<12;j++){
+                var v,cls;
+                if(type==='A'){
+                  v=A[i][j]; cls=v===1?'one':'z';
+                } else if(type==='D'){
+                  v=i===j?deg[i]:0;
+                  cls=i===j?(deg[i]===4?'dg4':'dg'):'z';
+                } else {
+                  v=i===j?deg[i]:-A[i][j];
+                  if(i===j) cls=deg[i]===4?'dg4':'dg';
+                  else if(v===-1) cls='neg';
+                  else cls='z';
+                }
+                h+='<td class="'+cls+'">'+(v===0?'·':v)+'</td>';
+              }
+              h+='</tr>';
+            }
+            h+='</table></div></div>';
+            return h;
+          }
+          document.getElementById('matrix-tables').innerHTML+=
+            makeTable('A','A — adjacency matrix (connections)')+
+            makeTable('D','D — degree matrix (vertex weights)')+
+            makeTable('L','L = D − A (the Laplace matrix)');
+        })();
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
 <hr>
 
 <!-- THE TWO BINDERS -->
@@ -1058,9 +1135,9 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
       <h4>Proposition: The dynamic side of the double cube</h4>
       <p><strong>Definition 1.</strong> Let a double cube be two unit cubes linked along one shared face. The double cube has 2×8 − 4 = 12 corners, where 4 shared corners are subtracted.</p>
       <p><strong>Definition 2.</strong> Let the tangent value S be defined as S = (√7/2)² = 7/4, where √7 is the combinator — established as forbidden by Legendre's three-square theorem.</p>
-      <p><strong>Observation.</strong> For n linked unit cubes, the corner count is 4(n+1). Scaled by 7/4, this gives:</p>
+      <p><strong>Lemma.</strong> For n linked unit cubes, the number of corners is 4(n+1), and the product with 7/4 is:</p>
       <div class="formula">4(n+1) · 7/4 = 7(n+1)</div>
-      <p>For the double cube, n = 2, so 4(3) = 12 corners, and:</p>
+      <p><strong>Corollary for n = 2:</strong></p>
       <div class="formula">12 · 7/4 = 21 = 3 × 7</div>
       <p><strong>Two independent convergences on 21:</strong></p>
       <p><strong>1.</strong> √21 = √(1² + 2² + 4²) — space diagonal of a 1×2×4 rectangle, where 1, 2, 4 are the first three powers of 2.</p>
@@ -1118,7 +1195,7 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>This gives the double cube a dual geometric nature that runs deeper than its shape. Its central axis admits two descriptions: linear (distance = 1, rational, internal) and quadratic (√3, irrational, boundary) — the same axis, two measurement languages. √7 inherits this duality directly: it appears linearly as the tangent distance, and quadratically as the tangent value (√7/2)² = 7/4. It is the only diagonal that changes status depending on which language is applied — boundary in one, interior in the other. This is what it means for the double cube to be a minimal system where the linear and the quadratic meet.</p>
 
-<p>A number-theoretic resonance suggests itself here. All primes greater than 2 divide into exactly two classes: those congruent to 1 mod 4, which can be expressed as a sum of two squares, and those congruent to 3 mod 4, which cannot. This is not an analogy — it is an independent mathematical fact. At the same time, it bears a striking resemblance to the dual nature observed in the double cube: one class admits a quadratic decomposition, the other does not. The double cube may be read as a geometric operand that makes this abstract partition visible — giving the two prime classes a spatial form, one internal and rational, the other a boundary that resists decomposition.</p>
+<p>A number-theoretic resonance suggests itself here. All primes greater than 2 divide into exactly two classes: those congruent to 1 mod 4, which can be expressed as a sum of two squares, and those congruent to 3 mod 4, which cannot. This is not an analogy — it is an independent mathematical fact. But it shares the same grammar as the double cube's dual nature: one class admits a quadratic decomposition, the other does not. The double cube may be read as a geometric operand that makes this abstract partition visible — giving the two prime classes a spatial form, one internal and rational, the other a boundary that resists decomposition.</p>
 
 <p>The observations, riding on the translations, show a convergence of the structural and the periodic that points to being non-arbitrary. It follows as a geometric consequence of a number-theoretic constraint: 7 cannot be realised as a diagonal in any three-dimensional integer lattice. Despite this, we have shown that it may indeed, though speculatively, be realized in the specific lattice of a double cube.</p>
 </div>
