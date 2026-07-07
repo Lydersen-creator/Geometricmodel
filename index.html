@@ -481,6 +481,10 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <div class="formula">Tₓ = r² / |OP| = 7 / 4 = 1.75</div>
 <p>Geometric construction: the tangent value 7/4 emerges where the tangent from the double cube's squared length meets the √7 sphere. It is not placed by assumption — it follows from the construction.</p>
 
+<p>The construction also leaves a right triangle O–T–P, right-angled where the radius meets the tangent. Its two legs are of unequal length: the excluded radius √7 (from the origin to the tangent point) and the tangent length 3. The hypotenuse is the squared length 4 (Pythagoras: 7 + 9 = 16). The cosines of its two acute angles are therefore exact:</p>
+<div class="formula">cos(∠P) = 3/4     cos(∠O) = √7 / 4</div>
+<p>So 3/4 appears here as an exact angular signature of the same construction that yields 7/4 — an observation about 3/4 alone. Its partner in the triangle is √7/4, not 2/3.</p>
+
 <figure style="max-width:560px; margin: 2rem auto;">
 <svg viewBox="0 0 560 580" xmlns="http://www.w3.org/2000/svg" role="img">
 <title>The tangent construction — tangent value 7/4</title>
@@ -658,85 +662,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 <p>The result is exclusive to the double cube within its family. The single cube (1×1×1) has spectral radius 6. The triple cube (3×1×1) has spectral radius 6 + √2 ≈ 7.414 — not an integer. The double cube is the only configuration in this series for which the spectral radius is a whole number, and that number is 7.</p>
 
 <p>Observations 1a and 1b establish 7 through the metric geometry of the double cube — the tangent construction and the midpoint derivation both land on 7/4. Observation 1c establishes 7 through the connectivity of its vertices, with no reference to distances or coordinates. The two are distinct mathematical descriptions of the same object. That both single out 7 as the privileged value suggests this is not a coincidence of construction, but a structural property of the object itself.</p>
-
-<div class="accordion" id="acc-matrices">
-  <button class="acc-btn" onclick="toggleAcc('matrices')" aria-expanded="false" aria-controls="accb-matrices">
-    The matrices: symmetry made visible
-    <span class="acc-icon" id="aci-matrices">+</span>
-  </button>
-  <div class="acc-body" id="accb-matrices">
-    <div class="acc-inner">
-      <p>The three matrices underlying the spectral result are not just computational scaffolding — their internal patterns are direct readings of the double cube's geometry. All three are symmetric about two axes, reflecting the object's structural symmetry: kube 1 and kube 2 are identical, and every connection is mutual.</p>
-      <p>In <strong>A</strong> (the adjacency matrix), blue cells mark connections: 1 where two vertices share an edge, 0 elsewhere. The pattern repeats in four quadrants, mirroring the double cube's bilateral symmetry. In <strong>D</strong> (the degree matrix), only the diagonal is populated: eight 3s for the outer corners, and four 4s for the shared face (vertices 5–8), which belong to both cubes simultaneously. In <strong>L = D − A</strong>, the diagonal carries the degree and every neighbour appears as −1. The number of −1s in each column always equals the diagonal value — a balance that ensures the uniform vector (1,1,…,1) always yields eigenvalue 0.</p>
-      <p>The four 4s at the centre of D are not incidental. They mark the shared face as a faster diffusion channel: a disturbance entering there propagates through four neighbours rather than three. The spectral radius 7 emerges from precisely this asymmetry between interior and exterior — encoded in the degree matrix before any eigenvalue computation begins.</p>
-      <div id="matrix-tables" style="margin-top:18px; overflow-x:auto;">
-        <style>
-          .mtx-section { margin-bottom:20px; }
-          .mtx-label { font-size:11px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
-          .mtx table { border-collapse:collapse; font-family:'Courier New',monospace; font-size:11px; }
-          .mtx td, .mtx th { width:22px; height:20px; text-align:center; vertical-align:middle; padding:0; }
-          .mtx th { color:var(--text3); font-weight:400; font-size:10px; }
-          .mtx td.rl { color:var(--text3); font-size:10px; width:18px; }
-          .mtx td.z  { color:var(--text3); opacity:0.3; }
-          .mtx td.one { color:#5a8a1a; font-weight:600; }
-          .mtx td.dg  { color:#5a8a1a; font-weight:600; }
-          .mtx td.dg4 { color:#c05000; font-weight:600; }
-          .mtx td.neg { color:#c05000; font-weight:600; }
-        </style>
-        <script>
-        (function(){
-          var A=[
-            [0,1,0,1,1,0,0,0,0,0,0,0],
-            [1,0,1,0,0,1,0,0,0,0,0,0],
-            [0,1,0,1,0,0,1,0,0,0,0,0],
-            [1,0,1,0,0,0,0,1,0,0,0,0],
-            [1,0,0,0,0,1,0,1,1,0,0,0],
-            [0,1,0,0,1,0,1,0,0,1,0,0],
-            [0,0,1,0,0,1,0,1,0,0,1,0],
-            [0,0,0,1,1,0,1,0,0,0,0,1],
-            [0,0,0,0,1,0,0,0,0,1,0,1],
-            [0,0,0,0,0,1,0,0,1,0,1,0],
-            [0,0,0,0,0,0,1,0,0,1,0,1],
-            [0,0,0,0,0,0,0,1,1,0,1,0]
-          ];
-          var deg=[3,3,3,3,4,4,4,4,3,3,3,3];
-          function makeTable(type,label){
-            var h='<div class="mtx-section"><div class="mtx-label">'+label+'</div><div class="mtx"><table>';
-            h+='<tr><th></th>';
-            for(var j=0;j<12;j++) h+='<th>'+(j+1)+'</th>';
-            h+='</tr>';
-            for(var i=0;i<12;i++){
-              h+='<tr><td class="rl">'+(i+1)+'</td>';
-              for(var j=0;j<12;j++){
-                var v,cls;
-                if(type==='A'){
-                  v=A[i][j]; cls=v===1?'one':'z';
-                } else if(type==='D'){
-                  v=i===j?deg[i]:0;
-                  cls=i===j?(deg[i]===4?'dg4':'dg'):'z';
-                } else {
-                  v=i===j?deg[i]:-A[i][j];
-                  if(i===j) cls=deg[i]===4?'dg4':'dg';
-                  else if(v===-1) cls='neg';
-                  else cls='z';
-                }
-                h+='<td class="'+cls+'">'+(v===0?'·':v)+'</td>';
-              }
-              h+='</tr>';
-            }
-            h+='</table></div></div>';
-            return h;
-          }
-          document.getElementById('matrix-tables').innerHTML+=
-            makeTable('A','A — adjacency matrix (connections)')+
-            makeTable('D','D — degree matrix (vertex weights)')+
-            makeTable('L','L = D − A (the Laplace matrix)');
-        })();
-        </script>
-      </div>
-    </div>
-  </div>
-</div>
 
 <hr>
 
@@ -1019,112 +944,6 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
 
 <p>The factor 3 is the spherical content — three spheres inscribed along the double cube's length (½ + 1 + ½). The factor 7 is the combinator. The product 21 is where cubic topology and spherical geometry meet as an exact integer.</p>
 
-<h3 class="sec-sub" style="margin-top:1.5rem;">5.4 — A local circle constant</h3>
-
-<p>The supposed curve traversing ½+1+½ spans the full length of the double cube — √4 = 2. If this curve is understood as a closed periodic path with radius r = ½, the ratio of path length to diameter is:</p>
-
-<div class="formula">C / 2r = 2 / (2 × ½) = 2</div>
-
-<p>In Euclidean geometry this ratio is π ≈ 3.14. Here, within the double cube's own geometry, the corresponding ratio is 2. This is a purely geometric observation about this specific lattice — not a redefinition of π. Whether this reflects a deeper structural property of the lattice remains an open question.</p>
-
-<figure style="max-width:600px; margin: 2rem auto;">
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="60 270 500 300">
-  <!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
-  <defs>
-    <style>
-      .pi0, .pi1, .pi2, .pi3, .pi4 {
-        fill: none;
-      }
-
-      .pi0, .pi3, .pi4 {
-        stroke: #95bc20;
-      }
-
-      .pi0, .pi4 {
-        stroke-width: 2.2px;
-      }
-
-      .pi1 {
-        stroke: #702c3f;
-        stroke-width: 1.1px;
-      }
-
-      .pi1, .pi5 {
-        opacity: .5;
-      }
-
-      .pi2 {
-        stroke: #1b9dd9;
-        stroke-width: .9px;
-      }
-
-      .pi3 {
-        stroke-width: .6px;
-      }
-
-      .pi3, .pi4 {
-        opacity: .5;
-      }
-
-      .pi6 {
-        fill: #95bc20;
-      }
-
-      .pi4 {
-        stroke-dasharray: 8.5 8.5;
-      }
-
-      .pi7 {
-        fill: #1b9dd9;
-      }
-
-      .pi8 {
-        fill: #702c3f;
-      }
-    </style>
-  </defs>
-  <path class="pi1" d="M91,314.4c58.5,0,106,47.5,106,106s-47.5,106-106,106"/>
-  <g class="pi5">
-    <path class="pi8" d="M303.8,315.5c57.8,0,104.9,47,104.9,104.9s-47,104.9-104.9,104.9-104.9-47-104.9-104.9,47-104.9,104.9-104.9M303.8,314.4c-58.5,0-106,47.5-106,106s47.5,106,106,106,106-47.5,106-106-47.5-106-106-106h0Z"/>
-  </g>
-  <path class="pi7" d="M302.5,314.4v211.5H91v-211.5h211.5M303.4,313.4H90.1v213.4h213.4v-213.4h0Z"/>
-  <path class="pi1" d="M516,526.3c-58.5,0-106-47.5-106-106s47.5-106,106-106"/>
-  <path class="pi4" d="M198.7,417.4c21.1-57.3,53.3-102.9,104.8-102.9"/>
-  <path class="pi0" d="M91,526.3c59-2.2,85.7-52.5,107.7-108.9"/>
-  <path class="pi4" d="M408.8,416.7c22.1,64.3,52.8,109.4,105.4,109.4"/>
-  <path class="pi0" d="M303.5,314.6c59.1,0,83.5,44.8,105.3,102.1"/>
-  <path class="pi7" d="M514.2,314.6v211.5h-211.5v-211.5h211.5M515.1,313.6h-213.4v213.4h213.4v-213.4h0Z"/>
-  <g>
-    <path class="pi6" d="M314.8,262.8v-1.4h7.5v1.1c-.7.8-1.5,1.8-2.2,3.1s-1.3,2.6-1.7,4c-.3,1-.5,2-.5,3.2h-1.5c0-.9.2-2,.5-3.3s.8-2.5,1.5-3.7c.6-1.2,1.3-2.2,2-3h-5.7Z"/>
-    <path class="pi6" d="M323,273l3.4-12h1.1l-3.3,12h-1.1Z"/>
-    <path class="pi6" d="M332.7,272.8v-2.8h-5v-1.3l5.3-7.5h1.2v7.5h1.6v1.3h-1.6v2.8h-1.4ZM332.7,268.7v-5.2l-3.6,5.2h3.6Z"/>
-  </g>
-
-  <!-- π = 2 annotering -->
-  <line x1="91" y1="545" x2="516" y2="545"
-    stroke="#9b9b96" stroke-width="0.8" opacity="0.5"/>
-  <line x1="91" y1="541" x2="91" y2="549" stroke="#9b9b96" stroke-width="0.8" opacity="0.5"/>
-  <line x1="516" y1="541" x2="516" y2="549" stroke="#9b9b96" stroke-width="0.8" opacity="0.5"/>
-  <text x="303" y="560" text-anchor="middle"
-    font-family="system-ui, sans-serif" font-size="11" fill="#9b9b96" opacity="0.7">C = 2</text>
-
-  <!-- Radius markering -->
-  <line x1="303.8" y1="420.4" x2="303.8" y2="314.4"
-    stroke="#702c3f" stroke-width="1.2" opacity="0.6"/>
-  <text x="310" y="374" font-family="system-ui, sans-serif" font-size="11"
-    fill="#702c3f" opacity="0.75">r = ½</text>
-
-  <!-- π = C/2r = 2 -->
-  <text x="303" y="588" text-anchor="middle"
-    font-family="system-ui, sans-serif" font-size="13" font-weight="600"
-    fill="#e6007e">π = C / 2r = 2 / 1 = 2</text>
-</svg>
-<figcaption style="font-size: 0.8rem; color: var(--color-text-tertiary); margin-top: 0.75rem; text-align: center;">The spiral traverses one full period over the double cube's length 2. With radius r = ½ and circumference C = 2, the natural circle constant in this geometry is π = C/2r = 2.</figcaption>
-</figure>
-
-
-
 <div class="accordion" id="acc-3x7">
   <button class="acc-btn" onclick="toggleAcc('3x7')">
     <span>The proposition behind 3 × 7 — a formal addendum</span>
@@ -1139,10 +958,13 @@ footer { padding:40px; text-align:center; border-top:1px solid var(--rule);
       <div class="formula">4(n+1) · 7/4 = 7(n+1)</div>
       <p><strong>Corollary for n = 2:</strong></p>
       <div class="formula">12 · 7/4 = 21 = 3 × 7</div>
-      <p><strong>Two independent convergences on 21:</strong></p>
-      <p><strong>1.</strong> √21 = √(1² + 2² + 4²) — space diagonal of a 1×2×4 rectangle, where 1, 2, 4 are the first three powers of 2.</p>
-      <p><strong>2.</strong> 7π/21 = π/3 = 60° exactly — base angle of hexagonal crystallography, and the phase angle per spherical segment when a curve winds around the three spheres (½ + 1 + ½) of the double cube. Six such segments complete a full phase of 2π.</p>
+      <p><strong>A structural convergence on 21:</strong></p>
+      <p>√21 = √(1² + 2² + 4²) — space diagonal of a 1×2×4 rectangle, where 1, 2, 4 are the first three powers of 2.</p>
       <h4>On the missing axiom</h4>
+      <div style="border-left:3px solid #702c3f; background:#faf3f5; padding:12px 15px; margin:14px 0; border-radius:0 6px 6px 0;">
+        <div style="font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#702c3f; font-weight:700; margin-bottom:6px;">Speculation — not an established result</div>
+        <p style="margin:0; font-size:13px; color:var(--text2);">The paragraph below is an exploratory conjecture, kept as intellectual motivation. Its premises — that a helix traverses exactly 2π over the double cube's length, and that this phase relationship fixes the 7/4 corner weighting — are <em>assumed, not derived</em>. Neither the choice of a single full turn nor the segment count follows from anything proved here. Read it as a direction to investigate, not as a claim the paper supports.</p>
+      </div>
       <p>The weighting of corners by 7/4 is geometrically motivated but not formally proved. However, a candidate axiom emerges from the spherical structure of the double cube: a helix winding around the three inscribed spheres (½ + 1 + ½) traverses exactly 2π over the double cube's full length — one complete phase per two cubic units. This gives π per unit length, and π/3 per spherical segment. The connection between cubic topology and spherical weighting may be precisely this phase relationship.</p>
     </div>
   </div>
